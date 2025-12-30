@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职业广场管理 - 莲藕平台</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        dark: '#1D2129',
+                        'light-bg': '#F2F3F5',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light-bg min-h-screen">
+    <!-- 侧边栏 -->
+    <div id="sidebar" class="fixed top-0 left-0 w-64 h-full bg-white border-r border-gray-200 transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40 overflow-y-auto">
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex items-center justify-center">
+                <div class="h-10 w-10 rounded-lg bg-primary flex items-center justify-center mr-3">
+                    <i class="fa fa-graduation-cap text-white text-xl"></i>
+                </div>
+                <h2 class="text-lg font-bold text-dark">莲藕平台</h2>
+            </div>
+        </div>
+        <div class="py-4">
+            <div class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">主导航</div>
+            <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fa fa-tachometer w-6 text-center"></i>
+                <span class="ml-3">控制面板</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fa fa-book w-6 text-center"></i>
+                <span class="ml-3">课程管理</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-2 text-primary bg-primary/10 border-l-4 border-primary transition-colors">
+                <i class="fa fa-briefcase w-6 text-center"></i>
+                <span class="ml-3">职业广场管理</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fa fa-users w-6 text-center"></i>
+                <span class="ml-3">兴趣小组管理</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fa fa-user-circle w-6 text-center"></i>
+                <span class="ml-3">用户管理</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="md:ml-64 transition-all duration-300 min-h-screen">
+        <!-- 顶部导航栏 -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+            <div class="flex items-center justify-between px-4 h-16">
+                <div class="flex items-center">
+                    <button id="sidebarToggle" class="md:hidden text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="ml-4 text-lg font-semibold text-dark">职业广场管理</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="relative text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fa fa-bell text-xl"></i>
+                        <span class="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-danger flex items-center justify-center text-white text-xs">3</span>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <div class="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
+                            <img src="https://picsum.photos/200/200?random=1" alt="管理员头像" class="h-full w-full object-cover">
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 hidden md:block">管理员</span>
+                        <i class="fa fa-angle-down text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 页面内容 -->
+        <main class="p-4 md:p-6">
+            <!-- 页面标题和描述 -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-dark mb-2">职业广场管理</h2>
+                <p class="text-gray-500">管理招聘信息和创业政策，为学生提供职业发展支持</p>
+            </div>
+
+            <!-- 信息统计卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">总招聘信息</h3>
+                        <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fa fa-briefcase text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-2xl font-bold text-dark">42</p>
+                    <div class="mt-2 flex items-center text-sm">
+                        <span class="text-success flex items-center"><i class="fa fa-arrow-up mr-1"></i> 5.2%</span>
+                        <span class="text-gray-400 ml-2">较上周</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">已发布招聘</h3>
+                        <div class="h-10 w-10 rounded-lg bg-success/10 flex items-center justify-center text-success">
+                            <i class="fa fa-check-circle text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-2xl font-bold text-dark">36</p>
+                    <div class="mt-2 flex items-center text-sm">
+                        <span class="text-success flex items-center"><i class="fa fa-arrow-up mr-1"></i> 3.8%</span>
+                        <span class="text-gray-400 ml-2">较上周</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">创业政策数</h3>
+                        <div class="h-10 w-10 rounded-lg bg-warning/10 flex items-center justify-center text-warning">
+                            <i class="fa fa-lightbulb-o text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-2xl font-bold text-dark">18</p>
+                    <div class="mt-2 flex items-center text-sm">
+                        <span class="text-success flex items-center"><i class="fa fa-arrow-up mr-1"></i> 12.5%</span>
+                        <span class="text-gray-400 ml-2">较上周</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">总浏览量</h3>
+                        <div class="h-10 w-10 rounded-lg bg-info/10 flex items-center justify-center text-info">
+                            <i class="fa fa-eye text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-2xl font-bold text-dark">2,589</p>
+                    <div class="mt-2 flex items-center text-sm">
+                        <span class="text-danger flex items-center"><i class="fa fa-arrow-down mr-1"></i> 2.1%</span>
+                        <span class="text-gray-400 ml-2">较上周</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 选项卡切换 -->
+            <div class="bg-white rounded-xl shadow-sm mb-6">
+                <div class="border-b border-gray-200">
+                    <div class="flex" role="tablist">
+                        <button id="jobPostingsTab" class="px-6 py-4 text-primary border-b-2 border-primary font-medium">招聘信息管理</button>
+                        <button id="entrepreneurshipPoliciesTab" class="px-6 py-4 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary/30">创业政策管理</button>
+                    </div>
+                </div>
+
+                <!-- 招聘信息内容 -->
+                <div id="jobPostingsContent" class="p-6">
+                    <!-- 搜索和筛选 -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <div class="relative">
+                                <input type="text" placeholder="搜索职位名称/公司" class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary w-full sm:w-64">
+                                <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <select class="border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                                <option>全部状态</option>
+                                <option>已发布</option>
+                                <option>已下架</option>
+                            </select>
+                            <select class="border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                                <option>全部城市</option>
+                                <option>北京</option>
+                                <option>上海</option>
+                                <option>广州</option>
+                                <option>深圳</option>
+                                <option>杭州</option>
+                            </select>
+                        </div>
+                        <button id="addJobBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
+                            <i class="fa fa-plus mr-2"></i> 新增招聘
+                        </button>
+                    </div>
+
+                    <!-- 招聘列表表格 -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">ID</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">职位名称</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">公司名称</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">薪资</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">城市</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">状态</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100">
+                                    <td class="px-4 py-4 text-sm text-gray-600">J001</td>
+                                    <td class="px-4 py-4 text-sm font-medium text-dark">前端开发工程师</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">未来科技有限公司</td>
+                                    <td class="px-4 py-4 text-sm text-primary">15K-25K</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">北京</td>
+                                    <td class="px-4 py-4"><span class="px-2 py-1 bg-success/10 text-success rounded-full text-xs">已发布</span></td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-800" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="text-warning hover:text-warning/80" title="下架">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="px-4 py-4 text-sm text-gray-600">J002</td>
+                                    <td class="px-4 py-4 text-sm font-medium text-dark">产品经理</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">创新科技有限公司</td>
+                                    <td class="px-4 py-4 text-sm text-primary">20K-30K</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">上海</td>
+                                    <td class="px-4 py-4"><span class="px-2 py-1 bg-success/10 text-success rounded-full text-xs">已发布</span></td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-800" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="text-warning hover:text-warning/80" title="下架">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-4 text-sm text-gray-600">J003</td>
+                                    <td class="px-4 py-4 text-sm font-medium text-dark">UI设计师</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">创意设计工作室</td>
+                                    <td class="px-4 py-4 text-sm text-primary">12K-20K</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">广州</td>
+                                    <td class="px-4 py-4"><span class="px-2 py-1 bg-gray-100 text-gray-500 rounded-full text-xs">已下架</span></td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-800" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="text-success hover:text-success/80" title="启用">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 创业政策内容 -->
+                <div id="entrepreneurshipPoliciesContent" class="p-6 hidden">
+                    <!-- 搜索和筛选 -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <div class="relative">
+                                <input type="text" placeholder="搜索政策名称/发布部门" class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary w-full sm:w-64">
+                                <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <select class="border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                                <option>全部状态</option>
+                                <option>已发布</option>
+                                <option>已下架</option>
+                            </select>
+                            <select class="border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                                <option>全部类型</option>
+                                <option>补贴政策</option>
+                                <option>税收优惠</option>
+                                <option>贷款支持</option>
+                                <option>场地支持</option>
+                            </select>
+                        </div>
+                        <button id="addPolicyBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center">
+                            <i class="fa fa-plus mr-2"></i> 新增政策
+                        </button>
+                    </div>
+
+                    <!-- 政策列表表格 -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">ID</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">政策名称</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">发布部门</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">政策类型</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">状态</th>
+                                    <th class="px-4 py-3 text-sm font-medium text-gray-600">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100">
+                                    <td class="px-4 py-4 text-sm text-gray-600">P001</td>
+                                    <td class="px-4 py-4 text-sm font-medium text-dark">大学生创业扶持计划</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">就业创业服务中心</td>
+                                    <td class="px-4 py-4 text-sm text-primary">补贴政策</td>
+                                    <td class="px-4 py-4"><span class="px-2 py-1 bg-success/10 text-success rounded-full text-xs">已发布</span></td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-800" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="text-warning hover:text-warning/80" title="下架">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100">
+                                    <td class="px-4 py-4 text-sm text-gray-600">P002</td>
+                                    <td class="px-4 py-4 text-sm font-medium text-dark">小微企业税收优惠政策</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">税务局</td>
+                                    <td class="px-4 py-4 text-sm text-primary">税收优惠</td>
+                                    <td class="px-4 py-4"><span class="px-2 py-1 bg-success/10 text-success rounded-full text-xs">已发布</span></td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-800" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="text-warning hover:text-warning/80" title="下架">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-4 text-sm text-gray-600">P003</td>
+                                    <td class="px-4 py-4 text-sm font-medium text-dark">创业孵化基地管理办法</td>
+                                    <td class="px-4 py-4 text-sm text-gray-600">科技局</td>
+                                    <td class="px-4 py-4 text-sm text-primary">场地支持</td>
+                                    <td class="px-4 py-4"><span class="px-2 py-1 bg-gray-100 text-gray-500 rounded-full text-xs">已下架</span></td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex gap-2">
+                                            <button class="text-primary hover:text-primary/80" title="查看详情">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-800" title="编辑">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button class="text-success hover:text-success/80" title="启用">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80" title="删除">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 侧边栏切换
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('-translate-x-full');
+        });
+
+        // 选项卡切换
+        document.getElementById('jobPostingsTab').addEventListener('click', function() {
+            document.getElementById('jobPostingsContent').classList.remove('hidden');
+            document.getElementById('entrepreneurshipPoliciesContent').classList.add('hidden');
+            document.getElementById('jobPostingsTab').classList.add('text-primary', 'border-b-2', 'border-primary');
+            document.getElementById('jobPostingsTab').classList.remove('text-gray-500');
+            document.getElementById('entrepreneurshipPoliciesTab').classList.remove('text-primary', 'border-b-2', 'border-primary');
+            document.getElementById('entrepreneurshipPoliciesTab').classList.add('text-gray-500');
+        });
+
+        document.getElementById('entrepreneurshipPoliciesTab').addEventListener('click', function() {
+            document.getElementById('entrepreneurshipPoliciesContent').classList.remove('hidden');
+            document.getElementById('jobPostingsContent').classList.add('hidden');
+            document.getElementById('entrepreneurshipPoliciesTab').classList.add('text-primary', 'border-b-2', 'border-primary');
+            document.getElementById('entrepreneurshipPoliciesTab').classList.remove('text-gray-500');
+            document.getElementById('jobPostingsTab').classList.remove('text-primary', 'border-b-2', 'border-primary');
+            document.getElementById('jobPostingsTab').classList.add('text-gray-500');
+        });
+    </script>
+</body>
+</html>

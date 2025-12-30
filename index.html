@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 莲藕平台管理系统</title>
+    <meta name="description" content="莲藕平台管理系统是一个专业的心理赋能平台，提供心理健康服务、社会融入服务和个人成长支持。">
+    <meta name="keywords" content="莲藕平台,心理赋能,心理健康,社会融入,管理系统">
+    <meta name="author" content="莲藕平台团队">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Schema.org 结构化数据 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "莲藕平台管理系统",
+      "url": "https://your-domain.com",
+      "description": "莲藕平台管理系统是一个专业的心理赋能平台，提供心理健康服务、社会融入服务和个人成长支持。",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://your-domain.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        dark: '#1D2129'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-blue {
+                background: linear-gradient(135deg, #165DFF 0%, #4080FF 100%);
+            }
+            .login-card-shadow {
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            }
+            .input-focus {
+                @apply focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all;
+            }
+            .btn-hover {
+                @apply hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div class="text-center">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-blue rounded-2xl mb-4">
+                <i class="fa fa-connectdevelop text-white text-3xl"></i>
+            </div>
+            <h2 class="mt-5 text-2xl font-bold text-dark">莲藕平台管理系统</h2>
+            <p class="mt-2 text-sm text-gray-500">请输入您的账户信息进行登录</p>
+        </div>
+
+        <div class="mt-8 bg-white rounded-xl login-card-shadow p-6">
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-1">用户名</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa fa-user text-gray-400"></i>
+                        </div>
+                        <input id="username" name="username" type="text" required
+                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg input-focus outline-none"
+                            placeholder="请输入用户名">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa fa-lock text-gray-400"></i>
+                        </div>
+                        <input id="password" name="password" type="password" required
+                            class="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg input-focus outline-none"
+                            placeholder="请输入密码">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <button type="button" id="togglePassword" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                                <i class="fa fa-eye-slash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox"
+                            class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                            记住我
+                        </label>
+                    </div>
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-primary hover:text-primary/80 transition-colors">
+                            忘记密码?
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" id="loginBtn"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 btn-hover">
+                        登录
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-center text-sm text-gray-500">
+            <p>© 2024 莲藕平台管理系统. 保留所有权利.</p>
+            <p class="mt-1">技术支持: <a href="#" class="text-primary hover:underline">400-123-4567</a></p>
+        </div>
+    </div>
+
+    <!-- 加载动画 -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded-lg flex flex-col items-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+            <p class="text-gray-700">正在登录，请稍候...</p>
+        </div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div id="errorToast" class="fixed bottom-5 right-5 bg-danger text-white p-4 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center">
+        <i class="fa fa-exclamation-circle mr-2"></i>
+        <span id="errorMessage">用户名或密码错误，请重试</span>
+        <button id="closeErrorToast" class="ml-4 text-white hover:text-gray-200">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 密码显示/隐藏切换
+            const togglePassword = document.getElementById('togglePassword');
+            const password = document.getElementById('password');
+
+            togglePassword.addEventListener('click', function() {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                
+                // 切换图标
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+                
+                // 添加点击反馈
+                this.classList.add('scale-95');
+                setTimeout(() => {
+                    this.classList.remove('scale-95');
+                }, 100);
+            });
+
+            // 登录表单提交
+            const loginForm = document.getElementById('loginForm');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const errorToast = document.getElementById('errorToast');
+            const errorMessage = document.getElementById('errorMessage');
+            const closeErrorToast = document.getElementById('closeErrorToast');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const loginBtn = document.getElementById('loginBtn');
+
+            // 输入框焦点事件
+            [usernameInput, passwordInput].forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.parentElement.classList.add('ring-2', 'ring-primary/20');
+                    this.parentElement.parentElement.classList.remove('ring-2', 'ring-danger/20');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.parentElement.classList.remove('ring-2', 'ring-primary/20');
+                    if (this.value.trim() === '' && this.hasAttribute('required')) {
+                        this.parentElement.parentElement.classList.add('ring-2', 'ring-danger/20');
+                    }
+                });
+            });
+
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // 验证用户名
+                if (!usernameInput.value.trim()) {
+                    usernameInput.parentElement.parentElement.classList.add('ring-2', 'ring-danger/20');
+                    isValid = false;
+                }
+                
+                // 验证密码
+                if (!passwordInput.value.trim()) {
+                    passwordInput.parentElement.parentElement.classList.add('ring-2', 'ring-danger/20');
+                    isValid = false;
+                }
+                
+                if (!isValid) {
+                    showError('请输入用户名和密码');
+                    return;
+                }
+                
+                // 显示加载动画
+                loadingOverlay.classList.remove('hidden');
+                
+                // 禁用登录按钮，防止重复提交
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>登录中...';
+                
+                // 模拟登录请求延迟
+                setTimeout(() => {
+                    // 这里应该是实际的登录验证逻辑
+                    // 为了演示，使用简单的模拟登录
+                    if (usernameInput.value.trim() === 'admin' && passwordInput.value === 'admin123') {
+                        // 登录成功，添加过渡动画
+                        document.body.classList.add('opacity-0');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 300);
+                    } else {
+                        // 登录失败
+                        loadingOverlay.classList.add('hidden');
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '登录';
+                        showError('用户名或密码错误，请重试');
+                    }
+                }, 1500);
+            });
+
+            // 显示错误提示
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorToast.classList.remove('translate-y-20', 'opacity-0');
+                errorToast.classList.add('translate-y-0', 'opacity-100');
+                
+                // 3秒后自动隐藏
+                setTimeout(() => {
+                    hideError();
+                }, 3000);
+            }
+
+            // 隐藏错误提示
+            function hideError() {
+                errorToast.classList.add('translate-y-20', 'opacity-0');
+                errorToast.classList.remove('translate-y-0', 'opacity-100');
+            }
+
+            // 关闭错误提示按钮
+            closeErrorToast.addEventListener('click', function() {
+                this.classList.add('scale-90');
+                setTimeout(() => {
+                    this.classList.remove('scale-90');
+                }, 100);
+                hideError();
+            });
+
+            // 添加键盘事件
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideError();
+                }
+            });
+
+            // 为表单元素添加入场动画效果
+            const formElements = document.querySelectorAll('input, button');
+            formElements.forEach((element, index) => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    element.style.transition = 'all 0.5s ease-out';
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 300 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

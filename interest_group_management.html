@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兴趣小组管理 - 莲藕平台</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <!-- 配置 Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        dark: '#1D2129',
+                        light: '#F2F3F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }    
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .shadow-sm {
+                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            }
+            .fade-in {
+                animation: fadeIn 0.3s ease-in-out;
+            }
+            .slide-in {
+                animation: slideIn 0.3s ease-in-out;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideIn {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-dark font-sans">
+    <div class="min-h-screen flex flex-col">
+        <!-- 顶部导航栏 -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between h-16">
+                    <!-- 左侧LOGO和标题 -->
+                    <div class="flex items-center">
+                        <button id="sidebarToggle" class="lg:hidden mr-3 text-gray-500 hover:text-primary focus:outline-none">
+                            <i class="fa fa-bars text-xl"></i>
+                        </button>
+                        <div class="flex items-center">
+                            <img src="https://picsum.photos/200/200?random=1" alt="莲藕平台" class="w-8 h-8 rounded-lg mr-2">
+                            <h1 class="text-lg font-semibold text-dark">莲藕平台 - 管理员端</h1>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧工具栏 -->
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <button class="text-gray-500 hover:text-primary focus:outline-none">
+                                <i class="fa fa-bell text-xl"></i>
+                                <span class="absolute -top-1 -right-1 w-4 h-4 bg-danger rounded-full flex items-center justify-center text-white text-xs">3</span>
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <button class="flex items-center focus:outline-none">
+                                <img src="https://picsum.photos/200/200?random=5" alt="管理员头像" class="w-8 h-8 rounded-full mr-2">
+                                <span class="hidden md:block text-sm font-medium">管理员</span>
+                                <i class="fa fa-angle-down ml-1 text-gray-500"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-1">
+            <!-- 侧边栏 -->
+            <aside id="sidebar" class="fixed lg:static top-16 left-0 bottom-0 w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-20 overflow-y-auto scrollbar-hide">
+                <nav class="p-4">
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="dashboard.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-dashboard w-5 text-center mr-3"></i>
+                                <span>数据概览</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="user_management.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-users w-5 text-center mr-3"></i>
+                                <span>人员档案管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="data_statistics.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-bar-chart w-5 text-center mr-3"></i>
+                                <span>数据统计汇总</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="risk_warning.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-exclamation-triangle w-5 text-center mr-3"></i>
+                                <span>风险预警</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="resource_allocation.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-cubes w-5 text-center mr-3"></i>
+                                <span>资源调配</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="course_management.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-book w-5 text-center mr-3"></i>
+                                <span>课程管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="employment_management.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-briefcase w-5 text-center mr-3"></i>
+                                <span>就业管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="psychology_management.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-heart w-5 text-center mr-3"></i>
+                                <span>心理管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="activity_management.html" class="flex items-center px-4 py-3 text-gray-600 hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">
+                                <i class="fa fa-calendar w-5 text-center mr-3"></i>
+                                <span>活动管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="interest_group_management.html" class="flex items-center px-4 py-3 bg-primary/10 text-primary rounded-lg transition-colors">
+                                <i class="fa fa-users w-5 text-center mr-3"></i>
+                                <span>兴趣小组管理</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- 主要内容区域 -->
+            <main class="flex-1 p-4 lg:p-6">
+                <div class="container mx-auto">
+                    <!-- 页面标题 -->
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-dark">兴趣小组管理</h2>
+                        <p class="text-gray-500 mt-1">管理平台所有兴趣小组，包括新增、编辑、下架和查看详情</p>
+                    </div>
+
+                    <!-- 操作区域 -->
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 mb-6">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div class="flex items-center gap-2 w-full md:w-auto">
+                                <div class="relative w-full md:w-64">
+                                    <input type="text" placeholder="搜索小组名称" class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                                    <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                </div>
+                                <select class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+                                    <option value="">全部状态</option>
+                                    <option value="active">活跃</option>
+                                    <option value="draft">筹备中</option>
+                                    <option value="disabled">已下架</option>
+                                </select>
+                            </div>
+                            <button id="addGroupBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors w-full md:w-auto">
+                                <i class="fa fa-plus mr-2"></i>
+                                <span>新增兴趣小组</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 小组统计卡片 -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+                        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-gray-500 text-sm">小组总数</p>
+                                    <h3 class="text-2xl font-bold text-dark mt-1">16</h3>
+                                </div>
+                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                                    <i class="fa fa-users text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-success text-sm">
+                                <i class="fa fa-arrow-up mr-1"></i>
+                                <span>3</span>
+                                <span class="text-gray-500 ml-1">较上月</span>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-gray-500 text-sm">活跃小组</p>
+                                    <h3 class="text-2xl font-bold text-dark mt-1">12</h3>
+                                </div>
+                                <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center text-success">
+                                    <i class="fa fa-check-circle text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-600 text-sm">
+                                <span>占比</span>
+                                <span class="text-success font-medium ml-1">75%</span>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-gray-500 text-sm">筹备中小组</p>
+                                    <h3 class="text-2xl font-bold text-dark mt-1">3</h3>
+                                </div>
+                                <div class="w-12 h-12 bg-warning/10 rounded-full flex items-center justify-center text-warning">
+                                    <i class="fa fa-cog text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-600 text-sm">
+                                <span>占比</span>
+                                <span class="text-warning font-medium ml-1">18.75%</span>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-gray-500 text-sm">已下架小组</p>
+                                    <h3 class="text-2xl font-bold text-dark mt-1">1</h3>
+                                </div>
+                                <div class="w-12 h-12 bg-danger/10 rounded-full flex items-center justify-center text-danger">
+                                    <i class="fa fa-minus-circle text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-600 text-sm">
+                                <span>占比</span>
+                                <span class="text-danger font-medium ml-1">6.25%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 兴趣小组列表 -->
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 mb-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">小组ID</th>
+                                        <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">小组名称</th>
+                                        <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">小组类型</th>
+                                        <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">成员数</th>
+                                        <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">创建时间</th>
+                                        <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">状态</th>
+                                        <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm text-gray-600">GROUP001</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-3">
+                                                <img src="https://picsum.photos/200/200?random=20" alt="编程兴趣小组" class="w-10 h-10 object-cover rounded-full">
+                                                <span class="text-sm font-medium">编程兴趣小组</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">技能提升</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">32</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-04-15</td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">活跃</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-primary hover:text-primary/80 view-group-btn" data-id="GROUP001">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-secondary hover:text-secondary/80 edit-group-btn" data-id="GROUP001">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="text-danger hover:text-danger/80 disable-group-btn" data-id="GROUP001">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm text-gray-600">GROUP002</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-3">
+                                                <img src="https://picsum.photos/200/200?random=21" alt="心理健康小组" class="w-10 h-10 object-cover rounded-full">
+                                                <span class="text-sm font-medium">心理健康小组</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">心理支持</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">28</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-04-20</td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">活跃</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-primary hover:text-primary/80 view-group-btn" data-id="GROUP002">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-secondary hover:text-secondary/80 edit-group-btn" data-id="GROUP002">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="text-danger hover:text-danger/80 disable-group-btn" data-id="GROUP002">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm text-gray-600">GROUP003</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-3">
+                                                <img src="https://picsum.photos/200/200?random=22" alt="求职互助小组" class="w-10 h-10 object-cover rounded-full">
+                                                <span class="text-sm font-medium">求职互助小组</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">就业互助</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">45</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-04-25</td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">筹备中</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-primary hover:text-primary/80 view-group-btn" data-id="GROUP003">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-secondary hover:text-secondary/80 edit-group-btn" data-id="GROUP003">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="text-danger hover:text-danger/80 disable-group-btn" data-id="GROUP003">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm text-gray-600">GROUP004</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-3">
+                                                <img src="https://picsum.photos/200/200?random=23" alt="创业交流小组" class="w-10 h-10 object-cover rounded-full">
+                                                <span class="text-sm font-medium">创业交流小组</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">职业发展</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">18</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-05-01</td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">活跃</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-primary hover:text-primary/80 view-group-btn" data-id="GROUP004">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-secondary hover:text-secondary/80 edit-group-btn" data-id="GROUP004">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="text-danger hover:text-danger/80 disable-group-btn" data-id="GROUP004">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="py-3 px-4 text-sm text-gray-600">GROUP005</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-3">
+                                                <img src="https://picsum.photos/200/200?random=24" alt="职场礼仪小组" class="w-10 h-10 object-cover rounded-full">
+                                                <span class="text-sm font-medium">职场礼仪小组</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">职业素养</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">12</td>
+                                        <td class="py-3 px-4 text-sm text-gray-600">2024-05-05</td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">已下架</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-primary hover:text-primary/80 view-group-btn" data-id="GROUP005">
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                                <button class="text-secondary hover:text-secondary/80 edit-group-btn" data-id="GROUP005">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="text-success hover:text-success/80 enable-group-btn" data-id="GROUP005">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 分页控件 -->
+                        <div class="flex items-center justify-between mt-6">
+                            <div class="text-sm text-gray-500">
+                                显示 <span class="font-medium">1</span> 到 <span class="font-medium">5</span> 条，共 <span class="font-medium">16</span> 条
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <button class="px-3 py-1 border border-gray-200 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    <i class="fa fa-angle-left text-gray-400"></i>
+                                </button>
+                                <button class="px-3 py-1 bg-primary text-white rounded">1</button>
+                                <button class="px-3 py-1 border border-gray-200 rounded hover:bg-gray-50">2</button>
+                                <button class="px-3 py-1 border border-gray-200 rounded hover:bg-gray-50">3</button>
+                                <button class="px-3 py-1 border border-gray-200 rounded hover:bg-gray-50">4</button>
+                                <button class="px-3 py-1 border border-gray-200 rounded hover:bg-gray-50">
+                                    <i class="fa fa-angle-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 新增兴趣小组模态框 -->
+    <div id="addGroupModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center fade-in">
+        <div class="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto slide-in">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">新增兴趣小组</h3>
+                    <button class="close-modal text-gray-400 hover:text-gray-600">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="addGroupForm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组名称 <span class="text-danger">*</span></label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组类型 <span class="text-danger">*</span></label>
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                                <option value="">请选择类型</option>
+                                <option value="skill">技能提升</option>
+                                <option value="psychology">心理支持</option>
+                                <option value="employment">就业互助</option>
+                                <option value="career">职业发展</option>
+                                <option value="professional">职业素养</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组负责人 <span class="text-danger">*</span></label>
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                                <option value="">请选择负责人</option>
+                                <option value="USER001">张三 (USER001)</option>
+                                <option value="USER002">李四 (USER002)</option>
+                                <option value="USER003">王五 (USER003)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组头像 <span class="text-danger">*</span></label>
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                                <div class="space-y-1 text-center">
+                                    <i class="fa fa-cloud-upload text-gray-400 text-3xl mb-2"></i>
+                                    <div class="flex text-sm text-gray-600">
+                                        <label for="group-avatar-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary/80">
+                                            <span>上传文件</span>
+                                            <input id="group-avatar-upload" name="group-avatar-upload" type="file" class="sr-only">
+                                        </label>
+                                        <p class="pl-1">或拖拽文件到此处</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">
+                                        PNG, JPG, GIF 最大 2MB，建议尺寸 200x200px
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">小组简介 <span class="text-danger">*</span></label>
+                        <textarea rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required></textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">小组目标</label>
+                        <textarea rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"></textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">加入条件</label>
+                        <textarea rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors"></textarea>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <button type="button" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors close-modal">取消</button>
+                        <button type="button" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">保存为筹备中</button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">创建并发布</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑兴趣小组模态框 -->
+    <div id="editGroupModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center fade-in">
+        <div class="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto slide-in">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">编辑兴趣小组</h3>
+                    <button class="close-modal text-gray-400 hover:text-gray-600">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="editGroupForm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组ID</label>
+                            <input type="text" value="GROUP001" class="w-full px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 cursor-not-allowed" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">创建时间</label>
+                            <input type="text" value="2024-04-15" class="w-full px-4 py-2 border border-gray-200 rounded-lg bg-gray-50 cursor-not-allowed" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组名称 <span class="text-danger">*</span></label>
+                            <input type="text" value="编程兴趣小组" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组类型 <span class="text-danger">*</span></label>
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                                <option value="skill" selected>技能提升</option>
+                                <option value="psychology">心理支持</option>
+                                <option value="employment">就业互助</option>
+                                <option value="career">职业发展</option>
+                                <option value="professional">职业素养</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组负责人 <span class="text-danger">*</span></label>
+                            <select class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                                <option value="USER001" selected>张三 (USER001)</option>
+                                <option value="USER002">李四 (USER002)</option>
+                                <option value="USER003">王五 (USER003)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">小组头像 <span class="text-danger">*</span></label>
+                            <div class="mt-1">
+                                <div class="aspect-w-1 aspect-h-1 w-24 mb-2">
+                                    <img src="https://picsum.photos/200/200?random=20" alt="小组头像" class="object-cover rounded-lg">
+                                </div>
+                                <div class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                                    <div class="space-y-1 text-center">
+                                        <i class="fa fa-cloud-upload text-gray-400 text-3xl mb-2"></i>
+                                        <div class="flex text-sm text-gray-600">
+                                            <label for="edit-group-avatar-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary/80">
+                                                <span>上传新文件</span>
+                                                <input id="edit-group-avatar-upload" name="edit-group-avatar-upload" type="file" class="sr-only">
+                                            </label>
+                                        </div>
+                                        <p class="text-xs text-gray-500">
+                                            PNG, JPG, GIF 最大 2MB，建议尺寸 200x200px
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">小组简介 <span class="text-danger">*</span></label>
+                        <textarea rows="4" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+本小组致力于提供编程技能交流与学习平台，欢迎所有对编程感兴趣的同学加入，共同进步。</textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">小组目标</label>
+                        <textarea rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+1. 提升成员编程技能
+2. 促进编程知识分享
+3. 组织编程实践活动
+4. 建立互助学习社区</textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">加入条件</label>
+                        <textarea rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors">
+1. 对编程有兴趣
+2. 能够按时参与小组活动
+3. 愿意分享和学习知识
+4. 遵守小组规章制度</textarea>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <button type="button" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors close-modal">取消</button>
+                        <button type="button" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">保存为筹备中</button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">更新小组</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 兴趣小组详情模态框 -->
+    <div id="viewGroupModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center fade-in">
+        <div class="bg-white rounded-xl w-full max-w-6xl max-h-[90vh] overflow-y-auto slide-in">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">兴趣小组详情</h3>
+                    <button class="close-modal text-gray-400 hover:text-gray-600">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <!-- 小组基本信息 -->
+                <div class="mb-8">
+                    <div class="flex flex-col md:flex-row gap-6 mb-6">
+                        <img src="https://picsum.photos/400/400?random=20" alt="编程兴趣小组" class="w-full md:w-32 h-32 object-cover rounded-lg mx-auto md:mx-0">
+                        <div class="flex-1">
+                            <h4 class="text-xl font-bold text-dark mb-3">编程兴趣小组</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa fa-id-card text-gray-400"></i>
+                                    <span class="text-sm text-gray-600">小组ID：GROUP001</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa fa-folder text-gray-400"></i>
+                                    <span class="text-sm text-gray-600">类型：技能提升</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa fa-user text-gray-400"></i>
+                                    <span class="text-sm text-gray-600">负责人：张三 (USER001)</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa fa-users text-gray-400"></i>
+                                    <span class="text-sm text-gray-600">成员数：32人</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa fa-calendar text-gray-400"></i>
+                                    <span class="text-sm text-gray-600">创建时间：2024-04-15</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa fa-check-circle text-success"></i>
+                                    <span class="text-sm text-success">状态：活跃</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 text-xs bg-primary/10 text-primary rounded-full">编程学习</span>
+                                <span class="px-3 py-1 text-xs bg-primary/10 text-primary rounded-full">技能提升</span>
+                                <span class="px-3 py-1 text-xs bg-primary/10 text-primary rounded-full">代码交流</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div>
+                            <h5 class="text-lg font-semibold text-dark mb-2">小组简介</h5>
+                            <p class="text-gray-600">本小组致力于提供编程技能交流与学习平台，欢迎所有对编程感兴趣的同学加入，共同进步。小组定期组织技术分享会、编程实战项目、代码评审等活动，帮助成员提升编程能力。</p>
+                        </div>
+                        <div>
+                            <h5 class="text-lg font-semibold text-dark mb-2">小组目标</h5>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                                <li>提升成员编程技能</li>
+                                <li>促进编程知识分享</li>
+                                <li>组织编程实践活动</li>
+                                <li>建立互助学习社区</li>
+                                <li>培养团队协作能力</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-lg font-semibold text-dark mb-2">加入条件</h5>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                                <li>对编程有兴趣</li>
+                                <li>能够按时参与小组活动</li>
+                                <li>愿意分享和学习知识</li>
+                                <li>遵守小组规章制度</li>
+                                <li>积极参与小组讨论</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 选项卡导航 -->
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="flex" aria-label="Tabs">
+                        <button id="membersTab" class="px-4 py-3 text-primary border-b-2 border-primary font-medium">成员列表</button>
+                        <button id="coursesTab" class="px-4 py-3 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary/30">小组课程</button>
+                        <button id="assignmentsTab" class="px-4 py-3 text-gray-500 hover:text-primary hover:border-b-2 hover:border-primary/30">小组作业</button>
+                    </nav>
+                </div>
+                
+                <!-- 成员列表内容 -->
+                <div id="membersContent" class="tab-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h5 class="text-lg font-semibold text-dark">成员信息</h5>
+                        <button class="px-3 py-1 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fa fa-plus mr-1"></i> 添加成员
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">成员姓名</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">成员ID</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">角色</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">加入时间</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">活跃状态</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=30" alt="张三" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">张三</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER001</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-primary/10 text-primary rounded-full">负责人</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-04-15</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">活跃</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i class="fa fa-user"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=31" alt="李四" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">李四</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER002</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-secondary/10 text-secondary rounded-full">管理员</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-04-16</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">活跃</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-user"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=32" alt="王五" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">王五</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER003</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">成员</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-04-17</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">活跃</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-user"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=33" alt="赵六" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">赵六</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER004</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">成员</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-04-18</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">不活跃</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-user"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=34" alt="钱七" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">钱七</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER005</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">成员</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-04-20</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">活跃</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-user"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex justify-center mt-6">
+                        <button class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            查看全部32名成员
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 小组课程内容 -->
+                <div id="coursesContent" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h5 class="text-lg font-semibold text-dark">小组课程</h5>
+                        <button class="px-3 py-1 text-sm border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <i class="fa fa-plus mr-1"></i> 关联课程
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">课程名称</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">课程ID</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">课时数</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">关联时间</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">完成人数</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/200/120?random=10" alt="简历制作技巧" class="w-12 h-8 object-cover rounded">
+                                            <span class="text-sm font-medium">简历制作技巧</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">COURSE001</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">8课时</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-04-20</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">28/32</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/200/120?random=11" alt="面试技巧与礼仪" class="w-12 h-8 object-cover rounded">
+                                            <span class="text-sm font-medium">面试技巧与礼仪</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">COURSE002</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">6课时</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-04-25</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">25/32</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/200/120?random=12" alt="职场沟通技巧" class="w-12 h-8 object-cover rounded">
+                                            <span class="text-sm font-medium">职场沟通技巧</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">COURSE003</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">10课时</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-05-01</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">15/32</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="text-danger hover:text-danger/80">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- 小组作业内容 -->
+                <div id="assignmentsContent" class="tab-content hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h5 class="text-lg font-semibold text-dark">小组作业管理</h5>
+                        <button id="addAssignmentBtn" class="px-3 py-1 text-sm bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+                            <i class="fa fa-plus mr-1"></i> 新增作业
+                        </button>
+                    </div>
+                    
+                    <!-- 作业列表 -->
+                    <div class="space-y-4 mb-6">
+                        <!-- 作业1 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h6 class="text-md font-semibold text-dark">JavaScript基础练习作业</h6>
+                                    <div class="flex items-center text-sm text-gray-500 mt-1">
+                                        <span class="mr-4">发布时间：2024-05-10</span>
+                                        <span class="mr-4">截止时间：2024-05-17</span>
+                                        <span>完成率：22/32</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button class="text-primary hover:text-primary/80 view-assignment-btn" data-id="ASSIGN001">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <button class="text-secondary hover:text-secondary/80 edit-assignment-btn" data-id="ASSIGN001">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button class="text-danger hover:text-danger/80 delete-assignment-btn" data-id="ASSIGN001">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">完成以下JavaScript基础练习题，巩固变量、数据类型、函数、条件语句等基础知识。请在截止日期前提交作业。</p>
+                            <div class="flex justify-between items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-4">
+                                    <div class="bg-primary h-2.5 rounded-full" style="width: 68.75%"></div>
+                                </div>
+                                <span class="text-sm font-medium">68.75%</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 作业2 -->
+                        <div class="border border-gray-200 rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h6 class="text-md font-semibold text-dark">HTML/CSS布局练习</h6>
+                                    <div class="flex items-center text-sm text-gray-500 mt-1">
+                                        <span class="mr-4">发布时间：2024-05-15</span>
+                                        <span class="mr-4">截止时间：2024-05-22</span>
+                                        <span>完成率：12/32</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button class="text-primary hover:text-primary/80 view-assignment-btn" data-id="ASSIGN002">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <button class="text-secondary hover:text-secondary/80 edit-assignment-btn" data-id="ASSIGN002">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                    <button class="text-danger hover:text-danger/80 delete-assignment-btn" data-id="ASSIGN002">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">根据提供的设计稿，实现一个响应式网页布局。要求使用HTML5和CSS3，确保在不同设备上都能正常显示。</p>
+                            <div class="flex justify-between items-center">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5 mr-4">
+                                    <div class="bg-primary h-2.5 rounded-full" style="width: 37.5%"></div>
+                                </div>
+                                <span class="text-sm font-medium">37.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增作业模态框 -->
+    <div id="addAssignmentModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center fade-in">
+        <div class="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto slide-in">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">新增小组作业</h3>
+                    <button class="close-modal text-gray-400 hover:text-gray-600">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="addAssignmentForm">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">作业标题 <span class="text-danger">*</span></label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">发布时间 <span class="text-danger">*</span></label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">截止时间 <span class="text-danger">*</span></label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">作业描述 <span class="text-danger">*</span></label>
+                        <textarea rows="5" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-colors" required></textarea>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">作业附件</label>
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                            <div class="space-y-1 text-center">
+                                <i class="fa fa-file-text-o text-gray-400 text-3xl mb-2"></i>
+                                <div class="flex text-sm text-gray-600">
+                                    <label for="assignment-attachment-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary/80">
+                                        <span>上传文件</span>
+                                        <input id="assignment-attachment-upload" name="assignment-attachment-upload" type="file" class="sr-only" multiple>
+                                    </label>
+                                    <p class="pl-1">或拖拽文件到此处</p>
+                                </div>
+                                <p class="text-xs text-gray-500">
+                                    支持PDF、Word、Excel、ZIP等格式，单个文件最大5MB
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">可选要求</label>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <input id="need-feedback" name="need-feedback" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary/50 border-gray-300 rounded">
+                                <label for="need-feedback" class="ml-2 block text-sm text-gray-700">需要教师评语</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="need-grade" name="need-grade" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary/50 border-gray-300 rounded">
+                                <label for="need-grade" class="ml-2 block text-sm text-gray-700">需要评分</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="allow-late-submit" name="allow-late-submit" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary/50 border-gray-300 rounded">
+                                <label for="allow-late-submit" class="ml-2 block text-sm text-gray-700">允许迟交</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-4">
+                        <button type="button" class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors close-modal">取消</button>
+                        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">发布作业</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 作业详情模态框 -->
+    <div id="viewAssignmentModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center fade-in">
+        <div class="bg-white rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto slide-in">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">作业详情</h3>
+                    <button class="close-modal text-gray-400 hover:text-gray-600">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-dark mb-4">JavaScript基础练习作业</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <i class="fa fa-calendar text-gray-400"></i>
+                            <span class="text-sm text-gray-600">发布时间：2024-05-10</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa fa-clock-o text-gray-400"></i>
+                            <span class="text-sm text-gray-600">截止时间：2024-05-17</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa fa-file-text-o text-gray-400"></i>
+                            <span class="text-sm text-gray-600">作业ID：ASSIGN001</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa fa-check-square-o text-gray-400"></i>
+                            <span class="text-sm text-gray-600">完成情况：22/32</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="text-sm font-medium text-gray-700 mb-2">作业描述</h5>
+                        <div class="bg-gray-50 p-4 rounded-lg text-gray-600">
+                            <p class="mb-3">完成以下JavaScript基础练习题，巩固变量、数据类型、函数、条件语句等基础知识。请在截止日期前提交作业。</p>
+                            <ol class="list-decimal pl-5 space-y-2">
+                                <li>创建变量并赋值不同类型的数据</li>
+                                <li>编写一个函数计算两个数的和、差、积、商</li>
+                                <li>使用条件语句判断一个数是正数、负数还是零</li>
+                                <li>使用循环输出1到100之间的偶数</li>
+                                <li>创建一个对象，包含姓名、年龄、性别等属性</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="text-sm font-medium text-gray-700 mb-2">作业附件</h5>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#" class="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-sm text-gray-700">
+                                <i class="fa fa-file-pdf-o text-danger"></i>
+                                <span>JavaScript基础练习题.pdf</span>
+                                <span class="text-xs text-gray-500">(2.5MB)</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors text-sm text-gray-700">
+                                <i class="fa fa-file-word-o text-primary"></i>
+                                <span>作业要求说明.docx</span>
+                                <span class="text-xs text-gray-500">(1.2MB)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-dark mb-4">作业完成情况</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">成员姓名</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">成员ID</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">提交时间</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">提交状态</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">成绩</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=40" alt="张三" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">张三</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER001</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-05-12</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">已提交</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-success font-medium">95</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-file-text-o"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=41" alt="李四" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">李四</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER002</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-05-13</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">已提交</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-success font-medium">88</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-file-text-o"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=42" alt="王五" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">王五</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER003</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-05-17</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">迟交</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-success font-medium">75</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-file-text-o"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=43" alt="赵六" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">赵六</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER004</td>
+                                    <td class="py-3 px-4 text-sm text-gray-500">--</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">未提交</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-500">--</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-gray-400 cursor-not-allowed">
+                                                <i class="fa fa-file-text-o"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-3">
+                                            <img src="https://picsum.photos/100/100?random=44" alt="钱七" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium">钱七</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">USER005</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">2024-05-11</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">已提交</span>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-success font-medium">92</td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="text-primary hover:text-primary/80">
+                                                <i class="fa fa-file-text-o"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex justify-center mt-6">
+                        <button class="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            查看全部32名成员提交情况
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 侧边栏切换
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        // 模态框相关操作
+        const addGroupBtn = document.getElementById('addGroupBtn');
+        const addGroupModal = document.getElementById('addGroupModal');
+        const editGroupModal = document.getElementById('editGroupModal');
+        const viewGroupModal = document.getElementById('viewGroupModal');
+        const addAssignmentModal = document.getElementById('addAssignmentModal');
+        const viewAssignmentModal = document.getElementById('viewAssignmentModal');
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+
+        // 显示新增小组模态框
+        addGroupBtn.addEventListener('click', function() {
+            addGroupModal.classList.remove('hidden');
+            addGroupModal.classList.add('flex');
+        });
+
+        // 显示编辑小组模态框
+        document.querySelectorAll('.edit-group-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                editGroupModal.classList.remove('hidden');
+                editGroupModal.classList.add('flex');
+            });
+        });
+
+        // 显示查看小组详情模态框
+        document.querySelectorAll('.view-group-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                viewGroupModal.classList.remove('hidden');
+                viewGroupModal.classList.add('flex');
+            });
+        });
+
+        // 显示新增作业模态框
+        document.getElementById('addAssignmentBtn').addEventListener('click', function() {
+            addAssignmentModal.classList.remove('hidden');
+            addAssignmentModal.classList.add('flex');
+        });
+
+        // 显示作业详情模态框
+        document.querySelectorAll('.view-assignment-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                viewAssignmentModal.classList.remove('hidden');
+                viewAssignmentModal.classList.add('flex');
+            });
+        });
+
+        // 关闭所有模态框
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modal = this.closest('.fixed');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+        });
+
+        // 点击模态框外部关闭
+        [addGroupModal, editGroupModal, viewGroupModal, addAssignmentModal, viewAssignmentModal].forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+        });
+
+        // 阻止模态框内容区域点击事件冒泡
+        document.querySelectorAll('.slide-in').forEach(modalContent => {
+            modalContent.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+
+        // 选项卡切换
+        const membersTab = document.getElementById('membersTab');
+        const coursesTab = document.getElementById('coursesTab');
+        const assignmentsTab = document.getElementById('assignmentsTab');
+        const membersContent = document.getElementById('membersContent');
+        const coursesContent = document.getElementById('coursesContent');
+        const assignmentsContent = document.getElementById('assignmentsContent');
+
+        membersTab.addEventListener('click', function() {
+            // 重置所有选项卡样式
+            [membersTab, coursesTab, assignmentsTab].forEach(tab => {
+                tab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                tab.classList.add('text-gray-500', 'hover:text-primary', 'hover:border-b-2', 'hover:border-primary/30');
+            });
+            // 隐藏所有内容
+            [membersContent, coursesContent, assignmentsContent].forEach(content => {
+                content.classList.add('hidden');
+            });
+            // 设置当前选项卡样式
+            membersTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+            membersTab.classList.remove('text-gray-500', 'hover:text-primary', 'hover:border-b-2', 'hover:border-primary/30');
+            // 显示对应内容
+            membersContent.classList.remove('hidden');
+        });
+
+        coursesTab.addEventListener('click', function() {
+            // 重置所有选项卡样式
+            [membersTab, coursesTab, assignmentsTab].forEach(tab => {
+                tab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                tab.classList.add('text-gray-500', 'hover:text-primary', 'hover:border-b-2', 'hover:border-primary/30');
+            });
+            // 隐藏所有内容
+            [membersContent, coursesContent, assignmentsContent].forEach(content => {
+                content.classList.add('hidden');
+            });
+            // 设置当前选项卡样式
+            coursesTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+            coursesTab.classList.remove('text-gray-500', 'hover:text-primary', 'hover:border-b-2', 'hover:border-primary/30');
+            // 显示对应内容
+            coursesContent.classList.remove('hidden');
+        });
+
+        assignmentsTab.addEventListener('click', function() {
+            // 重置所有选项卡样式
+            [membersTab, coursesTab, assignmentsTab].forEach(tab => {
+                tab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                tab.classList.add('text-gray-500', 'hover:text-primary', 'hover:border-b-2', 'hover:border-primary/30');
+            });
+            // 隐藏所有内容
+            [membersContent, coursesContent, assignmentsContent].forEach(content => {
+                content.classList.add('hidden');
+            });
+            // 设置当前选项卡样式
+            assignmentsTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+            assignmentsTab.classList.remove('text-gray-500', 'hover:text-primary', 'hover:border-b-2', 'hover:border-primary/30');
+            // 显示对应内容
+            assignmentsContent.classList.remove('hidden');
+        });
+
+        // 表单提交事件
+        document.getElementById('addGroupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 模拟提交成功
+            alert('兴趣小组创建成功！');
+            addGroupModal.classList.add('hidden');
+            addGroupModal.classList.remove('flex');
+        });
+
+        document.getElementById('editGroupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 模拟提交成功
+            alert('兴趣小组更新成功！');
+            editGroupModal.classList.add('hidden');
+            editGroupModal.classList.remove('flex');
+        });
+
+        document.getElementById('addAssignmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 模拟提交成功
+            alert('小组作业发布成功！');
+            addAssignmentModal.classList.add('hidden');
+            addAssignmentModal.classList.remove('flex');
+        });
+
+        // 删除/下架小组确认
+        document.querySelectorAll('.disable-group-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (confirm('确定要下架该兴趣小组吗？下架后小组将不再显示，但数据会保留。')) {
+                    alert('兴趣小组已下架！');
+                }
+            });
+        });
+
+        // 启用小组确认
+        document.querySelectorAll('.enable-group-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (confirm('确定要重新启用该兴趣小组吗？')) {
+                    alert('兴趣小组已启用！');
+                }
+            });
+        });
+
+        // 删除作业确认
+        document.querySelectorAll('.delete-assignment-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (confirm('确定要删除该作业吗？删除后将无法恢复。')) {
+                    alert('作业已删除！');
+                }
+            });
+        });
+
+        // 实现响应式导航菜单
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+            }
+        });
+
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', function() {
+            // 初始化图表数据
+            // 这里可以添加图表初始化代码
+        });
+    </script>
+</body>
+</html>

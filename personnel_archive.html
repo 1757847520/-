@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人员档案管理 - 莲藕平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        light: '#F2F3F5',
+                        dark: '#1D2129',
+                        sidebar: '#0E1726'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+            .sidebar-link {
+                @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-primary/10 hover:text-primary transition-all;
+            }
+            .sidebar-link.active {
+                @apply bg-primary/20 text-primary font-medium;
+            }
+            .table-row-hover {
+                @apply hover:bg-gray-50 transition-colors;
+            }
+            .input-focus {
+                @apply focus:ring-2 focus:ring-primary/30 focus:border-primary;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- 顶部导航 -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+        <div class="flex items-center justify-between h-16 px-4">
+            <div class="flex items-center gap-2">
+                <button id="sidebarToggle" class="lg:hidden text-gray-600 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fa fa-address-book text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-dark">莲藕平台管理系统</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-600 hover:text-primary transition-colors">
+                    <i class="fa fa-bell text-xl"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-danger rounded-full text-white text-xs flex items-center justify-center">3</span>
+                </button>
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <img src="https://picsum.photos/200/200?random=1" alt="管理员头像" class="w-9 h-9 rounded-full border-2 border-transparent group-hover:border-primary transition-all">
+                    <div class="hidden md:block">
+                        <p class="text-sm font-medium text-gray-800">管理员</p>
+                        <p class="text-xs text-gray-500">系统管理员</p>
+                    </div>
+                    <i class="fa fa-chevron-down text-xs text-gray-500 group-hover:text-primary transition-colors"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- 侧边栏 -->
+        <aside id="sidebar" class="w-64 bg-sidebar text-white h-[calc(100vh-4rem)] sticky top-16 transition-all duration-300 transform -translate-x-full lg:translate-x-0 z-20">
+            <nav class="h-full flex flex-col">
+                <div class="overflow-y-auto flex-1 p-4 space-y-1">
+                    <a href="dashboard.html" class="sidebar-link">
+                        <i class="fa fa-tachometer"></i>
+                        <span>控制面板</span>
+                    </a>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">人员管理</h3>
+                        <a href="user_management.html" class="sidebar-link">
+                            <i class="fa fa-users"></i>
+                            <span>用户管理</span>
+                        </a>
+                        <a href="personnel_archive.html" class="sidebar-link active">
+                            <i class="fa fa-address-book"></i>
+                            <span>人员档案管理</span>
+                        </a>
+                        <a href="psychological_test.html" class="sidebar-link">
+                            <i class="fa fa-heartbeat"></i>
+                            <span>心理测评</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">数据统计</h3>
+                        <a href="data_statistics.html" class="sidebar-link">
+                            <i class="fa fa-bar-chart"></i>
+                            <span>数据统计汇总</span>
+                        </a>
+                        <a href="employment_rate.html" class="sidebar-link">
+                            <i class="fa fa-briefcase"></i>
+                            <span>就业率统计</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">风险预警</h3>
+                        <a href="risk_warning.html" class="sidebar-link">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            <span>风险预警</span>
+                        </a>
+                        <a href="intervention_records.html" class="sidebar-link">
+                            <i class="fa fa-stethoscope"></i>
+                            <span>干预记录</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">资源管理</h3>
+                        <a href="resource_allocation.html" class="sidebar-link">
+                            <i class="fa fa-cubes"></i>
+                            <span>资源调配</span>
+                        </a>
+                        <a href="activity_management.html" class="sidebar-link">
+                            <i class="fa fa-calendar"></i>
+                            <span>活动管理</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">系统设置</h3>
+                        <a href="system_settings.html" class="sidebar-link">
+                            <i class="fa fa-cog"></i>
+                            <span>系统设置</span>
+                        </a>
+                        <a href="log_management.html" class="sidebar-link">
+                            <i class="fa fa-file-text"></i>
+                            <span>日志管理</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-700">
+                    <a href="index.html" class="sidebar-link text-danger hover:bg-danger/10">
+                        <i class="fa fa-sign-out"></i>
+                        <span>退出登录</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <!-- 页面标题 -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-dark">人员档案管理</h2>
+                        <p class="text-gray-500 mt-1">管理所有人员的详细档案信息</p>
+                    </div>
+                    <button id="addPersonBtn" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors flex items-center gap-2">
+                        <i class="fa fa-plus"></i>
+                        <span>新增人员</span>
+                    </button>
+                </div>
+
+                <!-- 搜索和筛选 -->
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <input type="text" placeholder="搜索姓名/身份证号" 
+                                class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                        </div>
+                        <select class="border border-gray-300 rounded-lg px-3 py-2 input-focus transition-all outline-none">
+                            <option value="">选择性别</option>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                        <select class="border border-gray-300 rounded-lg px-3 py-2 input-focus transition-all outline-none">
+                            <option value="">选择年龄范围</option>
+                            <option value="18-25">18-25岁</option>
+                            <option value="26-35">26-35岁</option>
+                            <option value="36-45">36-45岁</option>
+                            <option value="46+">46岁以上</option>
+                        </select>
+                        <select class="border border-gray-300 rounded-lg px-3 py-2 input-focus transition-all outline-none">
+                            <option value="">选择风险等级</option>
+                            <option value="low">低风险</option>
+                            <option value="medium">中风险</option>
+                            <option value="high">高风险</option>
+                        </select>
+                        <div class="flex gap-2">
+                            <button class="flex-1 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors">
+                                搜索
+                            </button>
+                            <button class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                重置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 数据表格 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-gray-50 border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                        <div class="flex items-center gap-1">
+                                            <input type="checkbox" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                            <span>序号</span>
+                                        </div>
+                                    </th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">姓名</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">身份证号</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">性别</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">年龄</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">联系电话</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">心理状态</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">就业状态</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">风险等级</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-100 table-row-hover">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                            <span class="text-sm text-gray-600">1</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <img src="https://picsum.photos/200/200?random=101" alt="用户头像" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium text-gray-800">张三</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">440111********3456</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">男</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">28</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">138****6789</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">良好</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">已就业</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-info/10 text-info rounded-full">低风险</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="view-btn text-primary hover:text-primary/80 transition-colors" data-id="1">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="edit-btn text-secondary hover:text-secondary/80 transition-colors" data-id="1">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="delete-btn text-danger hover:text-danger/80 transition-colors" data-id="1">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 table-row-hover">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                            <span class="text-sm text-gray-600">2</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <img src="https://picsum.photos/200/200?random=102" alt="用户头像" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium text-gray-800">李四</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">440112********4567</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">女</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">32</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">139****7890</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">一般</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">求职中</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">中风险</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="view-btn text-primary hover:text-primary/80 transition-colors" data-id="2">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="edit-btn text-secondary hover:text-secondary/80 transition-colors" data-id="2">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="delete-btn text-danger hover:text-danger/80 transition-colors" data-id="2">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 table-row-hover">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                            <span class="text-sm text-gray-600">3</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <img src="https://picsum.photos/200/200?random=103" alt="用户头像" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium text-gray-800">王五</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">440113********5678</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">男</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">25</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">137****8901</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">较差</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">未就业</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">高风险</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="view-btn text-primary hover:text-primary/80 transition-colors" data-id="3">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="edit-btn text-secondary hover:text-secondary/80 transition-colors" data-id="3">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="delete-btn text-danger hover:text-danger/80 transition-colors" data-id="3">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-100 table-row-hover">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                            <span class="text-sm text-gray-600">4</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <img src="https://picsum.photos/200/200?random=104" alt="用户头像" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium text-gray-800">赵六</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">440114********6789</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">女</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">35</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">136****9012</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">良好</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">已就业</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-info/10 text-info rounded-full">低风险</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="view-btn text-primary hover:text-primary/80 transition-colors" data-id="4">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="edit-btn text-secondary hover:text-secondary/80 transition-colors" data-id="4">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="delete-btn text-danger hover:text-danger/80 transition-colors" data-id="4">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="table-row-hover">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                            <span class="text-sm text-gray-600">5</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <img src="https://picsum.photos/200/200?random=105" alt="用户头像" class="w-8 h-8 rounded-full">
+                                            <span class="text-sm font-medium text-gray-800">孙七</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">440115********7890</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">男</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">29</td>
+                                    <td class="py-3 px-4 text-sm text-gray-600">135****0123</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">一般</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">求职中</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">中风险</span>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="view-btn text-primary hover:text-primary/80 transition-colors" data-id="5">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                            <button class="edit-btn text-secondary hover:text-secondary/80 transition-colors" data-id="5">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="delete-btn text-danger hover:text-danger/80 transition-colors" data-id="5">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 分页 -->
+                    <div class="flex items-center justify-between p-4 border-t border-gray-200">
+                        <div class="text-sm text-gray-500">
+                            显示 1-5 条，共 128 条
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-500 hover:border-primary hover:text-primary transition-colors" disabled>
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <button class="w-9 h-9 flex items-center justify-center bg-primary text-white rounded-md">1</button>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">2</button>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">3</button>
+                            <span class="w-9 h-9 flex items-center justify-center text-gray-500">...</span>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">26</button>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 新增/编辑人员模态框 -->
+    <div id="personModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 id="modalTitle" class="text-xl font-bold text-dark">新增人员信息</h3>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <form id="personForm" class="p-6 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="personName" class="block text-sm font-medium text-gray-700 mb-1">姓名 <span class="text-danger">*</span></label>
+                        <input type="text" id="personName" name="name" required 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="personId" class="block text-sm font-medium text-gray-700 mb-1">身份证号 <span class="text-danger">*</span></label>
+                        <input type="text" id="personId" name="idCard" required 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="personGender" class="block text-sm font-medium text-gray-700 mb-1">性别 <span class="text-danger">*</span></label>
+                        <select id="personGender" name="gender" required 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            <option value="">请选择</option>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="personAge" class="block text-sm font-medium text-gray-700 mb-1">年龄 <span class="text-danger">*</span></label>
+                        <input type="number" id="personAge" name="age" required min="1" max="150" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="personPhone" class="block text-sm font-medium text-gray-700 mb-1">联系电话 <span class="text-danger">*</span></label>
+                        <input type="tel" id="personPhone" name="phone" required 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="personEmail" class="block text-sm font-medium text-gray-700 mb-1">电子邮箱</label>
+                        <input type="email" id="personEmail" name="email" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="personEducation" class="block text-sm font-medium text-gray-700 mb-1">学历</label>
+                        <select id="personEducation" name="education" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            <option value="">请选择</option>
+                            <option value="primary">小学</option>
+                            <option value="junior">初中</option>
+                            <option value="senior">高中</option>
+                            <option value="college">专科</option>
+                            <option value="bachelor">本科</option>
+                            <option value="master">硕士</option>
+                            <option value="doctor">博士</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="personOccupation" class="block text-sm font-medium text-gray-700 mb-1">职业</label>
+                        <input type="text" id="personOccupation" name="occupation" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label for="personAddress" class="block text-sm font-medium text-gray-700 mb-1">居住地址</label>
+                    <input type="text" id="personAddress" name="address" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="personPsychStatus" class="block text-sm font-medium text-gray-700 mb-1">心理状态</label>
+                        <select id="personPsychStatus" name="psychStatus" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            <option value="">请选择</option>
+                            <option value="good">良好</option>
+                            <option value="normal">一般</option>
+                            <option value="poor">较差</option>
+                            <option value="danger">危险</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="personEmploymentStatus" class="block text-sm font-medium text-gray-700 mb-1">就业状态</label>
+                        <select id="personEmploymentStatus" name="employmentStatus" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            <option value="">请选择</option>
+                            <option value="employed">已就业</option>
+                            <option value="jobSeeking">求职中</option>
+                            <option value="unemployed">未就业</option>
+                            <option value="student">学生</option>
+                            <option value="retired">退休</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="personRiskLevel" class="block text-sm font-medium text-gray-700 mb-1">风险等级</label>
+                    <select id="personRiskLevel" name="riskLevel" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                        <option value="">请选择</option>
+                        <option value="low">低风险</option>
+                        <option value="medium">中风险</option>
+                        <option value="high">高风险</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="personRemark" class="block text-sm font-medium text-gray-700 mb-1">备注信息</label>
+                    <textarea id="personRemark" name="remark" rows="3" 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                    <button type="button" id="cancelForm" class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                        取消
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 查看人员详情模态框 -->
+    <div id="viewModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">人员详细信息</h3>
+                    <button id="closeViewModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-6" id="personDetailContent">
+                <!-- 详情内容将通过JavaScript动态填充 -->
+                <div class="text-center">
+                    <img id="detailAvatar" src="https://picsum.photos/200/200?random=101" alt="用户头像" class="w-24 h-24 rounded-full mx-auto mb-4">
+                    <h4 id="detailName" class="text-xl font-bold text-dark">张三</h4>
+                    <p id="detailIdCard" class="text-sm text-gray-500">身份证号：440111********3456</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">基本信息</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">性别：</span>
+                                    <span id="detailGender" class="text-sm text-gray-800">男</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">年龄：</span>
+                                    <span id="detailAge" class="text-sm text-gray-800">28岁</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">联系电话：</span>
+                                    <span id="detailPhone" class="text-sm text-gray-800">138****6789</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">电子邮箱：</span>
+                                    <span id="detailEmail" class="text-sm text-gray-800">zhangsan@example.com</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">教育就业</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">学历：</span>
+                                    <span id="detailEducation" class="text-sm text-gray-800">本科</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">职业：</span>
+                                    <span id="detailOccupation" class="text-sm text-gray-800">软件工程师</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">就业状态：</span>
+                                    <span id="detailEmploymentStatus" class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">已就业</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">状态信息</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">心理状态：</span>
+                                    <span id="detailPsychStatus" class="px-2 py-1 text-xs bg-success/10 text-success rounded-full">良好</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">风险等级：</span>
+                                    <span id="detailRiskLevel" class="px-2 py-1 text-xs bg-info/10 text-info rounded-full">低风险</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-600">最近测评时间：</span>
+                                    <span id="detailLastTestTime" class="text-sm text-gray-800">2024-06-10</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">其他信息</p>
+                            <div class="space-y-2">
+                                <div>
+                                    <p class="text-sm text-gray-600 mb-1">居住地址：</p>
+                                    <p id="detailAddress" class="text-sm text-gray-800">广东省广州市天河区天河路123号</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600 mb-1">备注：</p>
+                                    <p id="detailRemark" class="text-sm text-gray-800">该人员为软件行业从业者，心理状态良好，无特殊需求。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-gray-200 pt-4">
+                    <p class="text-sm text-gray-500 mb-3">历史记录</p>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-sm font-medium text-gray-800">心理测评</p>
+                                <p class="text-xs text-gray-500">2024-06-10</p>
+                            </div>
+                            <p class="text-sm text-gray-600">测评结果：良好，建议保持积极心态。</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-sm font-medium text-gray-800">就业指导</p>
+                                <p class="text-xs text-gray-500">2024-05-20</p>
+                            </div>
+                            <p class="text-sm text-gray-600">提供职业规划咨询，职业发展良好。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end pt-4 border-t border-gray-200">
+                    <button id="closeViewBtn" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 侧边栏切换
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            // 点击页面其他区域关闭侧边栏（在移动端）
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 1024 && 
+                    !sidebar.contains(e.target) && 
+                    !sidebarToggle.contains(e.target) &&
+                    !sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+
+            // 模态框相关操作
+            const personModal = document.getElementById('personModal');
+            const addPersonBtn = document.getElementById('addPersonBtn');
+            const closeModal = document.getElementById('closeModal');
+            const cancelForm = document.getElementById('cancelForm');
+            const personForm = document.getElementById('personForm');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            // 查看模态框
+            const viewModal = document.getElementById('viewModal');
+            const closeViewModal = document.getElementById('closeViewModal');
+            const closeViewBtn = document.getElementById('closeViewBtn');
+
+            // 打开新增模态框
+            addPersonBtn.addEventListener('click', function() {
+                modalTitle.textContent = '新增人员信息';
+                personForm.reset();
+                // 清除可能存在的数据ID
+                personForm.removeAttribute('data-id');
+                personModal.classList.remove('hidden');
+            });
+
+            // 关闭模态框
+            function closePersonModal() {
+                personModal.classList.add('hidden');
+            }
+            
+            closeModal.addEventListener('click', closePersonModal);
+            cancelForm.addEventListener('click', closePersonModal);
+
+            // 关闭查看模态框
+            function closeViewPersonModal() {
+                viewModal.classList.add('hidden');
+            }
+            
+            closeViewModal.addEventListener('click', closeViewPersonModal);
+            closeViewBtn.addEventListener('click', closeViewPersonModal);
+
+            // 点击模态框背景关闭
+            personModal.addEventListener('click', function(e) {
+                if (e.target === personModal) closePersonModal();
+            });
+            
+            viewModal.addEventListener('click', function(e) {
+                if (e.target === viewModal) closeViewPersonModal();
+            });
+
+            // 表单提交
+            personForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 这里应该进行表单验证和数据提交
+                // 模拟提交成功
+                alert('保存成功！');
+                closePersonModal();
+                
+                // 实际应用中应该刷新表格数据
+            });
+
+            // 编辑按钮点击事件
+            const editBtns = document.querySelectorAll('.edit-btn');
+            editBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    modalTitle.textContent = '编辑人员信息';
+                    // 这里应该根据ID获取人员信息并填充表单
+                    // 模拟填充数据
+                    document.getElementById('personName').value = `测试用户${id}`;
+                    document.getElementById('personId').value = `440111********${id}${id}${id}${id}`;
+                    document.getElementById('personGender').value = id % 2 === 0 ? 'female' : 'male';
+                    document.getElementById('personAge').value = 25 + parseInt(id);
+                    
+                    // 保存数据ID
+                    personForm.setAttribute('data-id', id);
+                    personModal.classList.remove('hidden');
+                });
+            });
+
+            // 查看按钮点击事件
+            const viewBtns = document.querySelectorAll('.view-btn');
+            viewBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    // 这里应该根据ID获取人员详情并填充
+                    // 模拟填充数据
+                    document.getElementById('detailName').textContent = `测试用户${id}`;
+                    document.getElementById('detailIdCard').textContent = `身份证号：440111********${id}${id}${id}${id}`;
+                    document.getElementById('detailGender').textContent = id % 2 === 0 ? '女' : '男';
+                    document.getElementById('detailAge').textContent = `${25 + parseInt(id)}岁`;
+                    
+                    viewModal.classList.remove('hidden');
+                });
+            });
+
+            // 删除按钮点击事件
+            const deleteBtns = document.querySelectorAll('.delete-btn');
+            deleteBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    if (confirm(`确定要删除ID为${id}的人员信息吗？`)) {
+                        // 这里应该发送删除请求
+                        alert('删除成功！');
+                        // 实际应用中应该刷新表格数据
+                    }
+                });
+            });
+
+            // 全选/取消全选
+            const selectAll = document.querySelector('thead input[type="checkbox"]');
+            const rowCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            
+            selectAll.addEventListener('change', function() {
+                rowCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+
+            // 添加表格行悬停效果的平滑过渡
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.style.transition = 'background-color 0.2s ease';
+            });
+        });
+    </script>
+</body>
+</html>

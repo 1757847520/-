@@ -1,0 +1,45 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M30 20C20 25 15 35 15 45C15 55 20 65 30 70C40 75 50 80 60 75C70 70 75 60 75 50C75 40 70 30 60 25C50 20 40 22 30 20Z" fill="#FFD1DC" stroke="#A52A2A" stroke-width="2"/>
+  <path d="M35 35C32 38 30 42 30 45C30 48 32 52 35 55" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M40 40C38 43 37 47 37 50C37 53 38 57 40 60" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M45 45C43 48 42 52 42 55C42 58 43 62 45 65" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M50 50C48 53 47 57 47 60C47 63 48 67 50 70" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M55 55C53 58 52 62 52 65C52 68 53 72 55 75" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M60 60C58 63 57 67 57 70C57 73 58 77 60 80" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M70 40C68 43 67 47 67 50C67 53 68 57 70 60" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M65 45C63 48 62 52 62 55C62 58 63 62 65 65" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M25 50C23 53 22 57 22 60C22 63 23 67 25 70" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M20 55C18 58 17 62 17 65C17 68 18 72 20 75" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M80 35C78 38 77 42 77 45C77 48 78 52 80 55" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M85 30C83 33 82 37 82 40C82 43 83 47 85 50" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M15 65C13 68 12 72 12 75C12 78 13 82 15 85" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M10 70C8 73 7 77 7 80C7 83 8 87 10 90" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M90 25C88 28 87 32 87 35C87 38 88 42 90 45" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M95 20C93 23 92 27 92 30C92 33 93 37 95 40" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M50 15C55 10 60 10 65 15C70 20 70 25 65 30C60 35 55 35 50 30C45 25 45 20 50 15Z" fill="#FFB6C1" stroke="#A52A2A" stroke-width="2"/>
+  <path d="M53 20C51 22 50 25 50 28C50 31 51 34 53 36" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M57 22C55 24 54 27 54 30C54 33 55 36 57 38" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M61 24C59 26 58 29 58 32C58 35 59 38 61 40" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M65 26C63 28 62 31 62 34C62 37 63 40 65 42" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M47 21C45 23 44 26 44 29C44 32 45 35 47 37" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M43 23C41 25 40 28 40 31C40 34 41 37 43 39" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M39 25C37 27 36 30 36 33C36 36 37 39 39 41" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M35 27C33 29 32 32 32 35C32 38 33 41 35 43" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M40 10C45 5 50 5 55 10C60 15 60 20 55 25C50 30 45 30 40 25C35 20 35 15 40 10Z" fill="#FFC0CB" stroke="#A52A2A" stroke-width="2"/>
+  <path d="M43 15C41 17 40 20 40 23C40 26 41 29 43 31" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M47 17C45 19 44 22 44 25C44 28 45 31 47 33" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M51 19C49 21 48 24 48 27C48 30 49 33 51 35" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M55 21C53 23 52 26 52 29C52 32 53 35 55 37" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M39 12C37 14 36 17 36 20C36 23 37 26 39 28" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M35 14C33 16 32 19 32 22C32 25 33 28 35 30" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M59 14C57 16 56 19 56 22C56 25 57 28 59 30" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M63 16C61 18 60 21 60 24C60 27 61 30 63 32" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M45 5C50 0 55 0 60 5C65 10 65 15 60 20C55 25 50 25 45 20C40 15 40 10 45 5Z" fill="#FFB6C1" stroke="#A52A2A" stroke-width="2"/>
+  <path d="M48 10C46 12 45 15 45 18C45 21 46 24 48 26" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M52 12C50 14 49 17 49 20C49 23 50 26 52 28" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M56 14C54 16 53 19 53 22C53 25 54 28 56 30" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M44 8C42 10 41 13 41 16C41 19 42 22 44 24" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M40 10C38 12 37 15 37 18C37 21 38 24 40 26" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M60 8C58 10 57 13 57 16C57 19 58 22 60 24" stroke="#A52A2A" stroke-width="1.5"/>
+  <path d="M64 10C62 12 61 15 61 18C61 21 62 24 64 26" stroke="#A52A2A" stroke-width="1.5"/>
+</svg>

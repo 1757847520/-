@@ -1,0 +1,28 @@
+{
+  "name": "lotus-platform-management",
+  "version": "1.0.0",
+  "description": "莲藕平台管理系统 - 心理赋能平台",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Static site - no build needed'",
+    "start": "python -m http.server 8000"
+  },
+  "keywords": [
+    "lotus-platform",
+    "psychology",
+    "management-system",
+    "static-site"
+  ],
+  "author": "莲藕平台团队",
+  "license": "MIT",
+  "devDependencies": {
+    "imagemin": "^9.0.1",
+    "imagemin-webp": "^8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/lotus-platform.git"
+  },
+  "homepage": "https://your-username.github.io/lotus-platform/"
+}

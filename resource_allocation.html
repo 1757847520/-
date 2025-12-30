@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源调配 - 莲藕平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        light: '#F2F3F5',
+                        dark: '#1D2129',
+                        sidebar: '#0E1726'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+            .sidebar-link {
+                @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-primary/10 hover:text-primary transition-all;
+            }
+            .sidebar-link.active {
+                @apply bg-primary/20 text-primary font-medium;
+            }
+            .resource-card {
+                @apply bg-white rounded-xl p-5 shadow-sm border border-gray-100 transition-all duration-300;
+            }
+            .input-focus {
+                @apply focus:ring-2 focus:ring-primary/30 focus:border-primary;
+            }
+            .tab-active {
+                @apply text-primary border-primary;
+            }
+            .resource-progress-bar {
+                @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+            }
+            .resource-progress-fill {
+                @apply h-full transition-all duration-500 ease-out;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- 顶部导航 -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+        <div class="flex items-center justify-between h-16 px-4">
+            <div class="flex items-center gap-2">
+                <button id="sidebarToggle" class="lg:hidden text-gray-600 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center">
+                        <i class="fa fa-cubes text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-dark">莲藕平台管理系统</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-600 hover:text-primary transition-colors">
+                    <i class="fa fa-bell text-xl"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-danger rounded-full text-white text-xs flex items-center justify-center">3</span>
+                </button>
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <img src="https://picsum.photos/200/200?random=1" alt="管理员头像" class="w-9 h-9 rounded-full border-2 border-transparent group-hover:border-primary transition-all">
+                    <div class="hidden md:block">
+                        <p class="text-sm font-medium text-gray-800">管理员</p>
+                        <p class="text-xs text-gray-500">系统管理员</p>
+                    </div>
+                    <i class="fa fa-chevron-down text-xs text-gray-500 group-hover:text-primary transition-colors"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- 侧边栏 -->
+        <aside id="sidebar" class="w-64 bg-sidebar text-white h-[calc(100vh-4rem)] sticky top-16 transition-all duration-300 transform -translate-x-full lg:translate-x-0 z-20">
+            <nav class="h-full flex flex-col">
+                <div class="overflow-y-auto flex-1 p-4 space-y-1">
+                    <a href="dashboard.html" class="sidebar-link">
+                        <i class="fa fa-tachometer"></i>
+                        <span>控制面板</span>
+                    </a>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">人员管理</h3>
+                        <a href="user_management.html" class="sidebar-link">
+                            <i class="fa fa-users"></i>
+                            <span>用户管理</span>
+                        </a>
+                        <a href="personnel_archive.html" class="sidebar-link">
+                            <i class="fa fa-address-book"></i>
+                            <span>人员档案管理</span>
+                        </a>
+                        <a href="psychological_test.html" class="sidebar-link">
+                            <i class="fa fa-heartbeat"></i>
+                            <span>心理测评</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">数据统计</h3>
+                        <a href="data_statistics.html" class="sidebar-link">
+                            <i class="fa fa-bar-chart"></i>
+                            <span>数据统计汇总</span>
+                        </a>
+                        <a href="employment_rate.html" class="sidebar-link">
+                            <i class="fa fa-briefcase"></i>
+                            <span>就业率统计</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">风险预警</h3>
+                        <a href="risk_warning.html" class="sidebar-link">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            <span>风险预警</span>
+                        </a>
+                        <a href="intervention_records.html" class="sidebar-link">
+                            <i class="fa fa-stethoscope"></i>
+                            <span>干预记录</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">资源管理</h3>
+                        <a href="resource_allocation.html" class="sidebar-link active">
+                            <i class="fa fa-cubes"></i>
+                            <span>资源调配</span>
+                        </a>
+                        <a href="activity_management.html" class="sidebar-link">
+                            <i class="fa fa-calendar"></i>
+                            <span>活动管理</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">系统设置</h3>
+                        <a href="system_settings.html" class="sidebar-link">
+                            <i class="fa fa-cog"></i>
+                            <span>系统设置</span>
+                        </a>
+                        <a href="log_management.html" class="sidebar-link">
+                            <i class="fa fa-file-text"></i>
+                            <span>日志管理</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-700">
+                    <a href="index.html" class="sidebar-link text-danger hover:bg-danger/10">
+                        <i class="fa fa-sign-out"></i>
+                        <span>退出登录</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <!-- 页面标题 -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-dark">资源调配</h2>
+                        <p class="text-gray-500 mt-1">管理和分配各类资源，支持高效服务开展</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button id="addResourceBtn" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fa fa-plus"></i>
+                            <span>添加资源</span>
+                        </button>
+                        <button class="px-4 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fa fa-filter"></i>
+                            <span>筛选</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 资源概览卡片 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="resource-card card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">总资源数量</p>
+                                <h3 class="text-2xl font-bold text-dark mt-1">248</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                                <i class="fa fa-cubes text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>8.5%</span>
+                            <span class="text-gray-500 ml-1">较上月</span>
+                        </div>
+                    </div>
+                    <div class="resource-card card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">已分配资源</p>
+                                <h3 class="text-2xl font-bold text-dark mt-1">186</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center text-success">
+                                <i class="fa fa-hand-pointer-o text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>12.3%</span>
+                            <span class="text-gray-500 ml-1">较上月</span>
+                        </div>
+                    </div>
+                    <div class="resource-card card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">待分配资源</p>
+                                <h3 class="text-2xl font-bold text-dark mt-1">62</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-warning/10 rounded-full flex items-center justify-center text-warning">
+                                <i class="fa fa-clock-o text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-danger text-sm">
+                            <i class="fa fa-arrow-down mr-1"></i>
+                            <span>4.7%</span>
+                            <span class="text-gray-500 ml-1">较上月</span>
+                        </div>
+                    </div>
+                    <div class="resource-card card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">申请处理率</p>
+                                <h3 class="text-2xl font-bold text-dark mt-1">93.2%</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
+                                <i class="fa fa-check-circle text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-success text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>2.8%</span>
+                            <span class="text-gray-500 ml-1">较上月</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源使用统计图表 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-dark">资源类型分布</h3>
+                            <button class="text-gray-400 hover:text-gray-600">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <div class="h-80">
+                            <canvas id="resourceTypeChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-dark">资源使用趋势</h3>
+                            <div class="flex items-center gap-2">
+                                <button class="px-3 py-1 text-xs bg-primary/10 text-primary rounded-full">本月</button>
+                                <button class="px-3 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded-full">本季度</button>
+                                <button class="px-3 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded-full">本年</button>
+                            </div>
+                        </div>
+                        <div class="h-80">
+                            <canvas id="resourceUsageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源管理选项卡 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="border-b border-gray-200">
+                        <div class="flex overflow-x-auto scrollbar-hide">
+                            <button class="tab-button tab-active px-6 py-4 font-medium text-sm border-b-2 border-transparent transition-all">
+                                所有资源
+                            </button>
+                            <button class="tab-button px-6 py-4 font-medium text-sm border-b-2 border-transparent transition-all text-gray-600 hover:text-primary hover:border-primary/30">
+                                人力资源
+                            </button>
+                            <button class="tab-button px-6 py-4 font-medium text-sm border-b-2 border-transparent transition-all text-gray-600 hover:text-primary hover:border-primary/30">
+                                物资资源
+                            </button>
+                            <button class="tab-button px-6 py-4 font-medium text-sm border-b-2 border-transparent transition-all text-gray-600 hover:text-primary hover:border-primary/30">
+                                服务资源
+                            </button>
+                            <button class="tab-button px-6 py-4 font-medium text-sm border-b-2 border-transparent transition-all text-gray-600 hover:text-primary hover:border-primary/30">
+                                场地资源
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 资源列表 -->
+                    <div class="p-5">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <input type="text" placeholder="搜索资源名称、类型、提供者" 
+                                    class="w-full md:w-80 pl-10 pr-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <select class="border border-gray-300 rounded-lg px-3 py-2 input-focus transition-all outline-none">
+                                    <option value="">资源状态</option>
+                                    <option value="available">可使用</option>
+                                    <option value="allocated">已分配</option>
+                                    <option value="unavailable">不可用</option>
+                                </select>
+                                <select class="border border-gray-300 rounded-lg px-3 py-2 input-focus transition-all outline-none">
+                                    <option value="">排序方式</option>
+                                    <option value="newest">最新添加</option>
+                                    <option value="usage_rate">使用率高</option>
+                                    <option value="name_asc">名称升序</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- 资源项1 -->
+                            <div class="border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/20">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                                                <i class="fa fa-user-md"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-dark">心理辅导师资源</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <span class="px-2 py-0.5 text-xs bg-success/10 text-success rounded-full">人力资源</span>
+                                                    <span class="px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">可使用</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="edit-resource-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="1">
+                                                <i class="fa fa-edit mr-1"></i>编辑
+                                            </button>
+                                            <button class="allocate-resource-btn px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" data-id="1">
+                                                <i class="fa fa-hand-pointer-o mr-1"></i>分配
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">提供者</p>
+                                            <p class="text-sm text-gray-800">市心理咨询中心</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">可用数量</p>
+                                            <p class="text-sm text-gray-800">8名（总计10名）</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">使用率</p>
+                                            <div class="flex items-center gap-2">
+                                                <div class="resource-progress-bar flex-1">
+                                                    <div class="resource-progress-fill bg-success" style="width: 80%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-800">80%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="text-sm text-gray-500 mb-1">资源描述</p>
+                                        <p class="text-sm text-gray-600">提供专业心理咨询服务，包括一对一咨询、团体辅导和心理危机干预等服务，适用于各类心理问题人群。</p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm text-gray-500"><i class="fa fa-clock-o mr-1"></i>更新时间：2024-06-15</span>
+                                            <span class="text-sm text-gray-500"><i class="fa fa-eye mr-1"></i>已被查看：42次</span>
+                                        </div>
+                                        <button class="view-details-btn text-primary hover:text-primary/80 text-sm transition-colors">
+                                            查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 资源项2 -->
+                            <div class="border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/20">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-warning/10 rounded-lg flex items-center justify-center text-warning">
+                                                <i class="fa fa-book"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-dark">就业指导教材</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <span class="px-2 py-0.5 text-xs bg-warning/10 text-warning rounded-full">物资资源</span>
+                                                    <span class="px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">可使用</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="edit-resource-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="2">
+                                                <i class="fa fa-edit mr-1"></i>编辑
+                                            </button>
+                                            <button class="allocate-resource-btn px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" data-id="2">
+                                                <i class="fa fa-hand-pointer-o mr-1"></i>分配
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">提供者</p>
+                                            <p class="text-sm text-gray-800">就业服务中心</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">可用数量</p>
+                                            <p class="text-sm text-gray-800">120本（总计200本）</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">使用率</p>
+                                            <div class="flex items-center gap-2">
+                                                <div class="resource-progress-bar flex-1">
+                                                    <div class="resource-progress-fill bg-success" style="width: 60%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-800">60%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="text-sm text-gray-500 mb-1">资源描述</p>
+                                        <p class="text-sm text-gray-600">包含求职技巧、简历制作、面试准备等就业指导教材，适用于求职人员提升就业能力。</p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm text-gray-500"><i class="fa fa-clock-o mr-1"></i>更新时间：2024-06-10</span>
+                                            <span class="text-sm text-gray-500"><i class="fa fa-eye mr-1"></i>已被查看：86次</span>
+                                        </div>
+                                        <button class="view-details-btn text-primary hover:text-primary/80 text-sm transition-colors">
+                                            查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 资源项3 -->
+                            <div class="border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/20">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center text-secondary">
+                                                <i class="fa fa-building"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-dark">多功能会议室</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <span class="px-2 py-0.5 text-xs bg-secondary/10 text-secondary rounded-full">场地资源</span>
+                                                    <span class="px-2 py-0.5 text-xs bg-gray-100 text-gray-500 rounded-full">已分配</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="edit-resource-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="3">
+                                                <i class="fa fa-edit mr-1"></i>编辑
+                                            </button>
+                                            <button class="allocate-resource-btn px-3 py-1 bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed text-sm">
+                                                <i class="fa fa-check mr-1"></i>已分配
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">提供者</p>
+                                            <p class="text-sm text-gray-800">社区服务中心</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">可用状态</p>
+                                            <p class="text-sm text-gray-800">已被分配至就业培训活动</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">使用率</p>
+                                            <div class="flex items-center gap-2">
+                                                <div class="resource-progress-bar flex-1">
+                                                    <div class="resource-progress-fill bg-danger" style="width: 100%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-800">100%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="text-sm text-gray-500 mb-1">资源描述</p>
+                                        <p class="text-sm text-gray-600">120平米多功能会议室，配备投影仪、音响等设备，可容纳80人，适用于培训、讲座等活动。</p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm text-gray-500"><i class="fa fa-clock-o mr-1"></i>更新时间：2024-06-08</span>
+                                            <span class="text-sm text-gray-500"><i class="fa fa-eye mr-1"></i>已被查看：65次</span>
+                                        </div>
+                                        <button class="view-details-btn text-primary hover:text-primary/80 text-sm transition-colors">
+                                            查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 资源项4 -->
+                            <div class="border border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/20">
+                                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-info/10 rounded-lg flex items-center justify-center text-info">
+                                                <i class="fa fa-laptop"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-medium text-dark">职业技能培训课程</h4>
+                                                <div class="flex items-center gap-2 mt-1">
+                                                    <span class="px-2 py-0.5 text-xs bg-info/10 text-info rounded-full">服务资源</span>
+                                                    <span class="px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">可使用</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="edit-resource-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="4">
+                                                <i class="fa fa-edit mr-1"></i>编辑
+                                            </button>
+                                            <button class="allocate-resource-btn px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" data-id="4">
+                                                <i class="fa fa-hand-pointer-o mr-1"></i>分配
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">提供者</p>
+                                            <p class="text-sm text-gray-800">职业技能培训中心</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">可用数量</p>
+                                            <p class="text-sm text-gray-800">5个课程（总计12个）</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500 mb-1">使用率</p>
+                                            <div class="flex items-center gap-2">
+                                                <div class="resource-progress-bar flex-1">
+                                                    <div class="resource-progress-fill bg-success" style="width: 58%"></div>
+                                                </div>
+                                                <span class="text-sm text-gray-800">58%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="text-sm text-gray-500 mb-1">资源描述</p>
+                                        <p class="text-sm text-gray-600">提供IT技能、市场营销、财务管理等职业培训课程，包括线上课程和线下实操培训。</p>
+                                    </div>
+                                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-sm text-gray-500"><i class="fa fa-clock-o mr-1"></i>更新时间：2024-06-12</span>
+                                            <span class="text-sm text-gray-500"><i class="fa fa-eye mr-1"></i>已被查看：102次</span>
+                                        </div>
+                                        <button class="view-details-btn text-primary hover:text-primary/80 text-sm transition-colors">
+                                            查看详情 <i class="fa fa-angle-right ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 分页 -->
+                        <div class="flex items-center justify-between p-4 border-t border-gray-200 mt-5">
+                            <div class="text-sm text-gray-500">
+                                显示 1-4 条，共 12 条
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-500 hover:border-primary hover:text-primary transition-colors" disabled>
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                                <button class="w-9 h-9 flex items-center justify-center bg-primary text-white rounded-md">1</button>
+                                <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">2</button>
+                                <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">3</button>
+                                <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 添加资源模态框 -->
+    <div id="addResourceModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">添加资源</h3>
+                    <button id="closeAddResourceModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label for="resourceName" class="block text-sm font-medium text-gray-700 mb-1">资源名称 <span class="text-danger">*</span></label>
+                        <input type="text" id="resourceName" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="resourceType" class="block text-sm font-medium text-gray-700 mb-1">资源类型 <span class="text-danger">*</span></label>
+                        <select id="resourceType" required class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            <option value="">请选择资源类型</option>
+                            <option value="human">人力资源</option>
+                            <option value="material">物资资源</option>
+                            <option value="service">服务资源</option>
+                            <option value="venue">场地资源</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label for="resourceProvider" class="block text-sm font-medium text-gray-700 mb-1">提供者 <span class="text-danger">*</span></label>
+                        <input type="text" id="resourceProvider" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="resourceQuantity" class="block text-sm font-medium text-gray-700 mb-1">总数量 <span class="text-danger">*</span></label>
+                        <input type="number" id="resourceQuantity" min="1" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="resourceDescription" class="block text-sm font-medium text-gray-700 mb-1">资源描述 <span class="text-danger">*</span></label>
+                    <textarea id="resourceDescription" rows="4" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none"></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label for="resourceContact" class="block text-sm font-medium text-gray-700 mb-1">联系人</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="resourceContactPhone" class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+                        <input type="tel"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label for="resourceLocation" class="block text-sm font-medium text-gray-700 mb-1">资源位置</label>
+                        <input type="text"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                    </div>
+                    <div>
+                        <label for="resourceStatus" class="block text-sm font-medium text-gray-700 mb-1">状态 <span class="text-danger">*</span></label>
+                        <select id="resourceStatus" required class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            <option value="available">可使用</option>
+                            <option value="unavailable">不可用</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">上传资源图片（可选）</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label class="flex flex-col w-full h-32 border-2 border-gray-300 border-dashed rounded-lg hover:bg-gray-50 transition-all">
+                            <div class="flex flex-col items-center justify-center pt-7">
+                                <i class="fa fa-cloud-upload text-2xl text-gray-400"></i>
+                                <p class="pt-1 text-sm text-gray-500">点击上传或拖放文件</p>
+                                <p class="text-xs text-gray-400 mt-1">支持PNG、JPG、JPEG格式，最大5MB</p>
+                            </div>
+                            <input type="file" class="opacity-0" accept="image/*">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 p-6 border-t border-gray-200">
+                <button id="cancelAddResourceBtn" class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                    取消
+                </button>
+                <button id="submitAddResourceBtn" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors">
+                    保存资源
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 资源分配模态框 -->
+    <div id="allocateResourceModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">分配资源</h3>
+                    <button id="closeAllocateResourceModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-5">
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-medium text-dark mb-2">资源信息</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <p class="text-sm text-gray-500">资源名称</p>
+                            <p class="text-sm font-medium text-gray-800">心理辅导师资源</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">资源类型</p>
+                            <p class="text-sm font-medium text-gray-800">人力资源</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">当前可用</p>
+                            <p class="text-sm font-medium text-gray-800">8名（总计10名）</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">提供者</p>
+                            <p class="text-sm font-medium text-gray-800">市心理咨询中心</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label for="allocateTo" class="block text-sm font-medium text-gray-700 mb-1">分配对象 <span class="text-danger">*</span></label>
+                        <select id="allocateTo" required class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                            <option value="">请选择分配对象</option>
+                            <option value="user">用户</option>
+                            <option value="activity">活动</option>
+                            <option value="project">项目</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="allocateQuantity" class="block text-sm font-medium text-gray-700 mb-1">分配数量 <span class="text-danger">*</span></label>
+                        <input type="number" id="allocateQuantity" min="1" max="8" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                        <p class="text-xs text-gray-500 mt-1">最多可分配8个</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="targetId" class="block text-sm font-medium text-gray-700 mb-1">选择目标 <span class="text-danger">*</span></label>
+                    <select id="targetId" required class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                        <option value="">请先选择分配对象类型</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label for="allocateStartDate" class="block text-sm font-medium text-gray-700 mb-1">开始日期 <span class="text-danger">*</span></label>
+                    <input type="date" id="allocateStartDate" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                </div>
+                
+                <div>
+                    <label for="allocateEndDate" class="block text-sm font-medium text-gray-700 mb-1">结束日期 <span class="text-danger">*</span></label>
+                    <input type="date" id="allocateEndDate" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                </div>
+                
+                <div>
+                    <label for="allocateReason" class="block text-sm font-medium text-gray-700 mb-1">分配原因 <span class="text-danger">*</span></label>
+                    <textarea id="allocateReason" rows="3" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 p-6 border-t border-gray-200">
+                <button id="cancelAllocateResourceBtn" class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                    取消
+                </button>
+                <button id="submitAllocateResourceBtn" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors">
+                    确认分配
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 侧边栏切换
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            // 点击页面其他区域关闭侧边栏（在移动端）
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 1024 && 
+                    !sidebar.contains(e.target) && 
+                    !sidebarToggle.contains(e.target) &&
+                    !sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+
+            // 资源类型分布图表
+            const resourceTypeCtx = document.getElementById('resourceTypeChart').getContext('2d');
+            const resourceTypeChart = new Chart(resourceTypeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['人力资源', '物资资源', '服务资源', '场地资源'],
+                    datasets: [{
+                        data: [35, 25, 30, 10],
+                        backgroundColor: [
+                            '#165DFF',
+                            '#FF7D00',
+                            '#4080FF',
+                            '#00B42A'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${percentage}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 资源使用趋势图表
+            const resourceUsageCtx = document.getElementById('resourceUsageChart').getContext('2d');
+            const resourceUsageChart = new Chart(resourceUsageCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1日', '5日', '10日', '15日', '20日', '25日', '30日'],
+                    datasets: [
+                        {
+                            label: '已分配资源',
+                            data: [120, 135, 142, 158, 165, 178, 186],
+                            borderColor: '#165DFF',
+                            backgroundColor: 'rgba(22, 93, 255, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointBackgroundColor: '#FFFFFF',
+                            pointBorderColor: '#165DFF',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        },
+                        {
+                            label: '总资源',
+                            data: [200, 210, 220, 230, 235, 240, 248],
+                            borderColor: '#86909C',
+                            borderDash: [5, 5],
+                            fill: false,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointBackgroundColor: '#FFFFFF',
+                            pointBorderColor: '#86909C',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#86909C'
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                color: '#86909C',
+                                precision: 0
+                            },
+                            grid: {
+                                borderDash: [2, 4],
+                                color: 'rgba(0, 0, 0, 0.06)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 选项卡切换
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除所有选项卡的活动状态
+                    tabButtons.forEach(btn => btn.classList.remove('tab-active'));
+                    // 添加当前选项卡的活动状态
+                    this.classList.add('tab-active');
+                    
+                    // 这里应该加载对应选项卡的数据
+                    // 在实际应用中，这里可以添加数据加载逻辑
+                });
+            });
+
+            // 添加资源模态框
+            const addResourceBtn = document.getElementById('addResourceBtn');
+            const addResourceModal = document.getElementById('addResourceModal');
+            const closeAddResourceModal = document.getElementById('closeAddResourceModal');
+            const cancelAddResourceBtn = document.getElementById('cancelAddResourceBtn');
+            const submitAddResourceBtn = document.getElementById('submitAddResourceBtn');
+
+            function openAddResourceModal() {
+                addResourceModal.classList.remove('hidden');
+            }
+
+            function closeAddResourceModal() {
+                addResourceModal.classList.add('hidden');
+            }
+
+            addResourceBtn.addEventListener('click', openAddResourceModal);
+            closeAddResourceModal.addEventListener('click', closeAddResourceModal);
+            cancelAddResourceBtn.addEventListener('click', closeAddResourceModal);
+
+            addResourceModal.addEventListener('click', function(e) {
+                if (e.target === addResourceModal) closeAddResourceModal();
+            });
+
+            submitAddResourceBtn.addEventListener('click', function() {
+                // 这里应该收集表单数据并提交
+                const resourceName = document.getElementById('resourceName').value;
+                const resourceType = document.getElementById('resourceType').value;
+                const resourceProvider = document.getElementById('resourceProvider').value;
+                const resourceQuantity = document.getElementById('resourceQuantity').value;
+                const resourceDescription = document.getElementById('resourceDescription').value;
+                const resourceStatus = document.getElementById('resourceStatus').value;
+
+                if (!resourceName || !resourceType || !resourceProvider || !resourceQuantity || !resourceDescription || !resourceStatus) {
+                    alert('请填写所有必填字段');
+                    return;
+                }
+
+                alert('资源添加成功！');
+                closeAddResourceModal();
+            });
+
+            // 资源分配模态框
+            const allocateResourceBtns = document.querySelectorAll('.allocate-resource-btn:not(:disabled)');
+            const allocateResourceModal = document.getElementById('allocateResourceModal');
+            const closeAllocateResourceModal = document.getElementById('closeAllocateResourceModal');
+            const cancelAllocateResourceModal = document.getElementById('cancelAllocateResourceBtn');
+            const submitAllocateResourceBtn = document.getElementById('submitAllocateResourceBtn');
+            const allocateTo = document.getElementById('allocateTo');
+            const targetId = document.getElementById('targetId');
+
+            function openAllocateResourceModal() {
+                allocateResourceModal.classList.remove('hidden');
+            }
+
+            function closeAllocateResourceModal() {
+                allocateResourceModal.classList.add('hidden');
+            }
+
+            allocateResourceBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const resourceId = this.getAttribute('data-id');
+                    // 这里可以根据resourceId加载对应的资源信息
+                    openAllocateResourceModal();
+                });
+            });
+
+            closeAllocateResourceModal.addEventListener('click', closeAllocateResourceModal);
+            cancelAllocateResourceModal.addEventListener('click', closeAllocateResourceModal);
+
+            allocateResourceModal.addEventListener('click', function(e) {
+                if (e.target === allocateResourceModal) closeAllocateResourceModal();
+            });
+
+            // 分配对象类型变更处理
+            allocateTo.addEventListener('change', function() {
+                const value = this.value;
+                targetId.innerHTML = '';
+                
+                if (value === 'user') {
+                    targetId.innerHTML = `
+                        <option value="">请选择用户</option>
+                        <option value="1001">张三 (ID: LP20240001)</option>
+                        <option value="1002">李四 (ID: LP20240002)</option>
+                        <option value="1003">王五 (ID: LP20240003)</option>
+                    `;
+                } else if (value === 'activity') {
+                    targetId.innerHTML = `
+                        <option value="">请选择活动</option>
+                        <option value="2001">就业技能培训讲座</option>
+                        <option value="2002">心理辅导工作坊</option>
+                        <option value="2003">职业规划咨询会</option>
+                    `;
+                } else if (value === 'project') {
+                    targetId.innerHTML = `
+                        <option value="">请选择项目</option>
+                        <option value="3001">青年就业援助计划</option>
+                        <option value="3002">心理健康支持项目</option>
+                        <option value="3003">社区服务提升计划</option>
+                    `;
+                } else {
+                    targetId.innerHTML = '<option value="">请先选择分配对象类型</option>';
+                }
+            });
+
+            submitAllocateResourceBtn.addEventListener('click', function() {
+                // 这里应该收集表单数据并提交分配申请
+                const allocateToValue = allocateTo.value;
+                const allocateQuantity = document.getElementById('allocateQuantity').value;
+                const targetIdValue = targetId.value;
+                const allocateStartDate = document.getElementById('allocateStartDate').value;
+                const allocateEndDate = document.getElementById('allocateEndDate').value;
+                const allocateReason = document.getElementById('allocateReason').value;
+
+                if (!allocateToValue || !allocateQuantity || !targetIdValue || !allocateStartDate || !allocateEndDate || !allocateReason) {
+                    alert('请填写所有必填字段');
+                    return;
+                }
+
+                alert('资源分配成功！');
+                closeAllocateResourceModal();
+            });
+
+            // 编辑资源按钮
+            const editResourceBtns = document.querySelectorAll('.edit-resource-btn');
+            editResourceBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const resourceId = this.getAttribute('data-id');
+                    alert(`编辑资源 ${resourceId} 功能开发中...`);
+                });
+            });
+
+            // 查看详情按钮
+            const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
+            viewDetailsBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('查看资源详情功能开发中...');
+                });
+            });
+
+            // 为资源卡片添加动画效果
+            const resourceCards = document.querySelectorAll('.resource-card');
+            resourceCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * (index + 1));
+            });
+
+            // 资源进度条动画
+            const progressFills = document.querySelectorAll('.resource-progress-fill');
+            progressFills.forEach(fill => {
+                const width = fill.style.width;
+                fill.style.width = '0';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

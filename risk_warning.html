@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风险预警 - 莲藕平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#4080FF',
+                        success: '#00B42A',
+                        warning: '#FF7D00',
+                        danger: '#F53F3F',
+                        info: '#86909C',
+                        light: '#F2F3F5',
+                        dark: '#1D2129',
+                        sidebar: '#0E1726'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+            .sidebar-link {
+                @apply flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-primary/10 hover:text-primary transition-all;
+            }
+            .sidebar-link.active {
+                @apply bg-primary/20 text-primary font-medium;
+            }
+            .warning-card {
+                @apply bg-white rounded-xl p-5 shadow-sm border border-gray-100 transition-all duration-300 hover:shadow-md;
+            }
+            .warning-card.danger {
+                @apply border-l-4 border-l-danger;
+            }
+            .warning-card.warning {
+                @apply border-l-4 border-l-warning;
+            }
+            .warning-card.info {
+                @apply border-l-4 border-l-info;
+            }
+            .input-focus {
+                @apply focus:ring-2 focus:ring-primary/30 focus:border-primary;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- 顶部导航 -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+        <div class="flex items-center justify-between h-16 px-4">
+            <div class="flex items-center gap-2">
+                <button id="sidebarToggle" class="lg:hidden text-gray-600 hover:text-primary">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-warning rounded-lg flex items-center justify-center">
+                        <i class="fa fa-exclamation-triangle text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-dark">莲藕平台管理系统</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="relative text-gray-600 hover:text-primary transition-colors">
+                    <i class="fa fa-bell text-xl"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-danger rounded-full text-white text-xs flex items-center justify-center">3</span>
+                </button>
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <img src="https://picsum.photos/200/200?random=1" alt="管理员头像" class="w-9 h-9 rounded-full border-2 border-transparent group-hover:border-primary transition-all">
+                    <div class="hidden md:block">
+                        <p class="text-sm font-medium text-gray-800">管理员</p>
+                        <p class="text-xs text-gray-500">系统管理员</p>
+                    </div>
+                    <i class="fa fa-chevron-down text-xs text-gray-500 group-hover:text-primary transition-colors"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- 侧边栏 -->
+        <aside id="sidebar" class="w-64 bg-sidebar text-white h-[calc(100vh-4rem)] sticky top-16 transition-all duration-300 transform -translate-x-full lg:translate-x-0 z-20">
+            <nav class="h-full flex flex-col">
+                <div class="overflow-y-auto flex-1 p-4 space-y-1">
+                    <a href="dashboard.html" class="sidebar-link">
+                        <i class="fa fa-tachometer"></i>
+                        <span>控制面板</span>
+                    </a>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">人员管理</h3>
+                        <a href="user_management.html" class="sidebar-link">
+                            <i class="fa fa-users"></i>
+                            <span>用户管理</span>
+                        </a>
+                        <a href="personnel_archive.html" class="sidebar-link">
+                            <i class="fa fa-address-book"></i>
+                            <span>人员档案管理</span>
+                        </a>
+                        <a href="psychological_test.html" class="sidebar-link">
+                            <i class="fa fa-heartbeat"></i>
+                            <span>心理测评</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">数据统计</h3>
+                        <a href="data_statistics.html" class="sidebar-link">
+                            <i class="fa fa-bar-chart"></i>
+                            <span>数据统计汇总</span>
+                        </a>
+                        <a href="employment_rate.html" class="sidebar-link">
+                            <i class="fa fa-briefcase"></i>
+                            <span>就业率统计</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">风险预警</h3>
+                        <a href="risk_warning.html" class="sidebar-link active">
+                            <i class="fa fa-exclamation-triangle"></i>
+                            <span>风险预警</span>
+                        </a>
+                        <a href="intervention_records.html" class="sidebar-link">
+                            <i class="fa fa-stethoscope"></i>
+                            <span>干预记录</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">资源管理</h3>
+                        <a href="resource_allocation.html" class="sidebar-link">
+                            <i class="fa fa-cubes"></i>
+                            <span>资源调配</span>
+                        </a>
+                        <a href="activity_management.html" class="sidebar-link">
+                            <i class="fa fa-calendar"></i>
+                            <span>活动管理</span>
+                        </a>
+                    </div>
+                    <div class="space-y-1 mt-6">
+                        <h3 class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">系统设置</h3>
+                        <a href="system_settings.html" class="sidebar-link">
+                            <i class="fa fa-cog"></i>
+                            <span>系统设置</span>
+                        </a>
+                        <a href="log_management.html" class="sidebar-link">
+                            <i class="fa fa-file-text"></i>
+                            <span>日志管理</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-700">
+                    <a href="index.html" class="sidebar-link text-danger hover:bg-danger/10">
+                        <i class="fa fa-sign-out"></i>
+                        <span>退出登录</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <!-- 页面标题 -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-dark">风险预警</h2>
+                        <p class="text-gray-500 mt-1">实时监控和管理各类风险预警信息</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                            <input type="date" class="pl-10 pr-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                        </div>
+                        <button class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors flex items-center gap-2">
+                            <i class="fa fa-download"></i>
+                            <span>导出报表</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 风险统计卡片 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">今日预警总数</p>
+                                <h3 class="text-2xl font-bold text-dark mt-1">12</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-danger/10 rounded-full flex items-center justify-center text-danger">
+                                <i class="fa fa-exclamation-circle text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-danger text-sm">
+                            <i class="fa fa-arrow-up mr-1"></i>
+                            <span>16.7%</span>
+                            <span class="text-gray-500 ml-1">较昨日</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">待处理预警</p>
+                                <h3 class="text-2xl font-bold text-dark mt-1">8</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-warning/10 rounded-full flex items-center justify-center text-warning">
+                                <i class="fa fa-clock-o text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-warning text-sm">
+                            <span>66.7%</span>
+                            <span class="text-gray-500 ml-1">占总数比例</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">已处理预警</p>
+                                <h3 class="text-2xl font-bold text-dark mt-1">4</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center text-success">
+                                <i class="fa fa-check-circle text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-success text-sm">
+                            <span>33.3%</span>
+                            <span class="text-gray-500 ml-1">占总数比例</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 图表和风险分布 -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 lg:col-span-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-dark">风险预警趋势</h3>
+                            <div class="flex items-center gap-2">
+                                <button class="px-3 py-1 text-xs bg-primary/10 text-primary rounded-full">本周</button>
+                                <button class="px-3 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded-full">本月</button>
+                                <button class="px-3 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded-full">全年</button>
+                            </div>
+                        </div>
+                        <div class="h-80">
+                            <canvas id="warningTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-dark">风险类型分布</h3>
+                            <button class="text-gray-400 hover:text-gray-600">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <div class="h-80 flex items-center justify-center">
+                            <canvas id="riskTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 预警列表 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="p-5 border-b border-gray-200">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                            <h3 class="font-semibold text-dark">最新预警列表</h3>
+                            <div class="flex items-center gap-2">
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input type="text" placeholder="搜索预警信息" 
+                                        class="w-full md:w-64 pl-10 pr-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                                </div>
+                                <select class="border border-gray-300 rounded-lg px-3 py-2 input-focus transition-all outline-none">
+                                    <option value="">全部状态</option>
+                                    <option value="pending">待处理</option>
+                                    <option value="processing">处理中</option>
+                                    <option value="resolved">已解决</option>
+                                    <option value="ignored">已忽略</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5 space-y-4">
+                        <div class="warning-card danger">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 bg-danger/10 rounded-full flex items-center justify-center text-danger mt-1">
+                                        <i class="fa fa-heartbeat text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-medium text-dark">情绪危机预警</h4>
+                                            <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">紧急</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1">张三 - 心理测评显示严重抑郁倾向，有自伤风险</p>
+                                        <div class="flex items-center gap-4 mt-3 text-sm text-gray-500">
+                                            <span><i class="fa fa-clock-o mr-1"></i>2小时前</span>
+                                            <span><i class="fa fa-user mr-1"></i>系统自动预警</span>
+                                            <span><i class="fa fa-eye mr-1"></i>待处理</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button class="view-warning-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="1">
+                                        查看详情
+                                    </button>
+                                    <button class="handle-warning-btn px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" data-id="1">
+                                        立即处理
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="warning-card danger">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 bg-danger/10 rounded-full flex items-center justify-center text-danger mt-1">
+                                        <i class="fa fa-bell text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-medium text-dark">连续未打卡预警</h4>
+                                            <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">紧急</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1">李四 - 连续3天未参与线上活动，电话无法联系</p>
+                                        <div class="flex items-center gap-4 mt-3 text-sm text-gray-500">
+                                            <span><i class="fa fa-clock-o mr-1"></i>5小时前</span>
+                                            <span><i class="fa fa-user mr-1"></i>系统自动预警</span>
+                                            <span><i class="fa fa-cog mr-1"></i>处理中</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button class="view-warning-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="2">
+                                        查看详情
+                                    </button>
+                                    <button class="handle-warning-btn px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" data-id="2">
+                                        继续处理
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="warning-card warning">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 bg-warning/10 rounded-full flex items-center justify-center text-warning mt-1">
+                                        <i class="fa fa-line-chart text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-medium text-dark">心理状态下降预警</h4>
+                                            <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">重要</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1">王五 - 近两周心理测评分数持续下降，需要关注</p>
+                                        <div class="flex items-center gap-4 mt-3 text-sm text-gray-500">
+                                            <span><i class="fa fa-clock-o mr-1"></i>1天前</span>
+                                            <span><i class="fa fa-user mr-1"></i>张心理师</span>
+                                            <span><i class="fa fa-eye mr-1"></i>待处理</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button class="view-warning-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="3">
+                                        查看详情
+                                    </button>
+                                    <button class="handle-warning-btn px-3 py-1 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm" data-id="3">
+                                        立即处理
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="warning-card warning">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 bg-warning/10 rounded-full flex items-center justify-center text-warning mt-1">
+                                        <i class="fa fa-briefcase text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-medium text-dark">就业困难预警</h4>
+                                            <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">重要</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1">赵六 - 连续面试失败，情绪低落，需要就业指导</p>
+                                        <div class="flex items-center gap-4 mt-3 text-sm text-gray-500">
+                                            <span><i class="fa fa-clock-o mr-1"></i>2天前</span>
+                                            <span><i class="fa fa-user mr-1"></i>李就业指导</span>
+                                            <span><i class="fa fa-check mr-1"></i>已解决</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button class="view-warning-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="4">
+                                        查看详情
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="warning-card info">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-12 h-12 bg-info/10 rounded-full flex items-center justify-center text-info mt-1">
+                                        <i class="fa fa-comments text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h4 class="font-medium text-dark">社交活动减少预警</h4>
+                                            <span class="px-2 py-1 text-xs bg-info/10 text-info rounded-full">一般</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1">孙七 - 本月参与社交活动次数显著减少</p>
+                                        <div class="flex items-center gap-4 mt-3 text-sm text-gray-500">
+                                            <span><i class="fa fa-clock-o mr-1"></i>3天前</span>
+                                            <span><i class="fa fa-user mr-1"></i>系统自动预警</span>
+                                            <span><i class="fa fa-ban mr-1"></i>已忽略</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button class="view-warning-btn px-3 py-1 border border-primary text-primary rounded-lg hover:bg-primary/5 transition-colors text-sm" data-id="5">
+                                        查看详情
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 分页 -->
+                    <div class="flex items-center justify-between p-4 border-t border-gray-200">
+                        <div class="text-sm text-gray-500">
+                            显示 1-5 条，共 24 条
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-500 hover:border-primary hover:text-primary transition-colors" disabled>
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <button class="w-9 h-9 flex items-center justify-center bg-primary text-white rounded-md">1</button>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">2</button>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">3</button>
+                            <span class="w-9 h-9 flex items-center justify-center text-gray-500">...</span>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">5</button>
+                            <button class="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-md text-gray-700 hover:border-primary hover:text-primary transition-colors">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 预警详情模态框 -->
+    <div id="warningDetailModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-dark">预警详情</h3>
+                    <button id="closeWarningDetailModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-6" id="warningDetailContent">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">预警信息</p>
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-dark">情绪危机预警</h4>
+                                    <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">紧急</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">心理测评显示严重抑郁倾向，有自伤风险</p>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">预警时间：</span>
+                                        <span class="text-sm text-gray-800">2024-06-15 10:23:45</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">预警来源：</span>
+                                        <span class="text-sm text-gray-800">系统自动预警</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">预警等级：</span>
+                                        <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">紧急</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">当前状态：</span>
+                                        <span class="px-2 py-1 text-xs bg-warning/10 text-warning rounded-full">待处理</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">预警原因分析</p>
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <p class="text-sm text-gray-600">
+                                    1. 最近三次心理测评分数呈明显下降趋势<br>
+                                    2. 回答中多次提及"生活没有意义"等消极内容<br>
+                                    3. 社交活动参与率从80%降至10%<br>
+                                    4. 睡眠质量评估得分极低
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">人员信息</p>
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <img src="https://picsum.photos/200/200?random=101" alt="用户头像" class="w-12 h-12 rounded-full">
+                                    <div>
+                                        <h4 class="font-medium text-dark">张三</h4>
+                                        <p class="text-xs text-gray-500">ID: LP20240001</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">年龄：</span>
+                                        <span class="text-sm text-gray-800">28岁</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">联系电话：</span>
+                                        <span class="text-sm text-gray-800">138****6789</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">风险等级：</span>
+                                        <span class="px-2 py-1 text-xs bg-danger/10 text-danger rounded-full">高风险</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-600">紧急联系人：</span>
+                                        <span class="text-sm text-gray-800">张母 (139****5678)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">建议干预措施</p>
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <p class="text-sm text-gray-600">
+                                    1. 立即安排专业心理师进行一对一干预<br>
+                                    2. 联系紧急联系人了解最近情况<br>
+                                    3. 增加日常关怀频率，每日至少一次电话随访<br>
+                                    4. 考虑转介至专业医疗机构评估
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">心理测评趋势</p>
+                    <div class="p-4 bg-gray-50 rounded-lg">
+                        <div class="h-64">
+                            <canvas id="psychTestTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">处理记录</p>
+                    <div class="p-4 bg-gray-50 rounded-lg space-y-4">
+                        <div class="p-3 border border-gray-200 rounded-lg">
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="text-sm font-medium text-gray-800">系统自动创建预警</p>
+                                <p class="text-xs text-gray-500">2024-06-15 10:23:45</p>
+                            </div>
+                            <p class="text-sm text-gray-600">根据心理测评数据，系统自动触发预警机制。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-sm text-gray-500 mb-1">处理预警</p>
+                    <div class="space-y-3">
+                        <div>
+                            <label for="handlerRemark" class="block text-sm font-medium text-gray-700 mb-1">处理备注</label>
+                            <textarea id="handlerRemark" rows="3" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">处理方式</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-2">
+                                    <input type="radio" name="handleType" value="intervention" class="h-4 w-4 text-primary border-gray-300 focus:ring-primary">
+                                    <span class="text-sm text-gray-700">安排心理干预</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="radio" name="handleType" value="referral" class="h-4 w-4 text-primary border-gray-300 focus:ring-primary">
+                                    <span class="text-sm text-gray-700">转介专业机构</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="radio" name="handleType" value="followup" class="h-4 w-4 text-primary border-gray-300 focus:ring-primary">
+                                    <span class="text-sm text-gray-700">加强随访观察</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="radio" name="handleType" value="ignore" class="h-4 w-4 text-primary border-gray-300 focus:ring-primary">
+                                    <span class="text-sm text-gray-700">忽略预警</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="assignTo" class="block text-sm font-medium text-gray-700 mb-1">指派给</label>
+                            <select id="assignTo" class="w-full px-3 py-2 border border-gray-300 rounded-lg input-focus transition-all outline-none">
+                                <option value="">请选择处理人员</option>
+                                <option value="1">张心理师</option>
+                                <option value="2">李心理师</option>
+                                <option value="3">王心理师</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
+                    <button id="closeWarningDetailBtn" class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                        关闭
+                    </button>
+                    <button id="submitWarningHandleBtn" class="px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors">
+                        提交处理
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 侧边栏切换
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            // 点击页面其他区域关闭侧边栏（在移动端）
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth < 1024 && 
+                    !sidebar.contains(e.target) && 
+                    !sidebarToggle.contains(e.target) &&
+                    !sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            });
+
+            // 预警趋势图表
+            const warningTrendCtx = document.getElementById('warningTrendChart').getContext('2d');
+            const warningTrendChart = new Chart(warningTrendCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    datasets: [
+                        {
+                            label: '紧急',
+                            data: [3, 2, 4, 1, 2, 0, 1],
+                            backgroundColor: '#F53F3F',
+                            borderRadius: 4
+                        },
+                        {
+                            label: '重要',
+                            data: [2, 3, 2, 4, 3, 1, 2],
+                            backgroundColor: '#FF7D00',
+                            borderRadius: 4
+                        },
+                        {
+                            label: '一般',
+                            data: [1, 2, 1, 3, 2, 2, 1],
+                            backgroundColor: '#86909C',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#86909C'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#86909C',
+                                precision: 0
+                            },
+                            grid: {
+                                borderDash: [2, 4],
+                                color: 'rgba(0, 0, 0, 0.06)'
+                            }
+                        }
+                    },
+                    barPercentage: 0.6,
+                    categoryPercentage: 0.8
+                }
+            });
+
+            // 风险类型分布图表
+            const riskTypeCtx = document.getElementById('riskTypeChart').getContext('2d');
+            const riskTypeChart = new Chart(riskTypeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['情绪危机', '就业困难', '社交隔离', '家庭问题', '其他'],
+                    datasets: [{
+                        data: [35, 25, 15, 15, 10],
+                        backgroundColor: [
+                            '#F53F3F',
+                            '#FF7D00',
+                            '#165DFF',
+                            '#00B42A',
+                            '#86909C'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${percentage}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 心理测评趋势图表
+            const psychTestTrendCtx = document.getElementById('psychTestTrendChart').getContext('2d');
+            const psychTestTrendChart = new Chart(psychTestTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['第1周', '第2周', '第3周', '第4周', '第5周', '第6周'],
+                    datasets: [{
+                        label: '心理测评分数',
+                        data: [85, 78, 72, 65, 58, 52],
+                        borderColor: '#F53F3F',
+                        backgroundColor: 'rgba(245, 63, 63, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointBackgroundColor: '#FFFFFF',
+                        pointBorderColor: '#F53F3F',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#86909C'
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            min: 0,
+                            max: 100,
+                            ticks: {
+                                color: '#86909C'
+                            },
+                            grid: {
+                                borderDash: [2, 4],
+                                color: 'rgba(0, 0, 0, 0.06)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 预警详情模态框
+            const warningDetailModal = document.getElementById('warningDetailModal');
+            const closeWarningDetailModal = document.getElementById('closeWarningDetailModal');
+            const closeWarningDetailBtn = document.getElementById('closeWarningDetailBtn');
+            const viewWarningBtns = document.querySelectorAll('.view-warning-btn');
+            const handleWarningBtns = document.querySelectorAll('.handle-warning-btn');
+            const submitWarningHandleBtn = document.getElementById('submitWarningHandleBtn');
+
+            function openWarningDetailModal() {
+                warningDetailModal.classList.remove('hidden');
+            }
+
+            function closeWarningDetailModal() {
+                warningDetailModal.classList.add('hidden');
+            }
+
+            viewWarningBtns.forEach(btn => {
+                btn.addEventListener('click', openWarningDetailModal);
+            });
+
+            handleWarningBtns.forEach(btn => {
+                btn.addEventListener('click', openWarningDetailModal);
+            });
+
+            closeWarningDetailModal.addEventListener('click', closeWarningDetailModal);
+            closeWarningDetailBtn.addEventListener('click', closeWarningDetailModal);
+
+            warningDetailModal.addEventListener('click', function(e) {
+                if (e.target === warningDetailModal) closeWarningDetailModal();
+            });
+
+            submitWarningHandleBtn.addEventListener('click', function() {
+                // 这里应该收集表单数据并提交处理
+                const handlerRemark = document.getElementById('handlerRemark').value;
+                const handleType = document.querySelector('input[name="handleType"]:checked');
+                const assignTo = document.getElementById('assignTo').value;
+
+                if (!handlerRemark || !handleType || !assignTo) {
+                    alert('请填写完整的处理信息');
+                    return;
+                }
+
+                alert('预警处理已提交！');
+                closeWarningDetailModal();
+            });
+
+            // 为警告卡片添加动画效果
+            const warningCards = document.querySelectorAll('.warning-card');
+            warningCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * (index + 1));
+            });
+        });
+    </script>
+</body>
+</html>
