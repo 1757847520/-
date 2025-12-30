@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>莲藕一体化平台 - 让回归，都成为真正意义上的重新开始</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // 主色调：藕荷色系
+                        'lotus-purple': '#D4A5FF',
+                        'lotus-purple-light': '#E8D6FF',
+                        'lotus-purple-dark': '#B88AFF',
+                        'lotus-purple-darker': '#9D66FF',
+                        
+                        // 辅助色：柔和的暖色调
+                        'lotus-pink': '#FFB6C1',
+                        'lotus-blue': '#A8D8EA',
+                        'lotus-green': '#B0E57C',
+                        'lotus-yellow': '#FFF6B7',
+                        
+                        // 中性色：柔和的灰度
+                        'lotus-white': '#F8F9FA',
+                        'lotus-gray-light': '#F0F0F0',
+                        'lotus-gray': '#E0E0E0',
+                        'lotus-gray-dark': '#9E9E9E',
+                        'lotus-dark': '#333333',
+                        
+                        // 功能色：柔和版本
+                        'primary': '#D4A5FF',
+                        'success': '#B0E57C',
+                        'warning': '#FFF6B7',
+                        'danger': '#FFB6C1',
+                        'info': '#A8D8EA'
+                    },
+                    fontFamily: {
+                        'serif': ['Georgia', 'Cambria', 'serif'],
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            
+            /* 柔和的渐变背景 */
+            .bg-gradient-lotus {
+                background: linear-gradient(135deg, #D4A5FF 0%, #F8F9FA 100%);
+            }
+            .bg-gradient-lotus-reverse {
+                background: linear-gradient(135deg, #F8F9FA 0%, #D4A5FF 100%);
+            }
+            .bg-gradient-lotus-soft {
+                background: linear-gradient(135deg, #E8D6FF 0%, #F8F9FA 100%);
+            }
+            
+            /* 柔和的阴影效果 */
+            .shadow-lotus {
+                box-shadow: 0 4px 20px rgba(212, 165, 255, 0.15);
+            }
+            .shadow-lotus-lg {
+                box-shadow: 0 10px 40px rgba(212, 165, 255, 0.2);
+            }
+            
+            /* 文字效果 */
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .text-lotus {
+                color: #D4A5FF;
+            }
+            
+            /* 间距和留白 */
+            .section-padding {
+                @apply py-20 px-4 sm:px-6 lg:px-8;
+            }
+            .section-padding-lg {
+                @apply py-28 px-4 sm:px-6 lg:px-8;
+            }
+            
+            /* 卡片效果 */
+            .card-lotus {
+                @apply bg-white rounded-2xl shadow-lotus p-6 transition-all duration-500 hover:shadow-lotus-lg hover:-translate-y-3;
+            }
+            .card-lotus-soft {
+                @apply bg-lotus-white rounded-2xl shadow-lotus p-6 transition-all duration-500 hover:shadow-lotus-lg hover:-translate-y-3;
+            }
+            
+            /* 按钮效果 */
+            .btn-lotus {
+                @apply px-8 py-3 bg-lotus-purple text-white font-medium rounded-lg transition-all duration-300 hover:bg-lotus-purple-dark hover:shadow-lg hover:-translate-y-1;
+            }
+            .btn-lotus-outline {
+                @apply px-8 py-3 bg-white text-lotus-purple border-2 border-lotus-purple font-medium rounded-lg transition-all duration-300 hover:bg-lotus-purple-light hover:shadow-lg hover:-translate-y-1;
+            }
+            
+            /* 动画效果 */
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            .animate-pulse-soft {
+                animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            
+            /* 自定义动画 */
+            @keyframes float {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+            }
+            
+            /* 分割线 */
+            .divider-lotus {
+                @apply h-px bg-gradient-to-r from-transparent via-lotus-purple to-transparent my-8;
+            }
+            
+            /* 滚动条样式 */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            ::-webkit-scrollbar-track {
+                background: #F8F9FA;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #D4A5FF;
+                border-radius: 4px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: #B88AFF;
+            }
+        }
+    </style>
+</head>
+<body class="bg-lotus-white text-dark">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-lotus transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center group">
+                        <div class="h-10 w-10 rounded-full bg-gradient-lotus flex items-center justify-center mr-3 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                            <img src="logo.png" alt="莲藕平台" class="h-8 w-8 object-contain" />
+                        </div>
+                        <h1 class="text-xl font-bold text-lotus-dark group-hover:text-lotus-purple transition-colors">莲藕一体化平台</h1>
+                    </div>
+                    <nav class="ml-10 flex items-center space-x-8">
+                        <a href="#about" class="text-lotus-gray-dark hover:text-lotus-purple font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-lotus-purple after:transition-all hover:after:w-full">平台介绍</a>
+                        <a href="#features" class="text-lotus-gray-dark hover:text-lotus-purple font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-lotus-purple after:transition-all hover:after:w-full">功能模块</a>
+                        <a href="#feasibility" class="text-lotus-gray-dark hover:text-lotus-purple font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-lotus-purple after:transition-all hover:after:w-full">可行性分析</a>
+                        <a href="#ethics" class="text-lotus-gray-dark hover:text-lotus-purple font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-lotus-purple after:transition-all hover:after:w-full">伦理合规</a>
+                    </nav>
+                </div>
+                <div class="flex items-center">
+                    <a href="index.html" class="ml-4 px-6 py-2 border border-transparent text-base font-medium rounded-full text-white bg-gradient-to-r from-lotus-purple to-lotus-purple-dark hover:from-lotus-purple-dark hover:to-lotus-purple-darker transition-all duration-300 shadow-lotus hover:shadow-lotus-lg transform hover:-translate-y-0.5">
+                        管理登录
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="bg-gradient-lotus section-padding-lg relative overflow-hidden">
+        <!-- 装饰性元素 -->
+        <div class="absolute top-20 left-20 w-64 h-64 bg-white/20 rounded-full blur-3xl animate-pulse-soft"></div>
+        <div class="absolute bottom-20 right-20 w-80 h-80 bg-white/20 rounded-full blur-3xl animate-pulse-soft"></div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-lotus-dark mb-6 text-shadow leading-tight">
+                    让回归，<br class="hidden md:block">都成为真正意义上的重新开始
+                </h1>
+                <p class="text-xl md:text-2xl text-lotus-dark/80 mb-10 max-w-3xl mx-auto leading-relaxed">
+                    莲藕一体化平台聚焦刑满释放人员心理健康与全周期社会融入，通过心理学、人工智能与人因工程的多学科交叉技术，破解身份转换期的心理断裂与社会脱节困境
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button class="btn-lotus rounded-full shadow-lotus">
+                        了解更多
+                    </button>
+                    <button class="btn-lotus-outline rounded-full shadow-lotus">
+                        <i class="fa fa-play-circle mr-2"></i> 观看演示
+                    </button>
+                </div>
+                
+                <!-- 滚动提示 -->
+                <div class="mt-16 animate-bounce">
+                    <a href="#about" class="inline-flex flex-col items-center text-lotus-dark/70 hover:text-lotus-purple transition-colors">
+                        <span class="text-sm mb-2">向下滚动</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 平台介绍 -->
+    <section id="about" class="section-padding bg-lotus-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="px-4 py-1 bg-lotus-purple-light text-lotus-purple rounded-full text-sm font-medium">平台价值</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-lotus-dark mb-6">平台核心价值与定位</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-transparent via-lotus-purple to-transparent mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <p class="text-lg text-lotus-dark/80 leading-relaxed">
+                        莲藕一体化平台（简称"莲藕平台"）是一款聚焦刑满释放人员心理健康与全周期社会融入的数字化解决方案。平台以"心理赋能+社会融入"双轨并进，贯通"狱中—释放—回归—融入"全场景，通过心理学、人工智能与人因工程的多学科交叉技术，破解刑释人员身份转换期的心理断裂与社会脱节困境。
+                    </p>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-lotus-dark mb-6 flex items-center">
+                            <span class="mr-3 text-lotus-purple">
+                                <i class="fa fa-lightbulb-o"></i>
+                            </span>
+                            三大核心隐喻
+                        </h3>
+                        <div class="space-y-6">
+                            <!-- 重生之喻 -->
+                            <div class="flex items-start group">
+                                <div class="h-12 w-12 rounded-full bg-lotus-purple-light flex items-center justify-center mr-5 flex-shrink-0 transition-all duration-300 group-hover:bg-lotus-purple group-hover:scale-110">
+                                    <i class="fa fa-fire text-lotus-purple group-hover:text-white transition-colors"></i>
+                                </div>
+                                <div class="group-hover:translate-x-2 transition-all">
+                                    <h4 class="text-xl font-semibold text-lotus-dark mb-2">重生之喻</h4>
+                                    <p class="text-lotus-dark/70">取意"哪吒以莲藕为身重生"的典故，传递"过往不定义未来"的信念，为用户提供精神支持。</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 不断之联 -->
+                            <div class="flex items-start group">
+                                <div class="h-12 w-12 rounded-full bg-lotus-purple-light flex items-center justify-center mr-5 flex-shrink-0 transition-all duration-300 group-hover:bg-lotus-purple group-hover:scale-110">
+                                    <i class="fa fa-link text-lotus-purple group-hover:text-white transition-colors"></i>
+                                </div>
+                                <div class="group-hover:translate-x-2 transition-all">
+                                    <h4 class="text-xl font-semibold text-lotus-dark mb-2">不断之联</h4>
+                                    <p class="text-lotus-dark/70">呼应"藕断丝连"的特性，实现"狱中预建档—出狱后长程跟踪"的服务衔接，联动监狱、司法、企业等多方资源。</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 多节之构 -->
+                            <div class="flex items-start group">
+                                <div class="h-12 w-12 rounded-full bg-lotus-purple-light flex items-center justify-center mr-5 flex-shrink-0 transition-all duration-300 group-hover:bg-lotus-purple group-hover:scale-110">
+                                    <i class="fa fa-cubes text-lotus-purple group-hover:text-white transition-colors"></i>
+                                </div>
+                                <div class="group-hover:translate-x-2 transition-all">
+                                    <h4 class="text-xl font-semibold text-lotus-dark mb-2">多节之构</h4>
+                                    <p class="text-lotus-dark/70">借鉴"莲藕多节"结构，分阶段支撑"出狱前评估—释放后适应—就业准备—长期融入"的全周期需求。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-8 bg-gradient-lotus rounded-2xl shadow-lotus">
+                        <p class="text-xl font-bold text-lotus-dark text-center leading-relaxed">
+                            平台使命：让回归，都成为真正意义上的重新开始。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 右侧图片区域 -->
+                <div class="relative">
+                    <!-- 装饰性元素 -->
+                    <div class="absolute -top-8 -left-8 w-32 h-32 bg-lotus-pink/30 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-lotus-blue/30 rounded-full blur-xl"></div>
+                    
+                    <div class="relative bg-white rounded-3xl shadow-lotus-lg overflow-hidden transform transition-all duration-500 hover:rotate-1 hover:scale-[1.02]">
+                        <img src="https://picsum.photos/600/400?random=2" alt="平台概念图" class="w-full h-auto rounded-3xl">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6 text-white">
+                                <p class="text-sm italic">莲藕平台 - 心理赋能与社会融入双轨并进</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 浮动装饰 -->
+                    <div class="absolute -top-10 right-10 w-20 h-20 bg-lotus-yellow/40 rounded-full animate-float"></div>
+                    <div class="absolute -bottom-5 left-20 w-16 h-16 bg-lotus-green/40 rounded-full animate-float" style="animation-delay: -2s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务旅程时间轴 -->
+    <section id="journey" class="section-padding bg-lotus-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="px-4 py-1 bg-lotus-purple-light text-lotus-purple rounded-full text-sm font-medium">服务流程</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-lotus-dark mb-6">服务旅程时间轴</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-transparent via-lotus-purple to-transparent mx-auto"></div>
+            </div>
+            
+            <!-- 时间轴容器 -->
+            <div class="relative">
+                <!-- 时间轴主线 -->
+                <div class="absolute top-1/2 left-0 right-0 h-1 bg-lotus-purple-light -translate-y-1/2 hidden md:block"></div>
+                
+                <!-- 时间轴阶段 -->
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <!-- 狱中建档 -->
+                    <div class="relative group mb-16 md:mb-0">
+                        <!-- 时间轴节点 -->
+                        <div class="absolute top-1/2 left-1/2 w-8 h-8 bg-lotus-purple rounded-full border-4 border-white shadow-lotus transform -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:bg-lotus-purple-dark">
+                            <i class="fa fa-file-text-o text-white text-sm absolute inset-0 flex items-center justify-center"></i>
+                        </div>
+                        
+                        <!-- 内容 - 上方 -->
+                        <div class="mb-8 md:mb-16">
+                            <div class="p-6 bg-white rounded-2xl shadow-lotus card-lotus hover:shadow-lotus-lg transition-all duration-500 hover:-translate-y-3">
+                                <h3 class="text-xl font-bold text-lotus-dark mb-3">狱中建档</h3>
+                                <p class="text-lotus-dark/70 leading-relaxed">
+                                    开展心理建档与创伤早期干预，为用户建立完整的心理档案，提前做好释放准备。
+                                </p>
+                                <a href="#features" class="inline-flex items-center text-lotus-purple mt-4 hover:text-lotus-purple-dark transition-colors">
+                                    <span>了解更多</span>
+                                    <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 释放过渡 -->
+                    <div class="relative group mb-16 md:mb-0">
+                        <!-- 时间轴节点 -->
+                        <div class="absolute top-1/2 left-1/2 w-8 h-8 bg-lotus-purple rounded-full border-4 border-white shadow-lotus transform -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:bg-lotus-purple-dark">
+                            <i class="fa fa-rocket text-white text-sm absolute inset-0 flex items-center justify-center"></i>
+                        </div>
+                        
+                        <!-- 内容 - 下方 -->
+                        <div class="mt-8 md:mt-16">
+                            <div class="p-6 bg-white rounded-2xl shadow-lotus card-lotus hover:shadow-lotus-lg transition-all duration-500 hover:-translate-y-3">
+                                <h3 class="text-xl font-bold text-lotus-dark mb-3">释放过渡</h3>
+                                <p class="text-lotus-dark/70 leading-relaxed">
+                                    提供心理适应支持与生活技能衔接，帮助用户顺利度过释放初期的适应期。
+                                </p>
+                                <a href="#features" class="inline-flex items-center text-lotus-purple mt-4 hover:text-lotus-purple-dark transition-colors">
+                                    <span>了解更多</span>
+                                    <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 就业赋能 -->
+                    <div class="relative group mb-16 md:mb-0">
+                        <!-- 时间轴节点 -->
+                        <div class="absolute top-1/2 left-1/2 w-8 h-8 bg-lotus-purple rounded-full border-4 border-white shadow-lotus transform -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:bg-lotus-purple-dark">
+                            <i class="fa fa-briefcase text-white text-sm absolute inset-0 flex items-center justify-center"></i>
+                        </div>
+                        
+                        <!-- 内容 - 上方 -->
+                        <div class="mb-8 md:mb-16">
+                            <div class="p-6 bg-white rounded-2xl shadow-lotus card-lotus hover:shadow-lotus-lg transition-all duration-500 hover:-translate-y-3">
+                                <h3 class="text-xl font-bold text-lotus-dark mb-3">就业赋能</h3>
+                                <p class="text-lotus-dark/70 leading-relaxed">
+                                    通过就业心理赋能与匿名岗位匹配促进经济自立，提升用户的就业竞争力。
+                                </p>
+                                <a href="#features" class="inline-flex items-center text-lotus-purple mt-4 hover:text-lotus-purple-dark transition-colors">
+                                    <span>了解更多</span>
+                                    <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 长期融入 -->
+                    <div class="relative group">
+                        <!-- 时间轴节点 -->
+                        <div class="absolute top-1/2 left-1/2 w-8 h-8 bg-lotus-purple rounded-full border-4 border-white shadow-lotus transform -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-300 group-hover:scale-110 group-hover:bg-lotus-purple-dark">
+                            <i class="fa fa-users text-white text-sm absolute inset-0 flex items-center justify-center"></i>
+                        </div>
+                        
+                        <!-- 内容 - 下方 -->
+                        <div class="mt-8 md:mt-16">
+                            <div class="p-6 bg-white rounded-2xl shadow-lotus card-lotus hover:shadow-lotus-lg transition-all duration-500 hover:-translate-y-3">
+                                <h3 class="text-xl font-bold text-lotus-dark mb-3">长期融入</h3>
+                                <p class="text-lotus-dark/70 leading-relaxed">
+                                    持续维护心理健康，巩固社会关系网络，确保用户能够长期稳定地融入社会。
+                                </p>
+                                <a href="#features" class="inline-flex items-center text-lotus-purple mt-4 hover:text-lotus-purple-dark transition-colors">
+                                    <span>了解更多</span>
+                                    <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 总结性文字 -->
+            <div class="mt-16 p-8 bg-gradient-lotus rounded-2xl shadow-lotus text-center">
+                <p class="text-lg text-lotus-dark/90 leading-relaxed max-w-4xl mx-auto">
+                    平台旨在帮助刑释人员修复心理创伤、重建自我效能感、提升社会适应能力、实现稳定就业，从心理根源上降低再犯罪风险，推动其实现心理康复与社会功能的双重重建，真正完成重返社会的平稳过渡。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能模块 -->
+    <section id="features" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="px-4 py-1 bg-lotus-purple-light text-lotus-purple rounded-full text-sm font-medium">核心功能</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-lotus-dark mb-6">功能模块设计</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-transparent via-lotus-purple to-transparent mx-auto"></div>
+                <p class="mt-6 text-lotus-dark/70 max-w-3xl mx-auto leading-relaxed">
+                    平台融合心理学、人工智能与人因工程技术，构建全方位的服务体系，为用户提供从心理赋能到社会融入的全周期支持
+                </p>
+            </div>
+            
+            <!-- 心理赋能体系 -->
+            <div class="mb-20">
+                <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark mb-10 text-center relative">
+                    <span class="relative z-10">心理赋能体系</span>
+                    <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- 动态心理档案 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-file-text-o text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">动态心理档案</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            基于PHQ-9、GAD-7等标准化量表，实现从入狱到释放后60个月的连续心理监测，为用户提供全方位的心理支持。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">数据存储：本地加密存储（敏感数据仅存用户设备）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">接口：对接司法局安置帮教系统（符合《个人信息保护法》）</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- AI心理助手 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-comments text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">AI心理助手"小藕"</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            提供7×24小时匿名倾诉服务，支持文字/语音交互，内置情绪急救四象限，为用户提供随时可用的心理支持。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">模型：基于Qwen大模型优化，提供智能心理陪伴</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">交互：WebSocket实时通信，提供流畅的对话体验</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 再社会化课程 -->
+            <div class="mb-20">
+                <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark mb-10 text-center relative">
+                    <span class="relative z-10">再社会化课程</span>
+                    <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- 低门槛设计 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-tv text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">低门槛设计</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            课程以3-5分钟动画为主，辅以语音导航，适配文盲/半文盲用户，降低学习门槛，提高参与度。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">前端：React 18 + TypeScript，确保高性能与可维护性</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">适配：支持语音导航与大字体模式，满足不同用户需求</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 课程分类 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-book text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">课程分类</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            涵盖生活技能、就业技能、兴趣培养等多个领域，满足不同用户的个性化需求，促进全面发展。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">生活技能：移动支付、网购、地铁出行等实用技能</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">就业技能：水电工、家政服务等岗位培训，提升就业竞争力</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">兴趣培养：绘画、音乐等疗愈型兴趣小组，促进心理健康</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 就业闭环支持 -->
+            <div class="mb-20">
+                <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark mb-10 text-center relative">
+                    <span class="relative z-10">就业闭环支持</span>
+                    <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- 岗位匹配 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-briefcase text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">岗位匹配</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            企业需通过"包容雇主认证"（司法局背书），岗位信息经脱敏处理，为用户提供安全、公平的就业机会。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">认证流程：企业提交资质 → 司法局审核 → 平台公示，确保雇主可靠性</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">数据库：PostgreSQL（用户数据）、Redis（缓存），确保数据安全与性能</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 就业训练链 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-line-chart text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">就业训练链</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            提供模拟面试、职业技能培训等全方位支持，提升用户就业竞争力，帮助用户顺利融入职场。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">模拟面试：基于AI视频分析（表情、语音情绪识别），提供针对性反馈</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">职业技能培训：理论+实践结合的模块化课程，实用性强</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 隐私与激励机制 -->
+            <div>
+                <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark mb-10 text-center relative">
+                    <span class="relative z-10">隐私与激励机制</span>
+                    <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- 伪装模式 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-eye-slash text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">伪装模式</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            APP图标可切换为"计算器""日历"，启动需特定手势，有效保护用户隐私，减少使用顾虑。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">安卓：动态图标切换（Android 12+），提供灵活的隐私保护</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">iOS：URL Scheme跳转，实现无缝伪装体验</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 藕粉积分 -->
+                    <div class="card-lotus">
+                        <div class="flex items-center mb-6">
+                            <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-lotus-purple to-lotus-purple-dark flex items-center justify-center mr-5 shadow-lotus">
+                                <i class="fa fa-gift text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold text-lotus-dark">藕粉积分</h4>
+                        </div>
+                        <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                            用户通过完成课程、心理评估等积极行为获取积分，可兑换生活用品或专业心理咨询时长，激励用户持续参与。
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">积分系统：Node.js + Express，确保稳定运行与可扩展性</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-green/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-check text-lotus-green text-sm"></i>
+                                </div>
+                                <span class="text-lotus-dark/70 text-sm">兑换接口：对接第三方商城API，提供丰富的兑换选择</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 可行性分析 -->
+    <section id="feasibility" class="section-padding bg-lotus-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="px-4 py-1 bg-lotus-purple-light text-lotus-purple rounded-full text-sm font-medium">项目评估</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-lotus-dark mb-6">可行性分析</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-transparent via-lotus-purple to-transparent mx-auto"></div>
+            </div>
+            
+            <!-- 政策支撑 -->
+            <div class="mb-20">
+                <div class="flex items-center justify-center mb-10">
+                    <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark relative">
+                        <span class="relative z-10">政策赋能：国家战略与部门协同双重保障</span>
+                        <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                    </h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6">
+                        <!-- 国家战略契合 -->
+                        <div class="card-lotus">
+                            <h4 class="text-xl font-bold text-lotus-dark mb-4">国家战略契合</h4>
+                            <p class="text-lotus-dark/70 mb-4 leading-relaxed">
+                                紧扣 "十五五" 规划 "普惠性、基础性、兜底性民生建设" 核心目标，响应 "解决人民群众急难愁盼问题""畅通社会流动渠道" 的政策导向，精准对接特殊群体心理福祉与社会功能修复需求。
+                            </p>
+                            <p class="text-lotus-dark/70 leading-relaxed">
+                                符合《中共中央关于制定国民经济和社会发展第十五个五年规划的建议》中 "加强社会治理、预防减少重新犯罪" 的社会治理要求，是民生建设与社会治理的双重契合点。
+                            </p>
+                        </div>
+                        
+                        <!-- 多部门政策协同 -->
+                        <div class="card-lotus">
+                            <h4 class="text-xl font-bold text-lotus-dark mb-4">多部门政策协同</h4>
+                            <p class="text-lotus-dark/70 mb-4 leading-relaxed">
+                                衔接司法、人社、民政、公安等部门安置帮教政策，遵循 "依法依规、自愿参与、一视同仁" 的工作原则，与现有安置帮教体系形成互补。
+                            </p>
+                            <p class="text-lotus-dark/70 leading-relaxed">
+                                适配人社部门就业支持、民政部门困难帮扶、司法部门心理帮教等政策要求，无政策冲突与合规风险。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- 规划文件截图 -->
+                        <div class="card-lotus relative overflow-hidden">
+                            <div class="aspect-video bg-gradient-lotus-soft rounded-xl flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fa fa-file-text-o text-lotus-purple text-4xl mb-4"></i>
+                                    <p class="text-lotus-dark/70">规划文件截图（脱敏处理）</p>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-4 text-white">
+                                    <p class="text-sm">"十五五"规划民生建设相关表述</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 多部门政策衔接示意图 -->
+                        <div class="card-lotus relative overflow-hidden">
+                            <div class="aspect-video bg-gradient-lotus-soft rounded-xl flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fa fa-sitemap text-lotus-purple text-4xl mb-4"></i>
+                                    <p class="text-lotus-dark/70">多部门政策衔接示意图</p>
+                                </div>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-4 text-white">
+                                    <p class="text-sm">司法、人社、民政、公安多部门协同</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 市场需求 -->
+            <div class="mb-20">
+                <div class="flex items-center justify-center mb-10">
+                    <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark relative">
+                        <span class="relative z-10">需求导向：百万群体的刚性诉求与真实反馈</span>
+                        <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                    </h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 目标群体规模与痛点 -->
+                    <div class="card-lotus md:col-span-2">
+                        <h4 class="text-xl font-bold text-lotus-dark mb-4">目标群体规模与痛点</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <p class="text-lotus-dark/70 mb-6 leading-relaxed">
+                                    需求规模：我国每年数十万刑释人员回归社会，82.1% 对融入社会深感忧虑，再就业率不足 40%，近三成人因 "前科标签" 被就业市场排斥。
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-lotus-dark mb-3">核心痛点：</h5>
+                                <ul class="space-y-3 text-lotus-dark/70">
+                                    <li class="flex items-start">
+                                        <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                            <i class="fa fa-heartbeat text-lotus-purple text-sm"></i>
+                                        </div>
+                                        <span>心理层面：PTSD、焦虑、抑郁等问题缺乏持续干预</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                            <i class="fa fa-briefcase text-lotus-purple text-sm"></i>
+                                        </div>
+                                        <span>就业层面：结构性歧视与技能断层</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                            <i class="fa fa-link text-lotus-purple text-sm"></i>
+                                        </div>
+                                        <span>服务层面：全周期服务衔接断裂</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                            <i class="fa fa-lock text-lotus-purple text-sm"></i>
+                                        </div>
+                                        <span>隐私层面：高度敏感的信息保护需求</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 需求真实性验证 -->
+                    <div class="card-lotus">
+                        <h4 class="text-xl font-bold text-lotus-dark mb-4">需求真实性验证</h4>
+                        <div class="space-y-6">
+                            <div>
+                                <h5 class="font-medium text-lotus-dark mb-3">调研反馈：</h5>
+                                <p class="text-lotus-dark/70 mb-4 leading-relaxed">
+                                    通过对刑释人员、狱警、司法局工作人员的深度访谈，验证核心需求：
+                                </p>
+                                <ul class="space-y-3 text-lotus-dark/70">
+                                    <li class="flex items-center justify-between">
+                                        <span>匿名心理支持</span>
+                                        <span class="font-medium text-lotus-purple">100%</span>
+                                    </li>
+                                    <li class="flex items-center justify-between">
+                                        <span>无歧视就业信息</span>
+                                        <span class="font-medium text-lotus-purple">92%</span>
+                                    </li>
+                                    <li class="flex items-center justify-between">
+                                        <span>通俗政策解读</span>
+                                        <span class="font-medium text-lotus-purple">85%</span>
+                                    </li>
+                                    <li class="flex items-center justify-between">
+                                        <span>低门槛技能培训</span>
+                                        <span class="font-medium text-lotus-purple">88%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- 需求详情弹窗按钮 -->
+                            <button class="w-full btn-lotus-outline">
+                                <i class="fa fa-info-circle mr-2"></i> 查看用户需求详情
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技术实现 -->
+            <div class="mb-20">
+                <div class="flex items-center justify-center mb-10">
+                    <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark relative">
+                        <span class="relative z-10">技术支撑：成熟架构与人性化设计双保障</span>
+                        <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                    </h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 技术架构可行性 -->
+                    <div class="card-lotus">
+                        <h4 class="text-xl font-bold text-lotus-dark mb-4">技术架构可行性</h4>
+                        <p class="text-lotus-dark/70 mb-5 leading-relaxed">
+                            核心技术：依托应用心理学、人工智能、人因工程等多学科交叉技术，采用 "1 个数字中枢 + 3 类服务入口 + N 方协同资源" 架构，技术成熟度高。
+                        </p>
+                        <h5 class="font-medium text-lotus-dark mb-3">关键技术落地：</h5>
+                        <ul class="space-y-3 text-lotus-dark/70">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-robot text-lotus-purple text-sm"></i>
+                                </div>
+                                <span>AI 心理助手（基于现有大数据对话模型优化）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-microphone text-lotus-purple text-sm"></i>
+                                </div>
+                                <span>语音交互（离线语音转写技术）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-lock text-lotus-purple text-sm"></i>
+                                </div>
+                                <span>数据加密（端到端加密 + 本地存储）</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-lotus-purple/20 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <i class="fa fa-vr-cardboard text-lotus-purple text-sm"></i>
+                                </div>
+                                <span>VR 场景模拟（复用现有成熟技术方案）</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- 产品设计适配性 -->
+                    <div class="card-lotus">
+                        <h4 class="text-xl font-bold text-lotus-dark mb-4">产品设计适配性</h4>
+                        <div class="space-y-5">
+                            <div>
+                                <h5 class="font-medium text-lotus-dark mb-3">低门槛交互：</h5>
+                                <p class="text-lotus-dark/70 leading-relaxed">
+                                    图标 + 语音双通道引导、视频优先内容、语音输入替代打字，适配中文盲 / 半文盲用户，降低使用门槛。
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-lotus-dark mb-3">隐私保护技术：</h5>
+                                <p class="text-lotus-dark/70 leading-relaxed">
+                                    伪装模式（应用图标伪装 + 特定启动方式）、无痕通知、敏感数据本地加密，解决用户核心顾虑。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 技术演示 -->
+                    <div class="card-lotus">
+                        <h4 class="text-xl font-bold text-lotus-dark mb-4">技术演示</h4>
+                        <div class="space-y-4">
+                            <!-- 技术架构示意图 -->
+                            <div class="aspect-video bg-gradient-lotus-soft rounded-xl flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fa fa-cubes text-lotus-purple text-4xl mb-4"></i>
+                                    <p class="text-lotus-dark/70">技术架构示意图</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 伪装模式演示 -->
+                            <div class="aspect-video bg-gradient-lotus-soft rounded-xl flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fa fa-eye-slash text-lotus-purple text-4xl mb-4"></i>
+                                    <p class="text-lotus-dark/70">伪装模式演示动图</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 语音交互演示 -->
+                            <div class="aspect-video bg-gradient-lotus-soft rounded-xl flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fa fa-volume-up text-lotus-purple text-4xl mb-4"></i>
+                                    <p class="text-lotus-dark/70">语音交互演示动图</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-4 bg-lotus-purple-light rounded-lg text-center">
+                            <p class="text-lotus-purple font-medium">技术方案已通过原型验证，可快速落地开发</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 运营落地 -->
+            <div class="mb-10">
+                <div class="flex items-center justify-center mb-10">
+                    <h3 class="text-2xl md:text-3xl font-bold text-lotus-dark relative">
+                        <span class="relative z-10">运营落地：资源协同与可持续路径</span>
+                        <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-3 bg-lotus-purple/20 -z-0"></span>
+                    </h3>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 多方资源协同 -->
+                    <div class="card-lotus">
+                        <h4 class="text-xl font-bold text-lotus-dark mb-4">多方资源协同</h4>
+                        <div class="space-y-5">
+                            <div class="aspect-video bg-gradient-lotus-soft rounded-xl flex items-center justify-center mb-4">
+                                <div class="text-center">
+                                    <i class="fa fa-users text-lotus-purple text-4xl mb-4"></i>
+                                    <p class="text-lotus-dark/70">多方资源协同图谱</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <h5 class="font-medium text-lotus-dark mb-2 flex items-center">
+                                        <i class="fa fa-building text-lotus-purple mr-2"></i> 政府端
+                                    </h5>
+                                    <p class="text-lotus-dark/70 text-sm">
+                                        对接司法、人社、民政、公安等部门，获取安置帮教数据、政策资源、就业岗位信息支持。
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-medium text-lotus-dark mb-2 flex items-center">
+                                        <i class="fa fa-industry text-lotus-purple mr-2"></i> 企业端
+                                    </h5>
+                                    <p class="text-lotus-dark/70 text-sm">
+                                        联动 "司法局认证包容雇主"，提供无歧视就业岗位，构建 "企业合作 - 岗位匹配 - 就业跟踪" 闭环。
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-medium text-lotus-dark mb-2 flex items-center">
+                                        <i class="fa fa-handshake-o text-lotus-purple mr-2"></i> 服务端
+                                    </h5>
+                                    <p class="text-lotus-dark/70 text-sm">
+                                        整合专业心理咨询师、技能培训讲师、兴趣小组导师资源，提供标准化 + 个性化服务。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 可持续运营模式 -->
+                    <div class="card-lotus">
+                        <h4 class="text-xl font-bold text-lotus-dark mb-4">可持续运营模式</h4>
+                        <div class="space-y-5">
+                            <div class="aspect-video bg-gradient-lotus-soft rounded-xl flex items-center justify-center mb-4">
+                                <div class="text-center">
+                                    <i class="fa fa-sitemap text-lotus-purple text-4xl mb-4"></i>
+                                    <p class="text-lotus-dark/70">运营流程图</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <h5 class="font-medium text-lotus-dark mb-2">成本控制：</h5>
+                                    <p class="text-lotus-dark/70">
+                                        线上课程替代部分线下服务，减少场地与人力成本；多部门资源复用，降低协同成本。
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-medium text-lotus-dark mb-2">激励机制：</h5>
+                                    <p class="text-lotus-dark/70">
+                                        藕粉积分体系（完成课程、任务获取积分，兑换日用品 / 高级课程 / 咨询时长），提升用户活跃度与留存率。
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-medium text-lotus-dark mb-2">落地路径：</h5>
+                                    <p class="text-lotus-dark/70">
+                                        先试点（与 1-2 个监狱、街道合作），再推广（逐步扩大覆盖范围），分阶段验证效果。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 伦理合规 -->
+    <section id="ethics" class="section-padding bg-lotus-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="px-4 py-1 bg-lotus-purple-light text-lotus-purple rounded-full text-sm font-medium">伦理与合规</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-lotus-dark mb-6">伦理合规保障</h2>
+                <div class="h-1 w-20 bg-gradient-to-r from-transparent via-lotus-purple to-transparent mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="card-lotus">
+                    <h3 class="text-xl font-bold text-lotus-dark mb-4">数据隐私保护</h3>
+                    <p class="text-lotus-dark/70 leading-relaxed">
+                        严格遵循《个人信息保护法》，采用端到端加密、本地存储等技术，确保用户敏感信息安全，实现数据最小化采集与使用。
+                    </p>
+                </div>
+                
+                <div class="card-lotus">
+                    <h3 class="text-xl font-bold text-lotus-dark mb-4">伦理审查机制</h3>
+                    <p class="text-lotus-dark/70 leading-relaxed">
+                        建立多学科伦理审查委员会，对平台设计、服务流程、数据使用等进行全方位伦理评估，确保服务符合伦理规范。
+                    </p>
+                </div>
+                
+                <div class="card-lotus">
+                    <h3 class="text-xl font-bold text-lotus-dark mb-4">知情同意原则</h3>
+                    <p class="text-lotus-dark/70 leading-relaxed">
+                        所有服务均遵循自愿参与、知情同意原则，用户有权随时退出服务，确保用户自主权得到充分尊重。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-lotus-dark text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="h-10 w-10 rounded-full bg-gradient-lotus flex items-center justify-center mr-3">
+                            <img src="logo.png" alt="莲藕平台" class="h-8 w-8 object-contain" />
+                        </div>
+                        <h3 class="text-xl font-bold">莲藕一体化平台</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        让回归，都成为真正意义上的重新开始
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fa fa-weixin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fa fa-weibo text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors">
+                            <i class="fa fa-envelope text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-gray-300 hover:text-white transition-colors">平台介绍</a></li>
+                        <li><a href="#features" class="text-gray-300 hover:text-white transition-colors">功能模块</a></li>
+                        <li><a href="#feasibility" class="text-gray-300 hover:text-white transition-colors">可行性分析</a></li>
+                        <li><a href="#ethics" class="text-gray-300 hover:text-white transition-colors">伦理合规</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-300">
+                            <i class="fa fa-map-marker mr-3"></i>
+                            <span>北京市海淀区中关村大街1号</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <i class="fa fa-phone mr-3"></i>
+                            <span>400-123-4567</span>
+                        </li>
+                        <li class="flex items-center text-gray-300">
+                            <i class="fa fa-envelope mr-3"></i>
+                            <span>contact@lianou.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
+                <p>&copy; 2024 莲藕一体化平台. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
