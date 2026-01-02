@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>功能亮点 - 莲藕摆渡一体化心理赋能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS变量 */
+        :root {
+            --primary-color: #dda0dd;
+            --secondary-color: #daa520;
+            --accent-color: #f4e4bc;
+            --light-bg: #f9f7f2;
+            --dark-text: #333333;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #8fb996;
+            --hover-color: #c77dff;
+        }
+
+        /* 全局样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: white;
+            overflow-x: hidden;
+        }
+
+        /* 容器样式 */
+        .container {
+            width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        /* 页面顶部区域 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* 主要内容区域 */
+        main {
+            padding: 20px 0;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 标题样式 */
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark-text);
+        }
+
+        h5 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        /* 图标样式 */
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        /* 服务卡片 */
+        .service-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+        }
+
+        .service-content p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin: 0;
+        }
+
+        /* 技术亮点 */
+        .tech-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .tech-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tech-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: var(--dark-text);
+        }
+
+        /* 功能亮点概览样式 */
+        .features-overview {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-content p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+
+        .feature-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: var(--light-bg);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+        }
+
+        /* 测评功能样式 */
+        .first-assessment-section {
+            margin-bottom: 40px;
+        }
+
+        .assessment-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .assessment-left {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .assessment-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+
+        .assessment-right p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        .assessment-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .assessment-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .assessment-feature i {
+            color: var(--success-color);
+            margin-top: 3px;
+        }
+
+        .assessment-feature span {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* 测评流程样式 */
+        .assessment-flow {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .flow-step {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h5 {
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* 个性化匹配机制样式 */
+        .personalized-matching-section {
+            margin-bottom: 40px;
+        }
+
+        .matching-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .matching-left p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        .matching-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .matching-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .matching-feature i {
+            color: var(--success-color);
+            margin-top: 3px;
+        }
+
+        .matching-feature strong {
+            color: var(--primary-color);
+        }
+
+        .matching-diagram {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .diagram-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        .diagram-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .diagram-step {
+            text-align: center;
+        }
+
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin: 0 auto 10px;
+        }
+
+        .diagram-step h5 {
+            margin-bottom: 5px;
+        }
+
+        .diagram-step p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .diagram-arrow {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* 心理支持路径样式 */
+        .psychological-support-section {
+            margin-bottom: 40px;
+        }
+
+        .support-paths {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .support-path-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .path-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .path-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 auto 15px;
+        }
+
+        .path-header h4 {
+            margin-bottom: 10px;
+        }
+
+        .path-header p {
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+
+        .support-services {
+            list-style: none;
+        }
+
+        .support-services li {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .support-services li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .support-services i {
+            color: var(--primary-color);
+            margin-top: 3px;
+        }
+
+        .service-content strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-text);
+        }
+
+        .service-content p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* 设计特色样式 */
+        .design-features-section {
+            margin-bottom: 40px;
+        }
+
+        .design-features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .design-feature-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .design-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .design-feature-card p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+
+        .design-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* 智能推荐系统样式 */
+        .smart-recommendation-section {
+            margin-bottom: 40px;
+        }
+
+        .recommendation-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .recommendation-left p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        .recommendation-types {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .recommendation-type {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            background-color: var(--light-bg);
+            border-radius: 12px;
+        }
+
+        .recommendation-type i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-type span {
+            font-size: 0.9rem;
+            color: var(--dark-text);
+        }
+
+        .recommendation-flow {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .flow-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flow-item i {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .flow-item p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* 切换版本按钮 */
+        .version-switch {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .version-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .version-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 30px 0 80px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-mission {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-info {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.1rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .recommendation-types {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mobile-index.html" class="logo">
+                    <img src="logo.png" alt="莲藕摆渡">
+                    莲藕摆渡
+                </a>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="container">
+                <h1>功能亮点</h1>
+                <h2>创新设计，精准服务，为重返社会人士提供全方位支持</h2>
+                <p>基于AI智能算法和3000+法院真实案例，为每个用户提供个性化服务方案</p>
+                <div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能亮点内容 -->
+        <section class="container">
+            <!-- 功能亮点概览 -->
+            <section class="features-overview card" id="features">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>核心功能亮点</h3>
+                </div>
+                <p>基于AI智能算法和3000+法院真实案例，为每个用户提供个性化服务方案</p>
+                <div class="tech-highlights">
+                    <!-- 功能卡片 1 -->
+                    <div class="tech-item">
+                        <i class="fas fa-clipboard-check"></i>
+                        <h4>首次测评功能入口</h4>
+                        <p>个性化服务的精准起点，5大维度21项指标全面评估</p>
+                    </div>
+                    
+                    <!-- 功能卡片 2 -->
+                    <div class="tech-item">
+                        <i class="fas fa-bullseye"></i>
+                        <h4>个性化任务匹配</h4>
+                        <p>AI智能匹配，为每个用户生成独一无二的服务方案</p>
+                    </div>
+                    
+                    <!-- 功能卡片 3 -->
+                    <div class="tech-item">
+                        <i class="fas fa-heart"></i>
+                        <h4>双路径心理支持</h4>
+                        <p>明线+暗线相结合，全方位、无死角的心理赋能服务</p>
+                    </div>
+                    
+                    <!-- 功能卡片 4 -->
+                    <div class="tech-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <h4>以人为本设计</h4>
+                        <p>低读写门槛，隐私优先，非评判性语言风格</p>
+                    </div>
+                    
+                    <!-- 功能卡片 5 -->
+                    <div class="tech-item">
+                        <i class="fas fa-magic"></i>
+                        <h4>智能推荐系统</h4>
+                        <p>基于用户数据，智能推荐课程、活动和资源</p>
+                    </div>
+                    
+                    <!-- 功能卡片 6 -->
+                    <div class="tech-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>安全可靠保障</h4>
+                        <p>三重安全措施，确保用户数据和隐私安全</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 首次测评功能入口 -->
+            <section class="first-assessment-section card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3>首次测评功能入口</h3>
+                </div>
+                <h4>一键启动测评 - 个性化服务的精准起点</h4>
+                <p>用户首次登录即可启动全面测评，基于<strong>"天镜云模型"和3000+法院真实案例大数据</strong>，涵盖心理状态、再社会化需求、就业技能水平、兴趣爱好、法律认知等5大维度21项指标，快速生成个性化服务方案。</p>
+                <div class="tech-highlights">
+                    <div class="tech-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>全面评估</h4>
+                        <p>5大维度21项指标</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-robot"></i>
+                        <h4>AI算法支撑</h4>
+                        <p>基于3000+法院案例</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-microphone"></i>
+                        <h4>语音交互支持</h4>
+                        <p>低读写门槛设计</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-clock"></i>
+                        <h4>快速完成</h4>
+                        <p>5分钟完成，即时生成报告</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-user-secret"></i>
+                        <h4>隐私优先</h4>
+                        <p>全程匿名，严格保密</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>双重保障</h4>
+                        <p>智能筛查+人工二次审核</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 个性化任务匹配机制 -->
+            <section class="personalized-matching-section card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>个性化任务匹配机制</h3>
+                </div>
+                <h4>AI驱动的精准服务</h4>
+                <p>基于"天镜云模型"和3000+法院案例大数据，应用心理学+AI+人因工程的交叉算法，为每一位用户生成独一无二的任务列表。</p>
+                <div class="tech-highlights">
+                    <div class="tech-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>精准度高</h4>
+                        <p>匹配准确率达92%以上</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-sync-alt"></i>
+                        <h4>动态自适应</h4>
+                        <p>根据用户反馈实时调整</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-user"></i>
+                        <h4>极致个性化</h4>
+                        <p>每个用户的任务列表独一无二</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>渐进式成长</h4>
+                        <p>难度和复杂度逐步提升</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>情境感知</h4>
+                        <p>根据用户状态智能推送</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 明线与暗线心理支持 -->
+            <section class="psychological-support-section card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>明线与暗线心理支持</h3>
+                </div>
+                <p>双路径结合，全方位、无死角的心理赋能服务，为重返社会人士提供温暖陪伴</p>
+                
+                <!-- 明线心理帮扶 -->
+                <h4>明线心理帮扶 - 主动可见的专业支持</h4>
+                <div class="tech-highlights">
+                    <div class="tech-item">
+                        <i class="fas fa-comments"></i>
+                        <h4>AI小藕智能陪聊</h4>
+                        <p>24小时在线，非评判性语言，提供情感支持</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <h4>专业心理咨询预约</h4>
+                        <p>1对1保密心理咨询，专业心理师服务</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <h4>24小时心理危机干预</h4>
+                        <p>专业团队值守，紧急支持和干预</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-book"></i>
+                        <h4>系统化心理课程</h4>
+                        <p>多领域视频课程，支持语音播放</p>
+                    </div>
+                </div>
+                
+                <!-- 暗线心理支持 -->
+                <h4>暗线心理支持 - 隐形的温暖陪伴</h4>
+                <div class="tech-highlights">
+                    <div class="tech-item">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>实时心理状态监测</h4>
+                        <p>AI分析用户行为，监测心理变化</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-bell"></i>
+                        <h4>智能正念冥想推送</h4>
+                        <p>根据心理状态，推送适合的冥想练习</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>个性化积极暗示</h4>
+                        <p>推送正能量内容，增强自信心</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>心理风险智能预警</h4>
+                        <p>监测异常状态，自动触发干预机制</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 设计特色 -->
+            <section class="design-features-section card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>设计特色</h3>
+                </div>
+                <p>以人为本的设计理念，为不同文化水平的用户提供易用、安全、温暖的服务体验</p>
+                <div class="tech-highlights">
+                    <!-- 设计特色卡片 1 -->
+                    <div class="tech-item">
+                        <i class="fas fa-low-vision"></i>
+                        <h4>低读写门槛设计</h4>
+                        <p>语音交互、图标导航、视频内容为主，降低使用门槛</p>
+                    </div>
+                    
+                    <!-- 设计特色卡片 2 -->
+                    <div class="tech-item">
+                        <i class="fas fa-user-secret"></i>
+                        <h4>隐私优先原则</h4>
+                        <p>默认匿名使用，数据端到端加密，三重安全措施</p>
+                    </div>
+                    
+                    <!-- 设计特色卡片 3 -->
+                    <div class="tech-item">
+                        <i class="fas fa-comment-dots"></i>
+                        <h4>非评判性语言风格</h4>
+                        <p>禁用歧视性标签，采用中性、支持性、温暖的语言</p>
+                    </div>
+                    
+                    <!-- 设计特色卡片 4 -->
+                    <div class="tech-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>情境感知推送技术</h4>
+                        <p>基于用户位置、时间、状态等信息，智能推送服务</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 智能推荐系统 -->
+            <section class="smart-recommendation-section card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>智能推荐系统</h3>
+                </div>
+                <h4>个性化内容推荐</h4>
+                <p>基于用户兴趣、需求和行为数据，智能推荐相关课程、活动和资源，提升用户参与度和学习效果。</p>
+                <div class="tech-highlights">
+                    <div class="tech-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>课程推荐</h4>
+                        <p>根据学习偏好智能推荐课程</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h4>活动推荐</h4>
+                        <p>推送适合的社交和学习活动</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-folder-open"></i>
+                        <h4>资源推荐</h4>
+                        <p>提供个性化的学习资源</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-briefcase"></i>
+                        <h4>岗位推荐</h4>
+                        <p>匹配适合的就业岗位</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-users"></i>
+                        <h4>社交圈推荐</h4>
+                        <p>连接志同道合的伙伴</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 切换到桌面版 -->
+            <div class="version-switch">
+                <button class="version-btn" onclick="switchToDesktop()">切换到桌面版</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">莲藕摆渡 莲藕摆渡</div>
+                <div class="footer-mission">以心为桥，渡人重生。专注为重返社会人士提供全周期心理赋能与社会融入服务。</div>
+                <div class="footer-info">
+                    <p>北京韦港科技集团有限公司</p>
+                    <p>2017年，北京市区级招商引资企业</p>
+                    <p>2019年，入驻海南生态软件园</p>
+                    <p>联系方式：邮箱：venisle@venisle.com | 北京：010-86460668 | 天津：022-66271007</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 底部导航栏 -->
+    <nav class="bottom-nav">
+        <a href="mobile-index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="mobile-core-position.html" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>核心定位</span>
+        </a>
+        <a href="mobile-service-system.html" class="nav-item">
+            <i class="fas fa-route"></i>
+            <span>服务体系</span>
+        </a>
+        <a href="mobile-contact-us.html" class="nav-item">
+            <i class="fas fa-phone"></i>
+            <span>联系我们</span>
+        </a>
+    </nav>
+
+    <!-- 移动端优化脚本 -->
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 添加触摸反馈效果
+        document.querySelectorAll('.btn, .card, .version-btn, .nav-item, .feature-card, .design-feature-card, .support-path-card').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // 图片懒加载
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src || image.src;
+                        imageObserver.unobserve(image);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img').forEach(function(image) {
+                imageObserver.observe(image);
+            });
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(function() {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // 底部导航栏激活状态
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 切换到桌面版
+        function switchToDesktop() {
+            // 设置cookie，24小时内不再重定向
+            document.cookie = 'prefer_desktop=true; expires=' + new Date(Date.now() + 86400000).toUTCString() + '; path=/';
+            // 跳转到桌面版页面
+            window.location.href = 'feature-highlights.html';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>联系我们 - 莲藕摆渡一体化心理赋能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS变量 */
+        :root {
+            --primary-color: #dda0dd;
+            --secondary-color: #daa520;
+            --accent-color: #f4e4bc;
+            --light-bg: #f9f7f2;
+            --dark-text: #333333;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #8fb996;
+            --hover-color: #c77dff;
+        }
+
+        /* 全局样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: white;
+            overflow-x: hidden;
+        }
+
+        /* 容器样式 */
+        .container {
+            width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        /* 页面顶部区域 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* 主要内容区域 */
+        main {
+            padding: 20px 0;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        /* 图标样式 */
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        /* 机构标语样式 */
+        .institution-slogan {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 0;
+            background-color: var(--light-bg);
+            border-radius: 12px;
+        }
+
+        .institution-slogan h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .institution-slogan p {
+            font-size: 1rem;
+            color: var(--light-text);
+            padding: 0 20px;
+        }
+
+        /* 联系信息卡片样式 */
+        .contact-section {
+            margin-bottom: 30px;
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .contact-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .contact-card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-card-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .contact-card-content p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 8px;
+        }
+
+        .contact-card-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .contact-card-content li {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-card-content li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* 联系表单样式 */
+        .contact-form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .section-header p {
+            font-size: 1rem;
+            color: var(--light-text);
+        }
+
+        .contact-form {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--dark-text);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(221, 160, 221, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(221, 160, 221, 0.4);
+        }
+
+        /* 团队信息样式 */
+        .team-section {
+            margin-bottom: 30px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .team-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-card-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+
+        .team-card-content {
+            flex: 1;
+        }
+
+        .team-card-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .team-position {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-text);
+        }
+
+        .team-expertise {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        .team-bio {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .team-education {
+            font-size: 0.85rem;
+            color: var(--light-text);
+            line-height: 1.5;
+        }
+
+        /* 常见问题样式 */
+        .faq-section {
+            margin-bottom: 30px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item h4::before {
+            content: "Q";
+            background-color: var(--primary-color);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .faq-item p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            padding-left: 35px;
+        }
+
+        /* 切换版本按钮 */
+        .version-switch {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .version-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .version-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 30px 0 80px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-mission {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-info {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.1rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .contact-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            /* 团队卡片响应式 */
+            .team-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .faq-item h4 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mobile-index.html" class="logo">
+                    <img src="logo.png" alt="莲藕摆渡">
+                    莲藕摆渡
+                </a>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="container">
+                <h1>联系我们</h1>
+                <h2>以心为桥，渡人重生</h2>
+            </div>
+        </section>
+
+        <!-- 联系我们内容 -->
+        <section class="container">
+            <!-- 机构标语 -->
+            <div class="institution-slogan">
+                <h3>莲藕摆渡 莲藕摆渡</h3>
+                <p>以心为桥，渡人重生。专注为重返社会人士提供全周期心理赋能与社会融入服务。</p>
+            </div>
+
+            <!-- 联系信息 -->
+            <div class="contact-section">
+                <div class="contact-info-grid">
+                    <!-- 公司信息 -->
+                    <div class="contact-card">
+                        <div class="contact-card-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="contact-card-content">
+                            <h3>公司信息</h3>
+                            <p><strong>公司名称：</strong>北京韦港科技集团有限公司</p>
+                            <p><strong>企业荣誉：</strong></p>
+                            <ul>
+                                <li>2017年，北京市区级招商引资企业</li>
+                                <li>2019年，入驻海南生态软件园</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 联系方式 -->
+                    <div class="contact-card">
+                        <div class="contact-card-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-card-content">
+                            <h3>联系方式</h3>
+                            <p><strong>邮箱：</strong>venisle@venisle.com</p>
+                            <p><strong>北京：</strong>010-86460668</p>
+                            <p><strong>天津：</strong>022-66271007</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 团队信息展示 -->
+            <div class="team-section">
+                <div class="section-header">
+                    <h3>运营团队概况</h3>
+                    <p>专业的团队，为您提供优质的服务</p>
+                </div>
+                <div class="team-grid">
+                    <!-- 团队成员1 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="team-card-content">
+                            <h4>焦炳燕 Vena</h4>
+                            <p class="team-position">荣誉顾问</p>
+                            <p class="team-expertise">93年天秤</p>
+                            <p class="team-bio">《莲藕摆渡一体化平台》作者，2025年全国应用心理专业学位研究生实践技能大赛国家一等奖获得者，现供职于联想天津AI大数据集成业务线产品经理，近十年产品岗位经验。</p>
+                            <p class="team-education">南开大学研究生院社会学院应用心理专业<br>天津外国语大学涉外法政学院法学（国际经济法方向）<br>天津市第一中学</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 团队成员2 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="team-card-content">
+                            <h4>刘宁 Doris</h4>
+                            <p class="team-position">产研负责人</p>
+                            <p class="team-expertise">81年巨蟹</p>
+                            <p class="team-bio">中国庭审公开网、裁判文书网、在线法院、电子送达、人民法院调解平台等多项国家级大型政务司法集群核心建设者，均由其带领并负责与最高院等业务对接及周期运营事务推进。曾先后供职于民用航空总局、新浪，深耕法院行业十余年。</p>
+                            <p class="team-education">天津大学管理专业</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 团队成员3 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="team-card-content">
+                            <h4>刘志强 Jason</h4>
+                            <p class="team-position">运营总监</p>
+                            <p class="team-expertise">01年白羊</p>
+                            <p class="team-bio">新能源、AI硬件等行业销冠，曾代表天津蔚来参与李斌线下会，区域级百万市场中个人贡献占比最高48%（AI智能家居），对渠道拓展、异业合作、客诉处理等领域具备个人方法论，擅长与特别是年轻用户群体沟通，天津韦港海棠联合创始人。</p>
+                            <p class="team-education">某院校计算机专业（网络安全方向）</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 团队成员4 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="team-card-content">
+                            <h4>Daniel</h4>
+                            <p class="team-position">北京G.R.支持</p>
+                            <p class="team-bio">现供职于某上市公司，负责有关部委财政预算及运维管理平台，包括但不限于教育部、公安部、司法部等，对团队与地方司法局、人社局洽谈提供建议及支持。</p>
+                            <p class="team-education">曾供职于阿里淘宝事业部产品经理</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 团队成员5 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="team-card-content">
+                            <h4>姜鸣鹤 Ven</h4>
+                            <p class="team-position">创始人</p>
+                            <p class="team-expertise">92年天秤</p>
+                            <p class="team-bio">参与公开网等法院项目，2017年创立北京韦港并推出"天镜云"模型，对接江苏司协，后由中国法网吸收，曾登顶拼多多茶叶类共6店榜首，先后供职于联想控股、黑弧奥美、阿里淘宝、新浪司法产品经理，天津韦港海棠创始人。</p>
+                            <p class="team-education">中国政法大学研究生院刑事司法学院刑事诉讼法学专业<br>北京交通大学人力资源管理专业<br>天津市第一中学</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 常见问题解答 -->
+            <div class="faq-section">
+                <div class="section-header">
+                    <h3>常见问题</h3>
+                    <p>以下是一些常见问题的解答，希望能帮助到您</p>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h4>1. 如何注册成为平台用户？</h4>
+                        <p>您可以通过平台首页的注册按钮进行注册，或者联系我们的客服人员协助您完成注册流程。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>2. 平台提供哪些服务？</h4>
+                        <p>我们提供心理测评、心理咨询、就业指导、技能培训、社会融入支持等全周期服务，为重返社会人士提供全方位支持。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>3. 平台的服务对象是谁？</h4>
+                        <p>我们的服务对象主要是重返社会人士，包括刑释人员、社区矫正对象等需要心理赋能和社会融入支持的群体。</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>4. 如何预约心理咨询服务？</h4>
+                        <p>您可以登录平台后在心理咨询模块进行预约，或者通过电话、邮箱联系我们进行预约。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 切换到桌面版 -->
+            <div class="version-switch">
+                <button class="version-btn" onclick="switchToDesktop()">切换到桌面版</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">莲藕摆渡 莲藕摆渡</div>
+                <div class="footer-mission">以心为桥，渡人重生。专注为重返社会人士提供全周期心理赋能与社会融入服务。</div>
+                <div class="footer-info">
+                    <p>北京韦港科技集团有限公司</p>
+                    <p>2017年，北京市区级招商引资企业</p>
+                    <p>2019年，入驻海南生态软件园</p>
+                    <p>联系方式：邮箱：venisle@venisle.com | 北京：010-86460668 | 天津：022-66271007</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 底部导航栏 -->
+    <nav class="bottom-nav">
+        <a href="mobile-index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="mobile-core-position.html" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>核心定位</span>
+        </a>
+        <a href="mobile-service-system.html" class="nav-item">
+            <i class="fas fa-route"></i>
+            <span>服务体系</span>
+        </a>
+        <a href="mobile-contact-us.html" class="nav-item active">
+            <i class="fas fa-phone"></i>
+            <span>联系我们</span>
+        </a>
+    </nav>
+
+    <!-- 移动端优化脚本 -->
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 添加触摸反馈效果
+        document.querySelectorAll('.btn, .card, .version-btn, .nav-item, .submit-btn').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // 图片懒加载
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src || image.src;
+                        imageObserver.unobserve(image);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img').forEach(function(image) {
+                imageObserver.observe(image);
+            });
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(function() {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // 底部导航栏激活状态
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 切换到桌面版
+        function switchToDesktop() {
+            // 设置cookie，24小时内不再重定向
+            document.cookie = 'prefer_desktop=true; expires=' + new Date(Date.now() + 86400000).toUTCString() + '; path=/';
+            // 跳转到桌面版页面
+            window.location.href = 'contact-us.html';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

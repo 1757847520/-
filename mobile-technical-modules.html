@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>技术功能模块 - 莲藕摆渡一体化心理赋能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS变量 */
+        :root {
+            --primary-color: #dda0dd;
+            --secondary-color: #daa520;
+            --accent-color: #f4e4bc;
+            --light-bg: #f9f7f2;
+            --dark-text: #333333;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #8fb996;
+            --hover-color: #c77dff;
+        }
+
+        /* 全局样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: white;
+            overflow-x: hidden;
+        }
+
+        /* 容器样式 */
+        .container {
+            width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        /* 页面顶部区域 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* 主要内容区域 */
+        main {
+            padding: 20px 0;
+        }
+
+        /* 页面标题 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        .page-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* 技术模块样式 */
+        .tech-module {
+            margin-bottom: 50px;
+        }
+
+        .tech-module-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tech-module-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .tech-module-header h3 {
+            font-size: 1.3rem;
+            color: var(--dark-text);
+        }
+
+        .tech-module-description {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 25px;
+        }
+
+        /* 流程图样式 */
+        .flow-diagram {
+            margin-bottom: 30px;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .flow-step {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .flow-step-number {
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .flow-step-title {
+            font-size: 1rem;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .flow-step-description {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .flow-step-details {
+            font-size: 0.85rem;
+            color: var(--light-text);
+        }
+
+        /* 卡片网格样式 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tech-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .tech-card-title {
+            font-size: 1rem;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .tech-card-description {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .tech-card-details {
+            font-size: 0.85rem;
+            color: var(--light-text);
+        }
+
+        /* 两栏布局样式 */
+        .two-column-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* 功能列表样式 */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .feature-list li {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .feature-list li i {
+            color: var(--success-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        /* 指标网格样式 */
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .indicator-category {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .indicator-category h4 {
+            font-size: 1.1rem;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+
+        .indicator-category p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+
+        .indicator-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .indicator-list li {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .indicator-list li i {
+            color: var(--success-color);
+            font-size: 0.8rem;
+        }
+
+        /* 算法架构样式 */
+        .algorithm-architecture {
+            margin-bottom: 30px;
+        }
+
+        .architecture-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .architecture-layer {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .layer-title {
+            font-size: 1rem;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .layer-content p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .architecture-arrow {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: -10px 0;
+        }
+
+        /* 性能指标样式 */
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-item {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--light-text);
+        }
+
+        /* 协作机制样式 */
+        .collaboration-diagram {
+            margin-bottom: 30px;
+        }
+
+        .mechanism-center {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .mechanism-center h4 {
+            font-size: 1rem;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .mechanism-center p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .mechanism-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mechanism-line {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .mechanism-line h5 {
+            font-size: 1rem;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+        }
+
+        .mechanism-line ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mechanism-line li {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mechanism-line li i {
+            color: var(--success-color);
+            font-size: 0.8rem;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        /* 切换版本按钮 */
+        .version-switch {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .version-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .version-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 30px 0 80px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-mission {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-info {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .tech-module-header h3 {
+                font-size: 1.2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .performance-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mobile-index.html" class="logo">
+                    <img src="logo.png" alt="莲藕摆渡">
+                    莲藕摆渡
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="container">
+                <h1>技术与功能模块</h1>
+                <h2>详细解析平台的技术架构和功能模块</h2>
+                <p>基于AI技术和心理学理论，构建科学有效的心理赋能体系，为重返社会人士提供全周期支持</p>
+                <div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 技术功能模块 -->
+        <section id="technical-modules" class="container">
+                
+                <!-- 1. 智能筛查+人工二次审核流程 -->
+                <div class="tech-module">
+                    <div class="tech-module-header">
+                        <div class="tech-module-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>智能筛查+人工二次审核流程</h3>
+                    </div>
+                    <p class="tech-module-description">基于"天镜云模型"和3000+法院案例大数据，结合专业心理师审核，确保服务的科学性和安全性</p>
+                    
+                    <!-- 流程图 -->
+                    <div class="flow-diagram">
+                        <div class="flow-steps">
+                            <div class="flow-step">
+                                <div class="flow-step-number">1</div>
+                                <div class="flow-step-content">
+                                    <h4 class="flow-step-title">多维度用户数据采集</h4>
+                                    <p class="flow-step-description">通过首次测评、日常行为轨迹、交互记录、任务完成情况等多渠道采集用户数据，构建全面的用户画像</p>
+                                    <p class="flow-step-details">数据类型包括：心理测评结果、行为模式数据、交互内容分析、任务完成率、兴趣偏好等</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">2</div>
+                                <div class="flow-step-content">
+                                    <h4 class="flow-step-title">"天镜云模型"AI智能分析</h4>
+                                    <p class="flow-step-description">利用基于3000+法院真实案例训练的"天镜云模型"，对用户数据进行深度分析，识别潜在风险和服务需求</p>
+                                    <p class="flow-step-details">AI分析维度包括：心理风险等级、再社会化需求、就业技能缺口、兴趣爱好匹配、社会支持系统评估等</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">3</div>
+                                <div class="flow-step-content">
+                                    <h4 class="flow-step-title">风险等级智能划分</h4>
+                                    <p class="flow-step-description">根据AI分析结果，将用户划分为低风险、中风险、高风险三个等级，针对不同风险等级制定差异化服务策略</p>
+                                    <ul class="flow-step-details feature-list">
+                                        <li><i class="fas fa-check-circle"></i> <strong>低风险：</strong>AI智能推荐服务，定期跟踪</li>
+                                        <li><i class="fas fa-check-circle"></i> <strong>中风险：</strong>AI推荐+人工干预，每月随访</li>
+                                        <li><i class="fas fa-check-circle"></i> <strong>高风险：</strong>AI预警+专业心理师1对1干预，每周随访</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">4</div>
+                                <div class="flow-step-content">
+                                    <h4 class="flow-step-title">专业心理师二次审核</h4>
+                                    <p class="flow-step-description">由持有国家心理咨询师资质的专业心理师对中高风险用户进行二次审核，确保风险评估的准确性和服务方案的合理性</p>
+                                    <p class="flow-step-details">审核内容包括：AI分析结果的准确性、风险等级的合理性、服务方案的针对性、干预措施的有效性等</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">5</div>
+                                <div class="flow-step-content">
+                                    <h4 class="flow-step-title">个性化服务方案制定</h4>
+                                    <p class="flow-step-description">结合AI智能分析和人工二次审核结果，为用户制定个性化的服务方案，包括心理支持、技能培训、就业推荐等内容</p>
+                                    <p class="flow-step-details">服务方案会根据用户的动态变化进行实时调整，确保始终符合用户需求</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">6</div>
+                                <div class="flow-step-content">
+                                    <h4 class="flow-step-title">服务效果动态跟踪与优化</h4>
+                                    <p class="flow-step-description">持续跟踪用户服务效果，收集用户反馈，不断优化服务方案和AI算法，提高服务的精准性和有效性</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 核心优势 -->
+                    <h4>双重保障机制的核心优势</h4>
+                    <div class="card-grid">
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h5 class="tech-card-title">提高准确性</h5>
+                            <p class="tech-card-description">AI智能分析结合人工专业审核，减少误判率</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h5 class="tech-card-title">增强安全性</h5>
+                            <p class="tech-card-description">及时识别高风险用户，采取干预措施，降低安全风险</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h5 class="tech-card-title">提升服务质量</h5>
+                            <p class="tech-card-description">个性化服务方案，提高用户满意度和服务效果</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h5 class="tech-card-title">优化算法模型</h5>
+                            <p class="tech-card-description">人工审核结果反哺AI模型，持续提升算法准确性</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2. 链上存证技术原理 -->
+                <div class="tech-module">
+                    <div class="tech-module-header">
+                        <div class="tech-module-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>链上存证技术原理</h3>
+                    </div>
+                    <p class="tech-module-description">采用联盟链技术对平台关键数据进行存证，确保数据不可篡改、可追溯，保护用户权益和数据安全</p>
+                    
+                    <!-- 两栏布局：技术原理和存证流程 -->
+                    <div class="two-column-layout">
+                        <!-- 技术原理 -->
+                        <div>
+                            <h4>技术原理</h4>
+                            <p>平台采用基于Hyperledger Fabric的联盟链技术，对用户测评数据、服务记录、干预措施等关键信息进行链上存证，确保数据的安全性、可信度和可追溯性。</p>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check-circle"></i> <strong>去中心化存储：</strong>数据分布存储在多个节点，避免单点故障和数据丢失风险</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>不可篡改性：</strong>采用SHA-256哈希算法和数字签名技术，数据一旦上链，无法被修改或删除</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>全流程可追溯：</strong>所有数据操作都有完整记录，可追溯到具体时间、操作人和操作内容</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>权限可控透明性：</strong>数据访问权限分级管理，既保证数据透明可审计，又保护用户隐私</li>
+                                <li><i class="fas fa-check-circle"></i> <strong>高可用性：</strong>采用共识机制和容错设计，确保系统7×24小时稳定运行</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 存证流程 -->
+                        <div>
+                            <h4>存证流程</h4>
+                            <div class="flow-diagram">
+                                <div class="flow-steps">
+                                    <div class="flow-step">
+                                        <div class="flow-step-number">1</div>
+                                        <div class="flow-step-content">
+                                            <h5 class="flow-step-title">数据生成</h5>
+                                            <p class="flow-step-description">平台生成用户测评数据、服务记录等关键信息</p>
+                                        </div>
+                                    </div>
+                                    <div class="flow-step">
+                                        <div class="flow-step-number">2</div>
+                                        <div class="flow-step-content">
+                                            <h5 class="flow-step-title">数据脱敏</h5>
+                                            <p class="flow-step-description">对敏感数据进行脱敏处理，保护用户隐私</p>
+                                        </div>
+                                    </div>
+                                    <div class="flow-step">
+                                        <div class="flow-step-number">3</div>
+                                        <div class="flow-step-content">
+                                            <h5 class="flow-step-title">数据加密</h5>
+                                            <p class="flow-step-description">采用AES-256加密算法对数据进行加密</p>
+                                        </div>
+                                    </div>
+                                    <div class="flow-step">
+                                        <div class="flow-step-number">4</div>
+                                        <div class="flow-step-content">
+                                            <h5 class="flow-step-title">哈希计算</h5>
+                                            <p class="flow-step-description">计算数据哈希值，生成唯一标识</p>
+                                        </div>
+                                    </div>
+                                    <div class="flow-step">
+                                        <div class="flow-step-number">5</div>
+                                        <div class="flow-step-content">
+                                            <h5 class="flow-step-title">数字签名</h5>
+                                            <p class="flow-step-description">对哈希值进行数字签名，确保数据完整性</p>
+                                        </div>
+                                    </div>
+                                    <div class="flow-step">
+                                        <div class="flow-step-number">6</div>
+                                        <div class="flow-step-content">
+                                            <h5 class="flow-step-title">上链存证</h5>
+                                            <p class="flow-step-description">将哈希值和数字签名上链存储</p>
+                                        </div>
+                                    </div>
+                                    <div class="flow-step">
+                                        <div class="flow-step-number">7</div>
+                                        <div class="flow-step-content">
+                                            <h5 class="flow-step-title">存证完成</h5>
+                                            <p class="flow-step-description">生成存证凭证，可随时查询验证</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 应用场景 -->
+                    <h4>链上存证的应用场景</h4>
+                    <div class="card-grid">
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-clipboard-check"></i>
+                            </div>
+                            <h5 class="tech-card-title">心理测评数据存证</h5>
+                            <p class="tech-card-description">对用户心理测评结果进行链上存证，确保测评数据的真实性和不可篡改</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <h5 class="tech-card-title">服务记录存证</h5>
+                            <p class="tech-card-description">对平台提供的心理支持、技能培训、就业推荐等服务记录进行存证</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <h5 class="tech-card-title">干预措施存证</h5>
+                            <p class="tech-card-description">对针对高风险用户采取的干预措施进行存证，确保干预的有效性和可追溯性</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h5 class="tech-card-title">就业匹配存证</h5>
+                            <p class="tech-card-description">对就业岗位匹配过程和结果进行存证，确保匹配的公平性和透明度</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3. 数据脱敏实施方法 -->
+                <div class="tech-module">
+                    <div class="tech-module-header">
+                        <div class="tech-module-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <h3>数据脱敏实施方法</h3>
+                    </div>
+                    <p class="tech-module-description">采用多层次数据脱敏技术，对用户敏感信息进行全面保护，确保数据使用安全合规</p>
+                    
+                    <!-- 核心脱敏技术方法 -->
+                    <h4>核心脱敏技术方法</h4>
+                    <div class="card-grid">
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <h5 class="tech-card-title">匿名化处理</h5>
+                            <p class="tech-card-description">移除用户真实身份信息，使用随机生成的唯一ID替代，确保无法通过ID关联到具体个人</p>
+                            <p class="tech-card-details">技术细节：采用UUIDv4算法生成唯一标识符，结合哈希映射表实现身份信息的完全隔离</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <h5 class="tech-card-title">高级加密存储</h5>
+                            <p class="tech-card-description">敏感数据采用AES-256-GCM加密算法进行存储，密钥采用硬件安全模块(HSM)管理，确保只有授权人员才能访问</p>
+                            <p class="tech-card-details">技术细节：实施零信任架构，所有数据访问都需要经过多重身份验证和授权</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-cut"></i>
+                            </div>
+                            <h5 class="tech-card-title">智能数据截断</h5>
+                            <p class="tech-card-description">对部分敏感数据进行动态截断处理，根据数据类型和使用场景灵活调整截断规则</p>
+                            <p class="tech-card-details">示例：手机号显示为138****1234，身份证号显示为110101********1234</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-random"></i>
+                            </div>
+                            <h5 class="tech-card-title">可控数据替换</h5>
+                            <p class="tech-card-description">使用符合数据特征的随机数据替换敏感信息，保持数据格式一致性，便于数据分析和模型训练</p>
+                            <p class="tech-card-details">技术细节：采用基于统计学的合成数据生成算法，确保替换后的数据保持原有数据分布特征</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h5 class="tech-card-title">AI辅助脱敏</h5>
+                            <p class="tech-card-description">利用AI技术自动识别和分类敏感数据，智能选择最优脱敏方法，提高脱敏效率和准确性</p>
+                            <p class="tech-card-details">技术细节：基于BERT模型的敏感信息识别系统，支持动态脱敏规则调整</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-eye-slash"></i>
+                            </div>
+                            <h5 class="tech-card-title">动态脱敏</h5>
+                            <p class="tech-card-description">根据用户角色、访问场景和数据使用目的，动态调整数据脱敏级别，实现细粒度的隐私保护</p>
+                            <p class="tech-card-details">示例：内部分析师只能查看脱敏后的数据，而紧急情况下的心理干预人员可查看完整信息</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 全面脱敏范围 -->
+                    <h4>全面脱敏范围</h4>
+                    <div class="two-column-layout">
+                        <div>
+                            <h5>1. 个人身份信息</h5>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check-circle"></i> 姓名、身份证号、手机号、电子邮箱</li>
+                                <li><i class="fas fa-check-circle"></i> 家庭住址、户籍地址、现居住地</li>
+                                <li><i class="fas fa-check-circle"></i> 护照号、驾驶证号、社保号码</li>
+                            </ul>
+                            
+                            <h5>2. 司法敏感信息</h5>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check-circle"></i> 犯罪记录、罪名、判决结果</li>
+                                <li><i class="fas fa-check-circle"></i> 服刑监狱、服刑时间、释放日期</li>
+                                <li><i class="fas fa-check-circle"></i> 管教人员信息、同监舍人员信息</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>3. 隐私数据</h5>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check-circle"></i> 家庭关系、亲属信息、婚姻状况</li>
+                                <li><i class="fas fa-check-circle"></i> 收入状况、财产信息、消费记录</li>
+                                <li><i class="fas fa-check-circle"></i> 社交关系、通信记录、上网痕迹</li>
+                            </ul>
+                            
+                            <h5>4. 心理测评数据</h5>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check-circle"></i> 具体测评得分、风险等级评估</li>
+                                <li><i class="fas fa-check-circle"></i> 心理疾病诊断、治疗历史</li>
+                                <li><i class="fas fa-check-circle"></i> 自杀风险评估、自残倾向记录</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 脱敏实施流程 -->
+                    <h4>脱敏实施流程</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-steps">
+                            <div class="flow-step">
+                                <div class="flow-step-number">1</div>
+                                <div class="flow-step-content">
+                                    <h5 class="flow-step-title">敏感数据识别</h5>
+                                    <p class="flow-step-description">AI自动识别和分类敏感数据，建立敏感数据清单</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">2</div>
+                                <div class="flow-step-content">
+                                    <h5 class="flow-step-title">脱敏规则制定</h5>
+                                    <p class="flow-step-description">根据数据类型和使用场景，制定差异化脱敏规则</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">3</div>
+                                <div class="flow-step-content">
+                                    <h5 class="flow-step-title">脱敏处理执行</h5>
+                                    <p class="flow-step-description">采用自动化工具执行数据脱敏处理，确保处理一致性</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">4</div>
+                                <div class="flow-step-content">
+                                    <h5 class="flow-step-title">脱敏效果验证</h5>
+                                    <p class="flow-step-description">对脱敏后的数据进行效果验证，确保脱敏完全且数据可用性不受影响</p>
+                                </div>
+                            </div>
+                            <div class="flow-step">
+                                <div class="flow-step-number">5</div>
+                                <div class="flow-step-content">
+                                    <h5 class="flow-step-title">脱敏数据使用</h5>
+                                    <p class="flow-step-description">脱敏后的数据用于分析、建模和服务推荐，原始数据仅用于必要的服务场景</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 4. 首次测评指标体系 -->
+                <div class="tech-module">
+                    <div class="tech-module-header">
+                        <div class="tech-module-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>首次测评指标体系</h3>
+                    </div>
+                    <p class="tech-module-description">基于应用心理学理论和3000+法院案例大数据，构建涵盖5大维度21项指标的全面测评体系，为个性化服务提供精准依据</p>
+                    
+                    <!-- 指标体系网格 -->
+                    <h4>五大测评维度</h4>
+                    <div class="indicator-grid">
+                        <div class="indicator-category">
+                            <h4>心理健康维度</h4>
+                            <p>评估用户的心理状态和心理健康水平，识别潜在心理问题</p>
+                            <ul class="indicator-list">
+                                <li><i class="fas fa-check-circle"></i> 抑郁症状评估（PHQ-9量表）</li>
+                                <li><i class="fas fa-check-circle"></i> 焦虑症状评估（GAD-7量表）</li>
+                                <li><i class="fas fa-check-circle"></i> 创伤后应激障碍评估（PCL-5量表）</li>
+                                <li><i class="fas fa-check-circle"></i> 自杀风险评估（SSI量表）</li>
+                                <li><i class="fas fa-check-circle"></i> 人格特质评估（大五人格模型）</li>
+                                <li><i class="fas fa-check-circle"></i> 情绪稳定性评估</li>
+                            </ul>
+                        </div>
+                        <div class="indicator-category">
+                            <h4>再社会化维度</h4>
+                            <p>评估用户的社会适应能力和融入社会的潜力</p>
+                            <ul class="indicator-list">
+                                <li><i class="fas fa-check-circle"></i> 社会适应能力评估</li>
+                                <li><i class="fas fa-check-circle"></i> 人际关系能力评估</li>
+                                <li><i class="fas fa-check-circle"></i> 家庭关系质量评估</li>
+                                <li><i class="fas fa-check-circle"></i> 法律意识与规则遵守评估</li>
+                                <li><i class="fas fa-check-circle"></i> 社会支持系统评估</li>
+                                <li><i class="fas fa-check-circle"></i> 社区融入意愿评估</li>
+                            </ul>
+                        </div>
+                        <div class="indicator-category">
+                            <h4>就业技能维度</h4>
+                            <p>评估用户的技能水平和就业潜力，为就业推荐提供依据</p>
+                            <ul class="indicator-list">
+                                <li><i class="fas fa-check-circle"></i> 基本文化水平评估</li>
+                                <li><i class="fas fa-check-circle"></i> 计算机操作能力评估</li>
+                                <li><i class="fas fa-check-circle"></i> 职业技能现状评估</li>
+                                <li><i class="fas fa-check-circle"></i> 学习能力与意愿评估</li>
+                                <li><i class="fas fa-check-circle"></i> 就业意愿与动机评估</li>
+                                <li><i class="fas fa-check-circle"></i> 职业兴趣与价值观评估</li>
+                            </ul>
+                        </div>
+                        <div class="indicator-category">
+                            <h4>风险预警维度</h4>
+                            <p>识别潜在风险因素，为干预措施提供依据</p>
+                            <ul class="indicator-list">
+                                <li><i class="fas fa-check-circle"></i> 重新犯罪风险评估</li>
+                                <li><i class="fas fa-check-circle"></i> 物质滥用风险评估</li>
+                                <li><i class="fas fa-check-circle"></i> 暴力倾向评估</li>
+                                <li><i class="fas fa-check-circle"></i> 冲动控制能力评估</li>
+                                <li><i class="fas fa-check-circle"></i> 反社会人格倾向评估</li>
+                            </ul>
+                        </div>
+                        <div class="indicator-category">
+                            <h4>兴趣爱好维度</h4>
+                            <p>了解用户兴趣爱好，为兴趣小组活动和个性化服务提供依据</p>
+                            <ul class="indicator-list">
+                                <li><i class="fas fa-check-circle"></i> 文化艺术兴趣评估</li>
+                                <li><i class="fas fa-check-circle"></i> 体育健身兴趣评估</li>
+                                <li><i class="fas fa-check-circle"></i> 手工制作兴趣评估</li>
+                                <li><i class="fas fa-check-circle"></i> 技术学习兴趣评估</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- 测评体系的核心优势 -->
+                    <h4>测评体系的核心优势</h4>
+                    <div class="card-grid">
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h5 class="tech-card-title">科学权威</h5>
+                            <p class="tech-card-description">采用国际通用的专业心理测评量表，结合国内司法实践进行本土化修订</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h5 class="tech-card-title">低读写门槛</h5>
+                            <p class="tech-card-description">支持语音交互，采用简单易懂的语言，适合不同文化水平用户</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h5 class="tech-card-title">高效便捷</h5>
+                            <p class="tech-card-description">5分钟即可完成全面测评，即时生成报告</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <h5 class="tech-card-title">隐私保护</h5>
+                            <p class="tech-card-description">测评过程全程匿名，结果仅用于个性化服务推荐</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 测评结果的应用 -->
+                    <h4>测评结果的应用</h4>
+                    <p>首次测评结果是平台为用户提供个性化服务的核心依据，主要应用于以下方面：</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> <strong>个性化服务方案制定：</strong>根据测评结果，为用户量身定制心理支持、技能培训、就业推荐等服务方案</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>风险预警与干预：</strong>对高风险用户进行重点关注和干预，降低重新犯罪风险</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>就业岗位精准匹配：</strong>根据技能评估结果，为用户推荐合适的就业岗位</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>兴趣小组活动推荐：</strong>根据兴趣爱好评估，推荐适合的兴趣小组活动</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>服务效果动态跟踪：</strong>定期重测，跟踪用户变化，调整服务方案</li>
+                    </ul>
+                </div>
+                
+                <!-- 5. 个性化任务匹配算法 -->
+                <div class="tech-module">
+                    <div class="tech-module-header">
+                        <div class="tech-module-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>个性化任务匹配算法</h3>
+                    </div>
+                    <p class="tech-module-description">基于"天镜云模型"和多算法融合技术，根据用户测评数据、行为数据和偏好数据，实现精准的个性化任务匹配</p>
+                    
+                    <!-- 算法架构与原理 -->
+                    <h4>算法架构与原理</h4>
+                    <p>平台采用多算法融合的智能推荐架构，结合协同过滤、内容推荐、强化学习等多种算法，实现精准的个性化任务匹配。</p>
+                    <div class="algorithm-architecture">
+                        <div class="architecture-layers">
+                            <div class="architecture-layer">
+                                <div class="layer-title">推荐层</div>
+                                <div class="layer-content">
+                                    <p>个性化任务推荐、实时推荐、批量推荐、场景化推荐</p>
+                                </div>
+                            </div>
+                            <div class="architecture-arrow">↓</div>
+                            <div class="architecture-layer">
+                                <div class="layer-title">算法层</div>
+                                <div class="layer-content">
+                                    <p>协同过滤算法、内容推荐算法、强化学习算法、深度学习算法</p>
+                                </div>
+                            </div>
+                            <div class="architecture-arrow">↓</div>
+                            <div class="architecture-layer">
+                                <div class="layer-title">特征工程层</div>
+                                <div class="layer-content">
+                                    <p>用户画像构建、任务特征提取、相似度计算、时序特征分析</p>
+                                </div>
+                            </div>
+                            <div class="architecture-arrow">↓</div>
+                            <div class="architecture-layer">
+                                <div class="layer-title">数据层</div>
+                                <div class="layer-content">
+                                    <p>用户测评数据、行为轨迹数据、交互记录数据、兴趣偏好数据、任务完成数据</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 算法特性 -->
+                    <h4>核心算法特性</h4>
+                    <div class="card-grid">
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h5 class="tech-card-title">协同过滤算法</h5>
+                            <p class="tech-card-description">基于用户-任务交互矩阵，分析相似用户的行为模式，推荐相关任务</p>
+                            <p class="tech-card-details">技术细节：采用基于矩阵分解的协同过滤算法，结合深度学习技术提升推荐精度</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5 class="tech-card-title">内容推荐算法</h5>
+                            <p class="tech-card-description">根据任务内容特征和用户画像特征进行匹配，推荐符合用户兴趣和需求的任务</p>
+                            <p class="tech-card-details">技术细节：采用TF-IDF和Word2Vec技术提取内容特征，结合余弦相似度计算实现匹配</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h5 class="tech-card-title">强化学习算法</h5>
+                            <p class="tech-card-description">根据用户反馈和任务完成情况，动态调整推荐策略，不断优化推荐结果</p>
+                            <p class="tech-card-details">技术细节：采用DQN（深度Q网络）算法，将用户行为作为环境反馈，优化推荐策略</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-network-wired"></i>
+                            </div>
+                            <h5 class="tech-card-title">图神经网络算法</h5>
+                            <p class="tech-card-description">构建用户-任务-资源的关系图谱，利用图神经网络技术发现隐藏的关联关系，提升推荐效果</p>
+                            <p class="tech-card-details">技术细节：采用GCN（图卷积网络）算法，学习节点嵌入表示，实现精准匹配</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 算法应用场景 -->
+                    <h4>算法应用场景</h4>
+                    <div class="card-grid">
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h5 class="tech-card-title">课程推荐</h5>
+                            <p class="tech-card-description">根据用户的学习需求、技能缺口和兴趣爱好，推荐适合的课程内容</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h5 class="tech-card-title">就业岗位推荐</h5>
+                            <p class="tech-card-description">根据用户的技能水平、就业意愿和地理位置，推荐匹配的就业岗位</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h5 class="tech-card-title">心理支持任务推荐</h5>
+                            <p class="tech-card-description">根据用户的心理状态和需求，推荐适合的心理支持任务和活动</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h5 class="tech-card-title">兴趣小组推荐</h5>
+                            <p class="tech-card-description">根据用户的兴趣爱好，推荐适合的兴趣小组和活动</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 算法性能指标 -->
+                    <h4>算法性能指标</h4>
+                    <div class="performance-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value">92%</div>
+                            <div class="metric-label">推荐准确率</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">87%</div>
+                            <div class="metric-label">用户满意度</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">78%</div>
+                            <div class="metric-label">任务完成率提升</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value">200ms</div>
+                            <div class="metric-label">平均响应时间</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 6. 明线与暗线心理支持的协同机制 -->
+                <div class="tech-module">
+                    <div class="tech-module-header">
+                        <div class="tech-module-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>明线与暗线心理支持的协同机制</h3>
+                    </div>
+                    <p class="tech-module-description">明线与暗线心理支持相互配合，形成全方位、无死角的心理支持体系，满足用户不同场景下的心理需求</p>
+                    
+                    <!-- 协同机制架构 -->
+                    <h4>协同机制架构</h4>
+                    <p>平台构建了"需求感知-智能分配-协同支持-效果评估"的完整心理支持协同机制，确保明线与暗线支持无缝配合，最大化心理支持效果。</p>
+                    
+                    <!-- 协同机制图表 -->
+                    <div class="collaboration-diagram">
+                        <div class="mechanism-center">
+                            <h4>用户心理需求</h4>
+                            <p>实时感知用户心理状态和需求</p>
+                        </div>
+                        <div class="mechanism-lines">
+                            <div class="mechanism-line">
+                                <h5>明线支持 - 主动可见的心理服务</h5>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> AI小藕智能陪聊</li>
+                                    <li><i class="fas fa-check-circle"></i> 专业心理咨询预约</li>
+                                    <li><i class="fas fa-check-circle"></i> 24小时心理危机干预热线</li>
+                                    <li><i class="fas fa-check-circle"></i> 系统化心理课程</li>
+                                    <li><i class="fas fa-check-circle"></i> 兴趣导向互助小组</li>
+                                </ul>
+                            </div>
+                            <div class="mechanism-line">
+                                <h5>暗线支持 - 隐形的心理支持</h5>
+                                <ul>
+                                    <li><i class="fas fa-check-circle"></i> 实时心理状态监测</li>
+                                    <li><i class="fas fa-check-circle"></i> 智能正念冥想推送</li>
+                                    <li><i class="fas fa-check-circle"></i> 个性化积极暗示</li>
+                                    <li><i class="fas fa-check-circle"></i> 积极行为引导</li>
+                                    <li><i class="fas fa-check-circle"></i> 心理风险智能预警</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mechanism-result">
+                            <h4>协同效果</h4>
+                            <div class="card-grid">
+                                <div class="tech-card">
+                                    <div class="tech-card-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <h5 class="tech-card-title">提高支持覆盖率</h5>
+                                    <p class="tech-card-description">全方位覆盖用户不同场景下的心理需求</p>
+                                </div>
+                                <div class="tech-card">
+                                    <div class="tech-card-icon">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <h5 class="tech-card-title">个性化精准支持</h5>
+                                    <p class="tech-card-description">根据用户状态智能匹配最佳支持方式</p>
+                                </div>
+                                <div class="tech-card">
+                                    <div class="tech-card-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <h5 class="tech-card-title">预防危机事件</h5>
+                                    <p class="tech-card-description">提前感知风险，及时介入干预</p>
+                                </div>
+                                <div class="tech-card">
+                                    <div class="tech-card-icon">
+                                        <i class="fas fa-heartbeat"></i>
+                                    </div>
+                                    <h5 class="tech-card-title">促进心理康复</h5>
+                                    <p class="tech-card-description">加速用户心理恢复和社会融入</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 切换到桌面版 -->
+        <div class="version-switch">
+            <button class="version-btn" onclick="switchToDesktop()">切换到桌面版</button>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">莲藕摆渡 莲藕摆渡</div>
+                <div class="footer-mission">以心为桥，渡人重生。专注为重返社会人士提供全周期心理赋能与社会融入服务。</div>
+                <div class="footer-info">
+                    <p>北京韦港科技集团有限公司</p>
+                    <p>2017年，北京市区级招商引资企业</p>
+                    <p>2019年，入驻海南生态软件园</p>
+                    <p>联系方式：邮箱：venisle@venisle.com | 北京：010-86460668 | 天津：022-66271007</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 底部导航栏 -->
+    <nav class="bottom-nav">
+        <a href="mobile-index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="mobile-core-position.html" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>核心定位</span>
+        </a>
+        <a href="mobile-service-system.html" class="nav-item">
+            <i class="fas fa-route"></i>
+            <span>服务体系</span>
+        </a>
+        <a href="mobile-contact-us.html" class="nav-item">
+            <i class="fas fa-phone"></i>
+            <span>联系我们</span>
+        </a>
+    </nav>
+
+    <!-- 移动端优化脚本 -->
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 添加触摸反馈效果
+        document.querySelectorAll('.btn, .card, .version-btn, .nav-item, .flow-step, .tech-card, .indicator-category, .architecture-layer, .mechanism-center, .mechanism-line').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // 图片懒加载
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src || image.src;
+                        imageObserver.unobserve(image);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img').forEach(function(image) {
+                imageObserver.observe(image);
+            });
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(function() {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // 底部导航栏激活状态
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 切换到桌面版
+        function switchToDesktop() {
+            window.location.href = 'technical-modules.html';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>团队荣誉 - 莲藕摆渡一体化心理赋能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS变量 */
+        :root {
+            --primary-color: #dda0dd;
+            --secondary-color: #daa520;
+            --accent-color: #f4e4bc;
+            --light-bg: #f9f7f2;
+            --dark-text: #333333;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #8fb996;
+            --hover-color: #c77dff;
+        }
+
+        /* 全局样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: white;
+            overflow-x: hidden;
+        }
+
+        /* 容器样式 */
+        .container {
+            width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        /* 页面顶部区域 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* 主要内容区域 */
+        main {
+            padding: 20px 0;
+        }
+
+        /* 页面标题 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        .page-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-left: 10px;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 模块样式 */
+        .module {
+            margin-bottom: 40px;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .module-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .module-header h3 {
+            font-size: 1.3rem;
+            color: var(--dark-text);
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        /* 切换版本按钮 */
+        .version-switch {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .version-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .version-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 30px 0 80px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-mission {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-info {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        /* 背景卡片样式 */
+        .background-content {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .background-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .background-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .background-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .background-header h4 {
+            font-size: 1.1rem;
+            color: var(--dark-text);
+        }
+
+        .background-description {
+            margin-bottom: 20px;
+        }
+
+        .background-description p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .background-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            background-color: rgba(221, 160, 221, 0.1);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .company-values {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .company-mission, .company-vision {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .value-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .value-header i {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .value-header h5 {
+            font-size: 0.95rem;
+            color: var(--dark-text);
+            margin: 0;
+        }
+
+        .company-mission p, .company-vision p {
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin: 0;
+        }
+
+        /* 荣誉卡片样式 */
+        .honors-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .honor-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .honor-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .honor-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .honor-card h4 {
+            font-size: 1.1rem;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .honor-level {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .honor-description {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .card {
+                padding: 20px;
+            }
+
+            .page-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .module-header h3 {
+                font-size: 1.2rem;
+            }
+
+            .honors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mobile-index.html" class="logo">
+                    <img src="logo.png" alt="莲藕摆渡">
+                    莲藕摆渡
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="container">
+                <h1>团队荣誉</h1>
+                <h2>展示团队的背景和荣誉资质</h2>
+                <p>专注为重返社会人士提供全周期心理赋能与社会融入服务</p>
+                <div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 团队荣誉 -->
+        <section id="team-honors" class="container">
+                
+                <!-- 1. 运营主体背景 -->
+                <div class="module">
+                    <div class="module-header">
+                        <div class="module-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>运营主体背景 - 韦港海棠</h3>
+                    </div>
+                    <div class="background-content">
+                        <div class="background-card">
+                            <div class="background-header">
+                                <div class="background-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <h4>韦港海棠（天津）科技有限公司</h4>
+                            </div>
+                            <div class="background-description">
+                                <p>韦港海棠是一家专注于为重返社会人士提供心理赋能和社会融入服务的创新型民营企业，致力于通过科技与心理学的融合，帮助刑释人员顺利融入社会，实现自我价值。</p>
+                                <p>公司拥有强大的专业团队，涵盖应用心理学、计算机科学、法律、社会学等多个领域，核心成员均具有丰富的行业经验和专业背景。公司与南开大学建立了紧密的合作关系，依托南开大学心理学系强大的学术支持，确保平台服务的科学性和有效性。</p>
+                            </div>
+                            <div class="background-features">
+                                <span class="feature-tag">心理学专业背景</span>
+                                <span class="feature-tag">技术驱动创新</span>
+                                <span class="feature-tag">强烈社会责任</span>
+                                <span class="feature-tag">跨学科融合</span>
+                                <span class="feature-tag">自主知识产权</span>
+                                <span class="feature-tag">南开大学指导</span>
+                            </div>
+                            <div class="company-values">
+                                <div class="company-mission">
+                                    <div class="value-header">
+                                        <i class="fas fa-bullseye"></i>
+                                        <h5>企业使命</h5>
+                                    </div>
+                                    <p>以科技赋能心理，用温暖照亮重生之路，帮助每一位重返社会人士实现真正的自我超越和社会融入</p>
+                                </div>
+                                <div class="company-vision">
+                                    <div class="value-header">
+                                        <i class="fas fa-eye"></i>
+                                        <h5>企业愿景</h5>
+                                    </div>
+                                    <p>成为国内领先的重返社会人士心理赋能与社会融入服务平台，构建"政府引导、社会参与、专业支撑、科技赋能"的新型安置帮教体系</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 2. 荣誉资质 -->
+                <div class="module">
+                    <div class="module-header">
+                        <div class="module-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>荣誉资质 - 专业认可与学术支持</h3>
+                    </div>
+                    <div class="honors-grid">
+                        <div class="honor-card">
+                            <div class="honor-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h4>2025全国应用心理专业学位研究生实践技能大赛</h4>
+                            <p class="honor-level">国家一等奖</p>
+                            <p class="honor-description">在全国应用心理专业学位研究生实践技能大赛中脱颖而出，获得国家一等奖，充分体现了团队在应用心理学领域的专业实力和实践能力。</p>
+                        </div>
+                        <div class="honor-card">
+                            <div class="honor-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h4>南开大学指导优势</h4>
+                            <p class="honor-level">强大学术支持</p>
+                            <p class="honor-description">依托南开大学心理学系强大的学术支持，拥有专业的心理学专家团队指导，确保平台心理服务的科学性和有效性。南开大学心理学系作为国内顶尖的心理学研究机构，为平台提供了坚实的理论基础和学术支撑。</p>
+                            <p class="honor-description">合作内容包括：心理测评量表修订、AI模型训练数据验证、心理支持方案审核、专业人才培养等方面。</p>
+                        </div>
+                        <div class="honor-card">
+                            <div class="honor-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <h4>天津市唯一专项决赛最高荣誉</h4>
+                            <p class="honor-level">市级最高荣誉</p>
+                            <p class="honor-description">在天津市相关专项比赛中获得最高荣誉，是天津市唯一获此殊荣的团队，充分体现了平台在天津市相关领域的领先地位和突出贡献。</p>
+                        </div>
+                        <div class="honor-card">
+                            <div class="honor-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4>"天镜云"模型创始人资质</h4>
+                            <p class="honor-level">自主知识产权</p>
+                            <p class="honor-description">拥有自主研发的"天镜云"AI模型的全部知识产权，该模型基于3000+法院真实案例训练，在心理评估、风险预警、个性化推荐等方面具有显著优势。</p>
+                            <p class="honor-description">模型已获得相关知识产权认证，具有完全自主可控的技术优势。</p>
+                        </div>
+                        <div class="honor-card">
+                            <div class="honor-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4>国家级司法平台核心建设者认证</h4>
+                            <p class="honor-level">行业权威认可</p>
+                            <p class="honor-description">团队核心成员拥有国家级司法平台核心建设者认证，具有丰富的司法信息化建设经验，确保平台在司法领域的专业性和权威性。</p>
+                        </div>
+                        <div class="honor-card">
+                            <div class="honor-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h4>应用心理学+AI交叉领域创新团队</h4>
+                            <p class="honor-level">跨学科创新认可</p>
+                            <p class="honor-description">被评为应用心理学+AI交叉领域创新团队，体现了团队在多学科融合创新方面的突出能力，为平台的技术创新和服务模式创新提供了有力支撑。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 切换到桌面版 -->
+        <div class="version-switch">
+            <button class="version-btn" onclick="switchToDesktop()">切换到桌面版</button>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">莲藕摆渡 莲藕摆渡</div>
+                <div class="footer-mission">以心为桥，渡人重生。专注为重返社会人士提供全周期心理赋能与社会融入服务。</div>
+                <div class="footer-info">
+                    <p>北京韦港科技集团有限公司</p>
+                    <p>2017年，北京市区级招商引资企业</p>
+                    <p>2019年，入驻海南生态软件园</p>
+                    <p>联系方式：邮箱：venisle@venisle.com | 北京：010-86460668 | 天津：022-66271007</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 底部导航栏 -->
+    <nav class="bottom-nav">
+        <a href="mobile-index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="mobile-core-position.html" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>核心定位</span>
+        </a>
+        <a href="mobile-service-system.html" class="nav-item">
+            <i class="fas fa-route"></i>
+            <span>服务体系</span>
+        </a>
+        <a href="mobile-contact-us.html" class="nav-item">
+            <i class="fas fa-phone"></i>
+            <span>联系我们</span>
+        </a>
+    </nav>
+
+    <!-- 移动端优化脚本 -->
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 添加触摸反馈效果
+        document.querySelectorAll('.btn, .card, .version-btn, .nav-item, .background-card, .honor-card, .company-mission, .company-vision').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // 图片懒加载
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src || image.src;
+                        imageObserver.unobserve(image);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img').forEach(function(image) {
+                imageObserver.observe(image);
+            });
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(function() {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // 底部导航栏激活状态
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // 切换到桌面版
+        function switchToDesktop() {
+            window.location.href = 'team-honors.html';
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

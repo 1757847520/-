@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>背景痛点 - 莲藕摆渡一体化心理赋能平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS变量 */
+        :root {
+            --primary-color: #dda0dd;
+            --secondary-color: #daa520;
+            --accent-color: #f4e4bc;
+            --light-bg: #f9f7f2;
+            --dark-text: #333333;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --success-color: #8fb996;
+            --hover-color: #c77dff;
+        }
+
+        /* 全局样式 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: white;
+            overflow-x: hidden;
+        }
+
+        /* 容器样式 */
+        .container {
+            width: 100%;
+            padding: 0 20px;
+            margin: 0 auto;
+        }
+
+        /* 页面顶部区域 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo img {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* 主要内容区域 */
+        main {
+            padding: 20px 0;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .card h5 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        /* 图标样式 */
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        /* 服务卡片 */
+        .service-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .service-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+        }
+
+        .service-content p {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin: 0;
+        }
+
+        /* 技术亮点 */
+        .tech-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .tech-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tech-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: var(--dark-text);
+        }
+
+        /* 模块头部样式 */
+        .module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .module-badge {
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* 政策项样式 */
+        .policy-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .policy-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .policy-item-icon {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .policy-item-content strong {
+            color: var(--dark-text);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .policy-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .highlight-box {
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .highlight-box.secondary {
+            border-left-color: var(--secondary-color);
+        }
+
+        /* 数据卡片样式 */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .data-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .data-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .data-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .data-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .data-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .data-description {
+            font-size: 0.85rem;
+            color: var(--light-text);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .data-source {
+            font-size: 0.75rem;
+            color: var(--light-text);
+            font-style: italic;
+        }
+
+        /* 痛点卡片样式 */
+        .pains-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .pain-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .pain-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .pain-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .pain-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pain-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .pain-item-icon {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .pain-item-content strong {
+            color: var(--dark-text);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 影响项样式 */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .impact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background-color: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .impact-item-icon {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .impact-item-content strong {
+            color: var(--dark-text);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 解决方案样式 */
+        .solution-box {
+            display: flex;
+            gap: 15px;
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .solution-icon {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin-top: 2px;
+        }
+
+        .solution-content h4 {
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        /* 切换版本按钮 */
+        .version-switch {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .version-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .version-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 30px 0 80px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .footer-mission {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer-info {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.1rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .solution-box {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="mobile-index.html" class="logo">
+                    <img src="logo.png" alt="莲藕摆渡">
+                    莲藕摆渡
+                </a>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="container">
+                <h1>背景痛点</h1>
+                <h2>以心为桥，渡人重生</h2>
+                <p>专注为重返社会人士提供全周期心理赋能与社会融入服务</p>
+                <div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 背景痛点内容 -->
+        <section class="container">
+            <!-- 政策背景 -->
+            <div class="card">
+                <h3>政策背景</h3>
+                <p>《中华人民共和国国民经济和社会发展第十五个五年规划和2035年远景目标纲要》明确将"加强特殊人群服务管理"作为民生建设的重要内容，提出四大重点要求：</p>
+                <div class="service-card">
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4>完善安置帮教制度</h4>
+                        <p>促进刑满释放人员顺利融入社会</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4>构建全周期体系</h4>
+                        <p>多元化、精准化的安置帮教体系</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4>降低重新犯罪率</h4>
+                        <p>促进社会和谐稳定</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4>加强心理服务</h4>
+                        <p>提升特殊人群心理服务水平</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 再社会化困境数据 -->
+            <div class="card">
+                <h3>再社会化困境数据</h3>
+                <p>根据全国调研，重返社会人士面临诸多困境：</p>
+                <div class="tech-highlights">
+                    <div class="tech-item">
+                        <i class="fas fa-chart-pie"></i>
+                        <h4>38.2%</h4>
+                        <p>再就业率</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-users"></i>
+                        <h4>82.1%</h4>
+                        <p>融入忧虑率</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-tag"></i>
+                        <h4>76.5%</h4>
+                        <p>前科标签影响</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <h4>68.3%</h4>
+                        <p>心理问题比例</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-user-secret"></i>
+                        <h4>72.8%</h4>
+                        <p>隐私顾虑比例</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-user-shield"></i>
+                        <h4>56.2%</h4>
+                        <p>安置帮教覆盖率</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心痛点分析 -->
+            <div class="card">
+                <h3>核心痛点分析</h3>
+                <div class="pains-grid">
+                    <!-- 就业排斥 -->
+                    <div class="pain-card">
+                        <div class="pain-header">
+                            <div class="pain-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h4>就业排斥现状</h4>
+                        </div>
+                        <div class="pain-content">
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>前科标签问题</strong>
+                                    <p>超过70%的企业明确表示不会雇佣有犯罪记录的人员，即使是轻微犯罪记录。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-sync-alt"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>技能脱节</strong>
+                                    <p>长期服刑导致技能与社会需求脱节，缺乏市场竞争力。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>就业信息不对称</strong>
+                                    <p>缺乏专门针对刑释人员的就业渠道和信息平台。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 心理创伤 -->
+                    <div class="pain-card">
+                        <div class="pain-header">
+                            <div class="pain-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>心理创伤影响</h4>
+                        </div>
+                        <div class="pain-content">
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>创伤后应激障碍</strong>
+                                    <p>长期服刑环境导致的心理创伤，影响正常社交和工作。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-heart-broken"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>自卑与自我否定</strong>
+                                    <p>社会歧视导致的自我价值感降低。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>焦虑与抑郁</strong>
+                                    <p>对未来的不确定性和社会压力导致的情绪问题。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 服务断点 -->
+                    <div class="pain-card">
+                        <div class="pain-header">
+                            <div class="pain-icon">
+                                <i class="fas fa-link-slash"></i>
+                            </div>
+                            <h4>服务断点现象</h4>
+                        </div>
+                        <div class="pain-content">
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-unlink"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>狱中与社会脱节</strong>
+                                    <p>出狱后缺乏有效的过渡支持，服务衔接不畅。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>长期支持不足</strong>
+                                    <p>现有服务多聚焦于短期安置，缺乏长程陪伴。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-stream"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>资源分散</strong>
+                                    <p>各部门服务资源分散，缺乏统一协调机制。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 隐私顾虑 -->
+                    <div class="pain-card">
+                        <div class="pain-header">
+                            <div class="pain-icon">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <h4>隐私顾虑</h4>
+                        </div>
+                        <div class="pain-content">
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>信息泄露风险</strong>
+                                    <p>担心个人信息被不当使用或泄露。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>被监控感</strong>
+                                    <p>对政府主导的服务存在信任顾虑，担心被持续监控。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>二次伤害</strong>
+                                    <p>担心个人经历被公开，造成二次伤害。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 安置帮教不足 -->
+                    <div class="pain-card">
+                        <div class="pain-header">
+                            <div class="pain-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <h4>安置帮教不足</h4>
+                        </div>
+                        <div class="pain-content">
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-user-slash"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>脱管漏管</strong>
+                                    <p>部分地区存在脱管漏管现象，服务覆盖率低。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-random"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>资源分散</strong>
+                                    <p>各部门资源缺乏整合，服务效率低下。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>专业能力不足</strong>
+                                    <p>基层帮教人员专业能力有限，缺乏心理干预技能。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 心理评估脱节 -->
+                    <div class="pain-card">
+                        <div class="pain-header">
+                            <div class="pain-icon">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <h4>心理评估脱节</h4>
+                        </div>
+                        <div class="pain-content">
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>评估不全面</strong>
+                                    <p>现有评估多聚焦于风险评估，缺乏全面的心理需求评估。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>动态跟踪不足</strong>
+                                    <p>缺乏对心理状态的动态监测和跟踪。</p>
+                                </div>
+                            </div>
+                            <div class="pain-item">
+                                <div class="pain-item-icon">
+                                    <i class="fas fa-bell-slash"></i>
+                                </div>
+                                <div class="pain-item-content">
+                                    <strong>干预不及时</strong>
+                                    <p>心理问题发现后，缺乏及时有效的干预措施。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 社会影响与挑战 -->
+            <div class="card">
+                <h3>社会影响与挑战</h3>
+                <div class="module-header">
+                    <h4>深远影响</h4>
+                    <div class="module-badge">社会层面</div>
+                </div>
+                <div class="impact-content">
+                    <p>刑释人员再社会化困境不仅影响个人发展，也给社会带来了诸多挑战：</p>
+                    <div class="impact-grid">
+                        <div class="impact-item">
+                            <div class="impact-item-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="impact-item-content">
+                                <strong>重新犯罪风险</strong>
+                                <p>再就业率低、社会融入困难是导致重新犯罪的重要因素，据统计，未得到有效帮教的刑释人员重新犯罪率是得到有效帮教的3.5倍</p>
+                            </div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-item-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="impact-item-content">
+                                <strong>家庭不稳定</strong>
+                                <p>个人困境容易引发家庭矛盾，影响家庭和谐，进而影响下一代成长</p>
+                            </div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-item-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="impact-item-content">
+                                <strong>社会资源消耗</strong>
+                                <p>重新犯罪导致司法资源消耗，增加社会治理成本，据估算，每增加一名重新犯罪人员，社会平均成本增加约20万元</p>
+                            </div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-item-icon">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                            <div class="impact-item-content">
+                                <strong>社会公平问题</strong>
+                                <p>前科标签导致的就业歧视，违背社会公平原则，影响社会和谐稳定</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="solution-box">
+                        <div class="solution-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="solution-content">
+                            <h4>解决之道</h4>
+                            <p>构建"政府引导、社会参与、专业支撑、科技赋能"的新型安置帮教体系，以心理赋能为核心，以就业支持为重点，以科技手段为支撑，为重返社会人士提供全周期、多元化、精准化的服务，帮助他们顺利融入社会，实现自我价值。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 切换到桌面版 -->
+            <div class="version-switch">
+                <button class="version-btn" onclick="switchToDesktop()">切换到桌面版</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">莲藕摆渡 莲藕摆渡</div>
+                <div class="footer-mission">以心为桥，渡人重生。专注为重返社会人士提供全周期心理赋能与社会融入服务。</div>
+                <div class="footer-info">
+                    <p>北京韦港科技集团有限公司</p>
+                    <p>2017年，北京市区级招商引资企业</p>
+                    <p>2019年，入驻海南生态软件园</p>
+                    <p>联系方式：邮箱：venisle@venisle.com | 北京：010-86460668 | 天津：022-66271007</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 底部导航栏 -->
+    <nav class="bottom-nav">
+        <a href="mobile-index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </a>
+        <a href="mobile-core-position.html" class="nav-item">
+            <i class="fas fa-compass"></i>
+            <span>核心定位</span>
+        </a>
+        <a href="mobile-service-system.html" class="nav-item">
+            <i class="fas fa-route"></i>
+            <span>服务体系</span>
+        </a>
+        <a href="mobile-contact-us.html" class="nav-item">
+            <i class="fas fa-phone"></i>
+            <span>联系我们</span>
+        </a>
+    </nav>
+
+    <!-- 移动端优化脚本 -->
+    <script>
+        // 平滑滚动效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 添加触摸反馈效果
+        document.querySelectorAll('.btn, .card, .version-btn, .nav-item').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // 图片懒加载
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        const image = entry.target;
+                        image.src = image.dataset.src || image.src;
+                        imageObserver.unobserve(image);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img').forEach(function(image) {
+                imageObserver.observe(image);
+            });
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(function() {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // 底部导航栏激活状态
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
